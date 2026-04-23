@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="theme-color" content="#0a0a0a">
+<meta name="theme-color" content="#0f172a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="LOOKSMAX">
@@ -14,26 +14,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <title>LOOKSMAXXING</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;touch-action:manipulation}
+button{user-select:none;-webkit-user-select:none}
 html{-webkit-tap-highlight-color:transparent}
 body{
   font-family:'Space Grotesk',sans-serif;
-  background:#0a0a0a;color:#e8e8e8;
+  background:#0f172a;color:#e8e8e8;
   min-height:100dvh;max-width:520px;margin:0 auto;overflow-x:hidden;
 }
 :root{
-  --bg:#0a0a0a;--s1:#111;--s2:#181818;
-  --b1:#242424;--b2:#343434;
+  --bg:#0f172a;--s1:#141d33;--s2:#1a2440;
+  --b1:#243050;--b2:#34405c;
   --t1:#f0f0f0;--t2:#888;--t3:#484848;
   --ac:#c8d0d8;--ac2:#fff;
-  --danger:#ff4040;--warn:#ff8800;--green:#3ddc84;
+  --danger:#ff4040;--warn:#ff8800;--green:#3ddc84;--sl:#9580ff;
   --r:8px;--rl:14px;
 }
 
 /* HEADER */
 #hdr{
   position:sticky;top:0;z-index:100;
-  background:#0d0d0d;border-bottom:1px solid var(--b1);
+  background:#0d1528;border-bottom:1px solid var(--b1);
   padding:0 16px;height:52px;
   display:flex;align-items:center;justify-content:space-between;
 }
@@ -128,7 +129,7 @@ body{
 }
 .wval{
   font-family:'Bebas Neue',sans-serif;font-size:72px;
-  color:var(--ac2);letter-spacing:2px;line-height:1;min-width:100px;text-align:center;
+  color:var(--ac2);letter-spacing:2px;line-height:1;min-width:100px;text-align:center;cursor:pointer;
 }
 .wunit{font-size:20px;color:var(--t2);font-weight:600;align-self:flex-end;padding-bottom:10px}
 /* collapsible preset */
@@ -136,11 +137,11 @@ body{
 .wpl-toggle{
   width:100%;display:flex;align-items:center;gap:8px;
   background:none;border:none;cursor:pointer;
-  padding:10px 12px;
+  padding:10px 12px;min-height:48px;
 }
 .wpl-toggle-lbl{font-size:12px;letter-spacing:1.5px;color:#888;font-weight:600}
 .wpl-cur{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--t2);letter-spacing:1px;margin-left:auto}
-.wpl-arrow{font-size:11px;color:var(--t3)}
+.wpl-arrow{font-size:22px;color:var(--t2);display:inline-block;transition:transform .25s;line-height:1}
 .wpbtns{display:none;flex-wrap:wrap;gap:5px;padding:0 12px 10px}
 .wpb{
   background:var(--s2);border:1px solid var(--b2);color:var(--t2);
@@ -170,7 +171,7 @@ body{
   cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s;
 }
 .ncb:hover{background:var(--b2)}.ncb:active{transform:scale(.9)}
-.ncv{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--ac2);min-width:50px;text-align:center;line-height:1}
+.ncv{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--ac2);min-width:50px;text-align:center;line-height:1;cursor:pointer}
 .ncu{font-size:13px;color:#777;text-align:center;padding-bottom:4px}
 
 /* REST PRESETS */
@@ -276,19 +277,21 @@ body{
 .timer-wrap svg{transform:rotate(-90deg)}
 #t-bg{fill:none;stroke:var(--s2);stroke-width:8}
 #t-arc{
-  fill:none;stroke:var(--ac);stroke-width:8;stroke-linecap:round;
-  stroke-dasharray:552.92;stroke-dashoffset:0;transition:stroke .3s;
+  fill:none;stroke:#4caf50;stroke-width:8;stroke-linecap:round;
+  stroke-dasharray:552.92;transition:stroke .3s,stroke-dashoffset 1s linear;
 }
-#t-arc.warn{stroke:var(--warn)}
+#t-arc.warn{stroke:#ff9800}
 #t-arc.done{stroke:var(--danger)}
 .timer-over{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-#t-disp{font-family:'Bebas Neue',sans-serif;font-size:54px;letter-spacing:2px;color:var(--ac2);line-height:1}
-#t-disp.warn{color:var(--warn)}
+#t-disp{font-family:'Bebas Neue',sans-serif;font-size:54px;letter-spacing:2px;color:#4caf50;line-height:1;transition:color .3s}
+#t-disp.warn{color:#ff9800}
 #t-disp.done{color:var(--danger)}
 .t-rl{font-size:11px;letter-spacing:2px;color:var(--t2);margin-top:4px}
 
 /* Wait phase */
-.wo-done-txt{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--green)}
+.wo-fire{font-size:80px;display:block;animation:fire-bounce .65s ease-in-out infinite alternate}
+@keyframes fire-bounce{from{transform:scale(1) translateY(0)}to{transform:scale(1.12) translateY(-8px)}}
+.wo-done-txt{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:3px;color:#fff;text-align:center;margin-top:6px}
 
 /* Completion */
 .co-ic{font-size:64px;animation:cpop .4s ease}
@@ -380,7 +383,7 @@ body{
     <div id="wbox">
       <div class="wdisp">
         <button class="ncb" style="width:42px;height:42px;font-size:22px" onclick="adjW(-0.5)">−</button>
-        <div class="wval" id="wval">60</div>
+        <div class="wval" id="wval" onclick="editW()">60</div>
         <span class="wunit">kg</span>
         <button class="ncb" style="width:42px;height:42px;font-size:22px" onclick="adjW(0.5)">+</button>
       </div>
@@ -409,7 +412,7 @@ body{
         <div class="nc-l" data-i18n="lbl_reps"></div>
         <div class="nc-row">
           <button class="ncb" onclick="adjN('r',-1)">−</button>
-          <div><div class="ncv" id="rval">10</div><div class="ncu" data-i18n="u_reps"></div></div>
+          <div><div class="ncv" id="rval" onclick="editN('r')">10</div><div class="ncu" data-i18n="u_reps"></div></div>
           <button class="ncb" onclick="adjN('r',1)">+</button>
         </div>
       </div>
@@ -417,7 +420,7 @@ body{
         <div class="nc-l" data-i18n="lbl_sets"></div>
         <div class="nc-row">
           <button class="ncb" onclick="adjN('s',-1)">−</button>
-          <div><div class="ncv" id="sval">3</div><div class="ncu" data-i18n="u_sets"></div></div>
+          <div><div class="ncv" id="sval" onclick="editN('s')">3</div><div class="ncu" data-i18n="u_sets"></div></div>
           <button class="ncb" onclick="adjN('s',1)">+</button>
         </div>
       </div>
@@ -514,7 +517,8 @@ body{
   </div>
 
   <!-- WAIT: rest finished, waiting for NEXT SET -->
-  <div class="wo-phase" id="ph-wait">
+  <div class="wo-phase" id="ph-wait" style="gap:12px">
+    <span class="wo-fire">🔥</span>
     <div class="wo-done-txt" data-i18n="wo_rest_done"></div>
   </div>
 
@@ -563,7 +567,7 @@ const LANGS = {
     fall_ex:'全種目',sel_ex:'種目を選択',
     m_weight:'最大重量',m_volume:'ボリューム',
     wo_ttl:'WORKOUT',wo_set_lbl:'SET',wo_rest_lbl:'REST',
-    wo_rest_done:'REST COMPLETE',btn_done:'DONE ✓',btn_next:'NEXT SET →',
+    wo_rest_done:"LET'S START TRAINING!!",btn_done:'DONE ✓',btn_next:'NEXT SET →',
     wo_complete:'COMPLETE!',
     dlg_ttl:'ワークアウトをリセット',dlg_body:'どうしますか？',
     dlg_save:'完了したセットを保存',dlg_disc:'破棄する',dlg_cancel:'キャンセル',
@@ -580,7 +584,7 @@ const LANGS = {
     fall_ex:'All exercises',sel_ex:'Select exercise',
     m_weight:'Max Weight',m_volume:'Volume',
     wo_ttl:'WORKOUT',wo_set_lbl:'SET',wo_rest_lbl:'REST',
-    wo_rest_done:'REST COMPLETE',btn_done:'DONE ✓',btn_next:'NEXT SET →',
+    wo_rest_done:"LET'S START TRAINING!!",btn_done:'DONE ✓',btn_next:'NEXT SET →',
     wo_complete:'COMPLETE!',
     dlg_ttl:'Reset Workout',dlg_body:'What would you like to do?',
     dlg_save:'Save completed sets',dlg_disc:'Discard',dlg_cancel:'Cancel',
@@ -597,7 +601,7 @@ const LANGS = {
     fall_ex:'전체 운동',sel_ex:'운동 선택',
     m_weight:'최대 중량',m_volume:'볼륨',
     wo_ttl:'워크아웃',wo_set_lbl:'세트',wo_rest_lbl:'휴식',
-    wo_rest_done:'휴식 완료',btn_done:'완료 ✓',btn_next:'다음 세트 →',
+    wo_rest_done:"LET'S START TRAINING!!",btn_done:'완료 ✓',btn_next:'다음 세트 →',
     wo_complete:'완료!',
     dlg_ttl:'운동 초기화',dlg_body:'어떻게 하시겠습니까?',
     dlg_save:'완료된 세트 저장',dlg_disc:'삭제',dlg_cancel:'취소',
@@ -614,7 +618,7 @@ const LANGS = {
     fall_ex:'所有动作',sel_ex:'选择动作',
     m_weight:'最大重量',m_volume:'训练量',
     wo_ttl:'训练',wo_set_lbl:'组',wo_rest_lbl:'休息',
-    wo_rest_done:'休息结束',btn_done:'完成 ✓',btn_next:'下一组 →',
+    wo_rest_done:"LET'S START TRAINING!!",btn_done:'完成 ✓',btn_next:'下一组 →',
     wo_complete:'完成!',
     dlg_ttl:'重置训练',dlg_body:'请选择操作',
     dlg_save:'保存已完成的组',dlg_disc:'放弃',dlg_cancel:'取消',
@@ -631,7 +635,7 @@ const LANGS = {
     fall_ex:'Todos',sel_ex:'Seleccionar ejercicio',
     m_weight:'Peso máx.',m_volume:'Volumen',
     wo_ttl:'ENTRENAMIENTO',wo_set_lbl:'SERIE',wo_rest_lbl:'DESCANSO',
-    wo_rest_done:'DESCANSO LISTO',btn_done:'HECHO ✓',btn_next:'SIGUIENTE →',
+    wo_rest_done:"LET'S START TRAINING!!",btn_done:'HECHO ✓',btn_next:'SIGUIENTE →',
     wo_complete:'¡COMPLETADO!',
     dlg_ttl:'Reiniciar',dlg_body:'¿Qué deseas hacer?',
     dlg_save:'Guardar series completadas',dlg_disc:'Descartar',dlg_cancel:'Cancelar',
@@ -689,12 +693,55 @@ function setW(w){
 }
 function adjW(d){ setW(curW + d); }
 function togglePresets(){
-  const el = document.getElementById('wpresets');
   const btns = document.getElementById('wpbtns');
   const arrow = document.getElementById('wpl-arrow');
   const open = btns.style.display === 'flex';
   btns.style.display = open ? 'none' : 'flex';
-  arrow.textContent = open ? '▾' : '▴';
+  arrow.style.transform = open ? '' : 'rotate(180deg)';
+}
+
+function editW(){
+  const el = document.getElementById('wval');
+  if(el.querySelector('input')) return;
+  el.innerHTML = `<input id="w-inp" type="number" inputmode="decimal" step="0.5" min="0" value="${curW}"
+    style="width:130px;background:none;border:none;border-bottom:2px solid var(--ac);
+    color:var(--ac2);font-family:'Bebas Neue',sans-serif;font-size:72px;letter-spacing:2px;
+    line-height:1;text-align:center;outline:none;-webkit-appearance:none;appearance:none;">`;
+  const inp = document.getElementById('w-inp');
+  inp.focus(); inp.select();
+  let done = false;
+  function commit(){
+    if(done) return; done = true;
+    const v = parseFloat(inp.value);
+    if(!isNaN(v) && v >= 0) setW(v);
+    else { el.textContent = curW%1===0 ? String(curW) : curW.toFixed(1); }
+  }
+  inp.addEventListener('blur', commit);
+  inp.addEventListener('keydown', e => { if(e.key==='Enter') inp.blur(); });
+}
+
+function editN(type){
+  const id = type==='r' ? 'rval' : 'sval';
+  const el = document.getElementById(id);
+  if(el.querySelector('input')) return;
+  const cur = type==='r' ? curR : curS;
+  el.innerHTML = `<input id="${id}-inp" type="number" inputmode="numeric" min="1" max="${type==='r'?100:20}" value="${cur}"
+    style="width:70px;background:none;border:none;border-bottom:2px solid var(--ac);
+    color:var(--ac2);font-family:'Bebas Neue',sans-serif;font-size:48px;
+    text-align:center;outline:none;-webkit-appearance:none;appearance:none;">`;
+  const inp = document.getElementById(`${id}-inp`);
+  inp.focus(); inp.select();
+  let done = false;
+  function commit(){
+    if(done) return; done = true;
+    const v = parseInt(inp.value, 10);
+    if(!isNaN(v) && v >= 1){
+      if(type==='r'){ curR = Math.min(100, v); el.textContent = curR; }
+      else { curS = Math.min(20, v); el.textContent = curS; }
+    } else { el.textContent = cur; }
+  }
+  inp.addEventListener('blur', commit);
+  inp.addEventListener('keydown', e => { if(e.key==='Enter') inp.blur(); });
 }
 
 // ── REPS / SETS ───────────────────────────────────────────
@@ -910,7 +957,7 @@ function renderTimer(){
 
   // SVG 円弧更新（setAttribute で確実に反映）
   const frac = timerTotal > 0 ? timerRem / timerTotal : 0;
-  arc.setAttribute('stroke-dashoffset', String(CIRC * (1 - frac)));
+  arc.setAttribute('stroke-dashoffset', String(CIRC * (frac - 1)));
 
   // 色クラス切替（SVG 要素は setAttribute('class') を使う）
   const cls = timerRem <= 0 ? 'done' : timerRem <= 10 ? 'warn' : '';
