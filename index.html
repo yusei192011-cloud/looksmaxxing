@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta name="theme-color" content="#000000">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -16,7 +16,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;touch-action:manipulation}
 button{user-select:none;-webkit-user-select:none}
-html{-webkit-tap-highlight-color:transparent}
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{
   font-family:'Space Grotesk',sans-serif;
   background:#0d0d0d;color:#e8e8e8;
@@ -1686,6 +1686,82 @@ function renderSleepChart(){
 // ── SERVICE WORKER ────────────────────────────────────────
 if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
 
+// ── DOUBLE-TAP ZOOM PREVENTION ────────────────────────────
+document.addEventListener('touchend', function(e){
+  const t = e.target.closest('button,.ncb,.ab,.wpb,.rpb,.tpb,.qlb,input');
+  if(t){
+    e.preventDefault();
+    if(!t._lpActive) t.click();
+  }
+}, {passive:false});
+
+// ── LONG PRESS ─────────────────────────────────────────────
+function makeLongPress(el, fn){
+  if(!el) return;
+  let timer=null, iv=null;
+  el._lpActive=false; el._lpWas=false;
+
+  function start(){
+    clearAll();
+    timer=setTimeout(()=>{
+      el._lpActive=true;
+      if(navigator.vibrate) navigator.vibrate(20);
+      fn();
+      const t0=Date.now(); let fast=false;
+      iv=setInterval(()=>{
+        fn();
+        if(!fast && Date.now()-t0>=2000){
+          fast=true; clearInterval(iv); iv=setInterval(fn,80);
+        }
+      },150);
+    },400);
+  }
+  function stop(e){
+    if(el._lpActive){ e.stopPropagation(); el._lpWas=true; }
+    clearAll();
+  }
+  function clearAll(){
+    clearTimeout(timer); timer=null;
+    clearInterval(iv); iv=null;
+    el._lpActive=false;
+  }
+  el.addEventListener('click',function(e){
+    if(el._lpWas){ el._lpWas=false; e.preventDefault(); e.stopImmediatePropagation(); }
+  });
+  el.addEventListener('touchstart',start,{passive:true});
+  el.addEventListener('touchend',stop,{passive:false});
+  el.addEventListener('touchcancel',clearAll,{passive:true});
+  el.addEventListener('mousedown',start);
+  el.addEventListener('mouseup',stop);
+  el.addEventListener('mouseleave',clearAll);
+}
+
+function initLongPress(){
+  function byOC(v){ return document.querySelector(`[onclick="${v}"]`); }
+  // 重量 ±0.5
+  makeLongPress(byOC('adjW(-0.5)'), ()=>adjW(-0.5));
+  makeLongPress(byOC('adjW(0.5)'),  ()=>adjW(0.5));
+  // 重量 adj
+  makeLongPress(byOC('adjW(-5)'),   ()=>adjW(-5));
+  makeLongPress(byOC('adjW(-2.5)'), ()=>adjW(-2.5));
+  makeLongPress(byOC('adjW(-1)'),   ()=>adjW(-1));
+  makeLongPress(byOC('adjW(1)'),    ()=>adjW(1));
+  makeLongPress(byOC('adjW(2.5)'),  ()=>adjW(2.5));
+  makeLongPress(byOC('adjW(5)'),    ()=>adjW(5));
+  // 回数
+  makeLongPress(byOC("adjN('r',-1)"), ()=>adjN('r',-1));
+  makeLongPress(byOC("adjN('r',1)"),  ()=>adjN('r',1));
+  // セット数
+  makeLongPress(byOC("adjN('s',-1)"), ()=>adjN('s',-1));
+  makeLongPress(byOC("adjN('s',1)"),  ()=>adjN('s',1));
+  // 就寝時刻
+  makeLongPress(byOC("adjTime('bed',-15)"), ()=>adjTime('bed',-15));
+  makeLongPress(byOC("adjTime('bed',15)"),  ()=>adjTime('bed',15));
+  // 起床時刻
+  makeLongPress(byOC("adjTime('wake',-15)"), ()=>adjTime('wake',-15));
+  makeLongPress(byOC("adjTime('wake',15)"),  ()=>adjTime('wake',15));
+}
+
 // ── INIT ──────────────────────────────────────────────────
 (function init(){
   initPresets();
@@ -1695,6 +1771,7 @@ if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').cat
   renderDuration();
   applyLang();
   updateStats();
+  initLongPress();
 })();
 </script>
 </body>
