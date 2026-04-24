@@ -238,6 +238,99 @@ body{
 .chart-yl{font-size:10px;color:var(--t3);letter-spacing:1px;margin-bottom:4px}
 .chart-wrap{position:relative;height:220px;margin-bottom:4px}
 
+/* SUB-TABS (RECORD pane) */
+.subtabs{display:flex;gap:8px;padding:12px 16px;border-bottom:1px solid var(--b1);background:var(--bg)}
+.stb{
+  flex:1;padding:8px 12px;border-radius:20px;border:1px solid var(--b2);
+  background:none;color:var(--t2);font-family:'Bebas Neue',sans-serif;
+  font-size:14px;letter-spacing:1.5px;cursor:pointer;transition:all .2s;min-height:38px;
+}
+.stb.on{background:rgba(255,255,255,.1);border-color:var(--ac);color:var(--ac2)}
+.stb.sl.on{background:rgba(149,128,255,.15);border-color:var(--sl);color:var(--sl)}
+.stb:not(.on):hover{color:var(--t1)}
+.subpane{display:none}.subpane.on{display:block}
+
+/* TIME BOX (sleep input) */
+.tbox{border:1px solid var(--b2);border-radius:var(--rl);overflow:hidden}
+.tdisp{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;border-bottom:1px solid var(--b1);background:var(--s1)}
+.tval{font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--ac2);letter-spacing:2px;line-height:1;min-width:130px;text-align:center;cursor:pointer}
+.tpreset{display:flex;gap:5px;padding:8px 10px}
+.tpb{
+  flex:1;background:var(--s2);border:1px solid var(--b2);color:var(--t2);
+  font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;
+  padding:6px 4px;border-radius:5px;cursor:pointer;transition:all .15s;min-height:32px;text-align:center;
+}
+.tpb:hover,.tpb.on{background:var(--sl);border-color:var(--sl);color:#fff}
+
+/* DURATION display */
+.dur-box{background:var(--s1);border:1px solid var(--b2);border-radius:var(--r);padding:16px;text-align:center}
+.dur-v{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--sl);letter-spacing:2px;line-height:1}
+.dur-l{font-size:12px;letter-spacing:2px;color:var(--t2);margin-top:6px}
+
+/* QUALITY buttons */
+.ql-row{display:flex;gap:5px}
+.qlb{
+  flex:1;background:var(--s1);border:1px solid var(--b2);border-radius:var(--r);
+  color:var(--t2);font-size:10px;font-weight:600;padding:8px 2px;cursor:pointer;
+  transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:62px;
+}
+.qlb .ql-em{font-size:20px}
+.qlb .ql-num{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--ac2);line-height:1}
+.qlb.on{background:rgba(149,128,255,.15);border-color:var(--sl);color:var(--sl)}
+.qlb.on .ql-num{color:var(--sl)}
+.qlb:hover:not(.on){background:var(--s2)}
+
+/* SLEEP SAVE button */
+.btn-sleep{background:linear-gradient(135deg,#9580ff,#6e54d4);color:#fff;font-size:20px;min-height:62px;border-radius:var(--rl)}
+.btn-sleep:hover{background:linear-gradient(135deg,#a590ff,#7e64e4)}
+
+/* HISTORY type filter */
+.htype-row{display:flex;gap:6px;margin-bottom:10px}
+.htb{
+  flex:1;padding:7px 4px;border-radius:20px;border:1px solid var(--b2);
+  background:none;color:var(--t2);font-family:'Bebas Neue',sans-serif;
+  font-size:13px;letter-spacing:1px;cursor:pointer;transition:all .2s;min-height:34px;
+}
+.htb.on{background:rgba(255,255,255,.08);border-color:var(--ac);color:var(--ac2)}
+.htb.sl.on{background:rgba(149,128,255,.12);border-color:var(--sl);color:var(--sl)}
+.htb:not(.on):hover{color:var(--t1)}
+
+/* PROGRESS section tabs */
+.prog-tabs{display:flex;gap:8px;margin-bottom:14px}
+.ptb{
+  flex:1;padding:9px;border-radius:20px;border:1px solid var(--b2);
+  background:none;color:var(--t2);font-family:'Bebas Neue',sans-serif;
+  font-size:14px;letter-spacing:1px;cursor:pointer;transition:all .2s;min-height:38px;
+}
+.ptb.on{background:rgba(255,255,255,.1);border-color:var(--ac);color:var(--ac2)}
+.ptb.sl.on{background:rgba(149,128,255,.15);border-color:var(--sl);color:var(--sl)}
+.ptb:not(.on):hover{color:var(--t1)}
+
+/* MUSCLE GROUP BUTTONS */
+.grp-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.grpb{
+  padding:5px 11px;border-radius:20px;border:1px solid var(--b2);
+  background:var(--s1);color:var(--t2);font-family:'Space Grotesk',sans-serif;
+  font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;gap:4px;min-height:30px;
+}
+.grpb.on{background:var(--s2);border-color:var(--ac);color:var(--ac2)}
+.grpb:not(.on):hover{color:var(--t1)}
+
+/* GROUP FILTER CHIPS (history) */
+.gchip-row{
+  display:flex;gap:5px;overflow-x:auto;padding-bottom:2px;margin-top:8px;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+.gchip-row::-webkit-scrollbar{display:none}
+.gchip{
+  flex-shrink:0;padding:5px 10px;border-radius:20px;border:1px solid var(--b2);
+  background:none;color:var(--t2);font-family:'Space Grotesk',sans-serif;
+  font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;min-height:28px;white-space:nowrap;
+}
+.gchip.on{background:var(--s2);border-color:var(--ac);color:var(--ac2)}
+.gchip:not(.on):hover{color:var(--t1)}
+
 /* WORKOUT OVERLAY */
 #wo{
   position:fixed;top:0;bottom:0;
@@ -369,97 +462,164 @@ body{
     <div class="stat"><div class="stat-v" id="st-streak">0</div><div class="stat-l" data-i18n="stat_streak"></div></div>
   </div>
 
-  <div class="sec">
-    <div class="sec-ttl" data-i18n="sec_exercise"></div>
-    <div class="ac-wrap">
-      <input type="text" id="ex-inp" class="inp" autocomplete="off"
-             oninput="acInput()" onfocus="acFocus()" onblur="acBlur()">
-      <div id="ac-list" class="ac-list"></div>
-    </div>
+  <!-- Sub-tab switcher -->
+  <div class="subtabs">
+    <button class="stb on" id="stb-workout" onclick="switchSub('workout')" data-i18n="tab_record"></button>
+    <button class="stb sl" id="stb-sleep" onclick="switchSub('sleep')" data-i18n="tab_sleep"></button>
   </div>
 
-  <div class="sec">
-    <div class="sec-ttl" data-i18n="sec_weight"></div>
-    <div id="wbox">
-      <div class="wdisp">
-        <button class="ncb" style="width:42px;height:42px;font-size:22px" onclick="adjW(-0.5)">−</button>
-        <div class="wval" id="wval" onclick="editW()">60</div>
-        <span class="wunit">kg</span>
-        <button class="ncb" style="width:42px;height:42px;font-size:22px" onclick="adjW(0.5)">+</button>
-      </div>
-      <div class="wpresets" id="wpresets">
-        <button class="wpl-toggle" onclick="togglePresets()">
-          <span class="wpl-toggle-lbl">PRESET</span>
-          <span class="wpl-cur" id="wpl-cur">60kg</span>
-          <span class="wpl-arrow" id="wpl-arrow">▾</span>
-        </button>
-        <div class="wpbtns" id="wpbtns"></div>
-      </div>
-      <div class="wadj">
-        <button class="ab m" onclick="adjW(-5)">−5</button>
-        <button class="ab m" onclick="adjW(-2.5)">−2.5</button>
-        <button class="ab m" onclick="adjW(-1)">−1</button>
-        <button class="ab p" onclick="adjW(1)">+1</button>
-        <button class="ab p" onclick="adjW(2.5)">+2.5</button>
-        <button class="ab p" onclick="adjW(5)">+5</button>
+  <!-- WORKOUT sub-pane -->
+  <div id="sub-workout" class="subpane on">
+    <div class="sec">
+      <div class="grp-row" id="grp-btns"></div>
+      <div class="sec-ttl" data-i18n="sec_exercise"></div>
+      <div class="ac-wrap">
+        <input type="text" id="ex-inp" class="inp" autocomplete="off"
+               oninput="acInput()" onfocus="acFocus()" onblur="acBlur()">
+        <div id="ac-list" class="ac-list"></div>
       </div>
     </div>
-  </div>
 
-  <div class="sec">
-    <div class="rs-row">
-      <div class="nc">
-        <div class="nc-l" data-i18n="lbl_reps"></div>
-        <div class="nc-row">
-          <button class="ncb" onclick="adjN('r',-1)">−</button>
-          <div><div class="ncv" id="rval" onclick="editN('r')">10</div><div class="ncu" data-i18n="u_reps"></div></div>
-          <button class="ncb" onclick="adjN('r',1)">+</button>
+    <div class="sec">
+      <div class="sec-ttl" data-i18n="sec_weight"></div>
+      <div id="wbox">
+        <div class="wdisp">
+          <button class="ncb" style="width:42px;height:42px;font-size:22px" onclick="adjW(-0.5)">−</button>
+          <div class="wval" id="wval" onclick="editW()">60</div>
+          <span class="wunit">kg</span>
+          <button class="ncb" style="width:42px;height:42px;font-size:22px" onclick="adjW(0.5)">+</button>
         </div>
-      </div>
-      <div class="nc">
-        <div class="nc-l" data-i18n="lbl_sets"></div>
-        <div class="nc-row">
-          <button class="ncb" onclick="adjN('s',-1)">−</button>
-          <div><div class="ncv" id="sval" onclick="editN('s')">3</div><div class="ncu" data-i18n="u_sets"></div></div>
-          <button class="ncb" onclick="adjN('s',1)">+</button>
+        <div class="wpresets" id="wpresets">
+          <button class="wpl-toggle" onclick="togglePresets()">
+            <span class="wpl-toggle-lbl">PRESET</span>
+            <span class="wpl-cur" id="wpl-cur">60kg</span>
+            <span class="wpl-arrow" id="wpl-arrow">▾</span>
+          </button>
+          <div class="wpbtns" id="wpbtns"></div>
+        </div>
+        <div class="wadj">
+          <button class="ab m" onclick="adjW(-5)">−5</button>
+          <button class="ab m" onclick="adjW(-2.5)">−2.5</button>
+          <button class="ab m" onclick="adjW(-1)">−1</button>
+          <button class="ab p" onclick="adjW(1)">+1</button>
+          <button class="ab p" onclick="adjW(2.5)">+2.5</button>
+          <button class="ab p" onclick="adjW(5)">+5</button>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="sec">
-    <div class="sec-ttl" data-i18n="sec_rest"></div>
-    <div class="rp-row" id="rp-row">
-      <button class="rpb" data-s="30" onclick="setRest(30)">30s</button>
-      <button class="rpb" data-s="60" onclick="setRest(60)">60s</button>
-      <button class="rpb on" data-s="90" onclick="setRest(90)">90s</button>
-      <button class="rpb" data-s="120" onclick="setRest(120)">2m</button>
-      <button class="rpb" data-s="180" onclick="setRest(180)">3m</button>
+    <div class="sec">
+      <div class="rs-row">
+        <div class="nc">
+          <div class="nc-l" data-i18n="lbl_reps"></div>
+          <div class="nc-row">
+            <button class="ncb" onclick="adjN('r',-1)">−</button>
+            <div><div class="ncv" id="rval" onclick="editN('r')">10</div><div class="ncu" data-i18n="u_reps"></div></div>
+            <button class="ncb" onclick="adjN('r',1)">+</button>
+          </div>
+        </div>
+        <div class="nc">
+          <div class="nc-l" data-i18n="lbl_sets"></div>
+          <div class="nc-row">
+            <button class="ncb" onclick="adjN('s',-1)">−</button>
+            <div><div class="ncv" id="sval" onclick="editN('s')">3</div><div class="ncu" data-i18n="u_sets"></div></div>
+            <button class="ncb" onclick="adjN('s',1)">+</button>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="sec" style="border-bottom:none">
-    <button class="btn btn-start" onclick="startWorkout()">
-      <span>▶</span><span data-i18n="btn_start"></span>
-    </button>
-    <button class="btn btn-log" onclick="quickLog()" data-i18n="btn_log"></button>
-  </div>
+    <div class="sec">
+      <div class="sec-ttl" data-i18n="sec_rest"></div>
+      <div class="rp-row" id="rp-row">
+        <button class="rpb" data-s="30" onclick="setRest(30)">30s</button>
+        <button class="rpb" data-s="60" onclick="setRest(60)">60s</button>
+        <button class="rpb on" data-s="90" onclick="setRest(90)">90s</button>
+        <button class="rpb" data-s="120" onclick="setRest(120)">2m</button>
+        <button class="rpb" data-s="180" onclick="setRest(180)">3m</button>
+      </div>
+    </div>
+
+    <div class="sec" style="border-bottom:none">
+      <button class="btn btn-start" onclick="startWorkout()">
+        <span>▶</span><span data-i18n="btn_start"></span>
+      </button>
+      <button class="btn btn-log" onclick="quickLog()" data-i18n="btn_log"></button>
+    </div>
+  </div><!-- /sub-workout -->
+
+  <!-- SLEEP sub-pane -->
+  <div id="sub-sleep" class="subpane">
+    <div class="sec">
+      <div class="sec-ttl" data-i18n="sec_bedtime"></div>
+      <div class="tbox">
+        <div class="tdisp">
+          <button class="ncb" style="width:42px;height:42px;font-size:22px" onclick="adjTime('bed',-15)">−</button>
+          <div class="tval" id="bed-val" onclick="editTime('bed')">23:00</div>
+          <button class="ncb" style="width:42px;height:42px;font-size:22px" onclick="adjTime('bed',15)">+</button>
+        </div>
+        <div class="tpreset" id="bed-presets"></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-ttl" data-i18n="sec_wakeup"></div>
+      <div class="tbox">
+        <div class="tdisp">
+          <button class="ncb" style="width:42px;height:42px;font-size:22px" onclick="adjTime('wake',-15)">−</button>
+          <div class="tval" id="wake-val" onclick="editTime('wake')">07:00</div>
+          <button class="ncb" style="width:42px;height:42px;font-size:22px" onclick="adjTime('wake',15)">+</button>
+        </div>
+        <div class="tpreset" id="wake-presets"></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="dur-box">
+        <div class="dur-v" id="dur-val">8:00</div>
+        <div class="dur-l" data-i18n="sec_duration"></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-ttl" data-i18n="sec_quality"></div>
+      <div class="ql-row">
+        <button class="qlb" onclick="setQuality(1)"><span class="ql-em">😫</span><span class="ql-num">1</span></button>
+        <button class="qlb" onclick="setQuality(2)"><span class="ql-em">😞</span><span class="ql-num">2</span></button>
+        <button class="qlb" onclick="setQuality(3)"><span class="ql-em">😐</span><span class="ql-num">3</span></button>
+        <button class="qlb" onclick="setQuality(4)"><span class="ql-em">😊</span><span class="ql-num">4</span></button>
+        <button class="qlb" onclick="setQuality(5)"><span class="ql-em">😁</span><span class="ql-num">5</span></button>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-ttl" data-i18n="sec_memo"></div>
+      <input type="text" id="sl-memo" class="inp" autocomplete="off">
+    </div>
+
+    <div class="sec" style="border-bottom:none">
+      <button class="btn btn-sleep" onclick="saveSleep()" data-i18n="btn_sleep_save"></button>
+    </div>
+  </div><!-- /sub-sleep -->
 </div>
 
 <!-- HISTORY PANE -->
 <div id="pane-history" class="pane">
   <div class="sec">
-    <div class="f-row">
-      <select class="fsel" id="fp" onchange="renderHistory()">
-        <option value="7" data-i18n="f7d"></option>
-        <option value="30" data-i18n="f30d"></option>
-        <option value="90" data-i18n="f90d"></option>
-        <option value="all" data-i18n="fall"></option>
-      </select>
-      <select class="fsel" id="fex" onchange="renderHistory()">
-        <option value="all" data-i18n="fall_ex"></option>
-      </select>
+    <div class="htype-row">
+      <button class="htb on" id="htb-all" onclick="setHistType('all')" data-i18n="hf_all"></button>
+      <button class="htb" id="htb-workout" onclick="setHistType('workout')" data-i18n="hf_workout"></button>
+      <button class="htb sl" id="htb-sleep" onclick="setHistType('sleep')" data-i18n="hf_sleep"></button>
     </div>
+    <div id="grp-chips-wrap" style="display:none">
+      <div class="gchip-row" id="grp-chips"></div>
+    </div>
+    <select class="fsel" id="fp" onchange="renderHistory()">
+      <option value="7" data-i18n="f7d"></option>
+      <option value="30" data-i18n="f30d"></option>
+      <option value="90" data-i18n="f90d"></option>
+      <option value="all" data-i18n="fall"></option>
+    </select>
   </div>
   <div class="sec" style="border-bottom:none;padding-top:8px" id="hist-list"></div>
 </div>
@@ -467,18 +627,32 @@ body{
 <!-- PROGRESS PANE -->
 <div id="pane-progress" class="pane">
   <div class="sec">
-    <select class="fsel" id="pex" onchange="renderChart()">
-      <option value="" data-i18n="sel_ex"></option>
-    </select>
-    <div class="mbtns">
-      <button class="mb on" id="mb-weight" onclick="setMetric('weight')" data-i18n="m_weight"></button>
-      <button class="mb" id="mb-volume" onclick="setMetric('volume')" data-i18n="m_volume"></button>
-      <button class="mb" id="mb-1rm" onclick="setMetric('1rm')">1RM</button>
+    <div class="prog-tabs">
+      <button class="ptb on" id="ptb-workout" onclick="switchProg('workout')" data-i18n="hf_workout"></button>
+      <button class="ptb sl" id="ptb-sleep" onclick="switchProg('sleep')" data-i18n="hf_sleep"></button>
     </div>
+    <div id="prog-workout">
+      <select class="fsel" id="pex" onchange="renderChart()">
+        <option value="" data-i18n="sel_ex"></option>
+      </select>
+      <div class="mbtns">
+        <button class="mb on" id="mb-weight" onclick="setMetric('weight')" data-i18n="m_weight"></button>
+        <button class="mb" id="mb-volume" onclick="setMetric('volume')" data-i18n="m_volume"></button>
+        <button class="mb" id="mb-1rm" onclick="setMetric('1rm')">1RM</button>
+        <button class="mb" id="mb-group" onclick="setMetric('group')" data-i18n="m_group"></button>
+      </div>
+    </div>
+    <div id="prog-sleep" style="display:none"></div>
   </div>
   <div class="sec" style="border-bottom:none">
-    <div class="chart-yl" id="cyl"></div>
-    <div class="chart-wrap"><canvas id="pchart"></canvas></div>
+    <div id="chart-workout-wrap">
+      <div class="chart-yl" id="cyl"></div>
+      <div class="chart-wrap"><canvas id="pchart"></canvas></div>
+    </div>
+    <div id="chart-sleep-wrap" style="display:none">
+      <div class="chart-yl">HOURS</div>
+      <div class="chart-wrap"><canvas id="schart"></canvas></div>
+    </div>
   </div>
 </div>
 
@@ -572,6 +746,11 @@ const LANGS = {
     dlg_ttl:'ワークアウトをリセット',dlg_body:'どうしますか？',
     dlg_save:'完了したセットを保存',dlg_disc:'破棄する',dlg_cancel:'キャンセル',
     empty:'記録がありません',today:'今日',yesterday:'昨日',dago:'日前',no_data:'データなし',
+    tab_sleep:'SLEEP',
+    sec_bedtime:'就寝時刻',sec_wakeup:'起床時刻',sec_duration:'睡眠時間',sec_quality:'睡眠の質',sec_memo:'メモ（任意）',
+    ph_memo:'メモを入力...',
+    btn_sleep_save:'睡眠を記録',sleepSaved:'記録しました ✓',
+    hf_all:'全て',hf_workout:'WORKOUT',hf_sleep:'SLEEP',m_group:'部位別',
   },
   en:{
     tab_record:'RECORD',tab_history:'HISTORY',tab_progress:'PROGRESS',
@@ -589,6 +768,11 @@ const LANGS = {
     dlg_ttl:'Reset Workout',dlg_body:'What would you like to do?',
     dlg_save:'Save completed sets',dlg_disc:'Discard',dlg_cancel:'Cancel',
     empty:'No records yet',today:'Today',yesterday:'Yesterday',dago:' days ago',no_data:'No data',
+    tab_sleep:'SLEEP',
+    sec_bedtime:'BEDTIME',sec_wakeup:'WAKE UP',sec_duration:'SLEEP DURATION',sec_quality:'SLEEP QUALITY',sec_memo:'MEMO (optional)',
+    ph_memo:'Add a note...',
+    btn_sleep_save:'SAVE SLEEP',sleepSaved:'Saved ✓',
+    hf_all:'ALL',hf_workout:'WORKOUT',hf_sleep:'SLEEP',m_group:'By Group',
   },
   ko:{
     tab_record:'기록',tab_history:'히스토리',tab_progress:'진행',
@@ -606,6 +790,11 @@ const LANGS = {
     dlg_ttl:'운동 초기화',dlg_body:'어떻게 하시겠습니까?',
     dlg_save:'완료된 세트 저장',dlg_disc:'삭제',dlg_cancel:'취소',
     empty:'기록 없음',today:'오늘',yesterday:'어제',dago:'일 전',no_data:'데이터 없음',
+    tab_sleep:'SLEEP',
+    sec_bedtime:'취침 시간',sec_wakeup:'기상 시간',sec_duration:'수면 시간',sec_quality:'수면 질',sec_memo:'메모（선택）',
+    ph_memo:'메모 입력...',
+    btn_sleep_save:'수면 기록',sleepSaved:'저장됨 ✓',
+    hf_all:'전체',hf_workout:'운동',hf_sleep:'수면',m_group:'부위별',
   },
   zh:{
     tab_record:'记录',tab_history:'历史',tab_progress:'进度',
@@ -623,6 +812,11 @@ const LANGS = {
     dlg_ttl:'重置训练',dlg_body:'请选择操作',
     dlg_save:'保存已完成的组',dlg_disc:'放弃',dlg_cancel:'取消',
     empty:'暂无记录',today:'今天',yesterday:'昨天',dago:'天前',no_data:'无数据',
+    tab_sleep:'SLEEP',
+    sec_bedtime:'就寝时间',sec_wakeup:'起床时间',sec_duration:'睡眠时长',sec_quality:'睡眠质量',sec_memo:'备注（选填）',
+    ph_memo:'添加备注...',
+    btn_sleep_save:'记录睡眠',sleepSaved:'已保存 ✓',
+    hf_all:'全部',hf_workout:'训练',hf_sleep:'睡眠',m_group:'部位',
   },
   es:{
     tab_record:'REGISTRO',tab_history:'HISTORIAL',tab_progress:'PROGRESO',
@@ -640,6 +834,11 @@ const LANGS = {
     dlg_ttl:'Reiniciar',dlg_body:'¿Qué deseas hacer?',
     dlg_save:'Guardar series completadas',dlg_disc:'Descartar',dlg_cancel:'Cancelar',
     empty:'Sin registros',today:'Hoy',yesterday:'Ayer',dago:' días atrás',no_data:'Sin datos',
+    tab_sleep:'SLEEP',
+    sec_bedtime:'HORA DE DORMIR',sec_wakeup:'HORA DE DESPERTAR',sec_duration:'DURACIÓN',sec_quality:'CALIDAD',sec_memo:'NOTA (opcional)',
+    ph_memo:'Añadir nota...',
+    btn_sleep_save:'GUARDAR SUEÑO',sleepSaved:'Guardado ✓',
+    hf_all:'TODO',hf_workout:'ENTRENO',hf_sleep:'SUEÑO',m_group:'Por grupo',
   },
 };
 
@@ -649,10 +848,12 @@ function t(k){ return (LANGS[lang]||LANGS.en)[k] || LANGS.en[k] || k; }
 function applyLang(){
   document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n));
   document.getElementById('ex-inp').placeholder = t('ph_ex');
+  const memoEl = document.getElementById('sl-memo');
+  if(memoEl) memoEl.placeholder = t('ph_memo');
   document.getElementById('lang-btn').textContent = lang.toUpperCase() + ' ▾';
   document.querySelectorAll('.lang-opt').forEach(el => el.classList.toggle('on', el.dataset.l === lang));
-  // Refresh option texts
   document.querySelectorAll('option[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n));
+  renderGrpBtns();
   updateStats();
   renderHistory();
 }
@@ -672,10 +873,17 @@ const KEY = 'workout_records_v2';
 function loadRecs(){ try{ return JSON.parse(localStorage.getItem(KEY)||'[]'); } catch{ return []; } }
 function saveRecs(r){ localStorage.setItem(KEY, JSON.stringify(r)); }
 
+const SLEEP_KEY = 'sleep_records_v1';
+function loadSleepRecs(){ try{ return JSON.parse(localStorage.getItem(SLEEP_KEY)||'[]'); } catch{ return []; } }
+function saveSleepRecs(r){ localStorage.setItem(SLEEP_KEY, JSON.stringify(r)); }
+
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 // ── STATE ─────────────────────────────────────────────────
 let curW = 60, curR = 10, curS = 3, curRest = 90, curMetric = 'weight';
+let curGroup = '';
+let curBed = '23:00', curWake = '07:00', curQuality = 0;
+let histType = 'all', histGroup = '', progSection = 'workout', sleepChart = null;
 
 // ── WEIGHT CONTROLS ───────────────────────────────────────
 const W_PRESETS = [40,50,60,70,80,90,100,110,120,140,160];
@@ -750,6 +958,119 @@ function adjN(type, d){
   else          { curS = Math.max(1, Math.min(20,  curS+d)); document.getElementById('sval').textContent = curS; }
 }
 
+// ── SUB-TABS ──────────────────────────────────────────────
+function switchSub(which){
+  ['workout','sleep'].forEach(k => {
+    document.getElementById('sub-'+k).classList.toggle('on', k===which);
+    document.getElementById('stb-'+k).classList.toggle('on', k===which);
+  });
+}
+
+// ── MUSCLE GROUPS ─────────────────────────────────────────
+function renderGrpBtns(){
+  const el = document.getElementById('grp-btns');
+  if(!el) return;
+  el.innerHTML = GROUPS.map(g =>
+    `<button class="grpb${g.id===curGroup?' on':''}" onclick="setGroup('${g.id}')">${g.id===curGroup?g.icon+' ':''}${gName(g.id)}</button>`
+  ).join('');
+}
+function setGroup(id){
+  curGroup = curGroup===id ? '' : id;
+  document.getElementById('ex-inp').value = '';
+  renderGrpBtns();
+  showAC();
+}
+function renderGrpChips(){
+  const el = document.getElementById('grp-chips');
+  if(!el) return;
+  el.innerHTML = GROUPS.map(g =>
+    `<button class="gchip${g.id===histGroup?' on':''}" onclick="setHistGroup('${g.id}')">${g.icon} ${gName(g.id)}</button>`
+  ).join('');
+}
+function setHistGroup(g){
+  histGroup = histGroup===g ? '' : g;
+  renderGrpChips();
+  renderHistory();
+}
+
+// ── SLEEP ─────────────────────────────────────────────────
+function timeToMin(s){ const [h,m]=s.split(':').map(Number); return h*60+m; }
+function minToTime(m){ m=((m%1440)+1440)%1440; return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0'); }
+function calcDur(bed,wake){ let d=timeToMin(wake)-timeToMin(bed); if(d<=0) d+=1440; return d; }
+function fmtDur(mins){ return Math.floor(mins/60)+':'+String(mins%60).padStart(2,'0'); }
+
+function renderDuration(){
+  document.getElementById('dur-val').textContent = fmtDur(calcDur(curBed, curWake));
+}
+
+const BED_PRESETS  = ['21:00','22:00','23:00','00:00','01:00'];
+const WAKE_PRESETS = ['05:00','06:00','07:00','08:00','09:00'];
+
+function updateBedPresets(){
+  document.getElementById('bed-presets').innerHTML = BED_PRESETS.map(v =>
+    `<button class="tpb${v===curBed?' on':''}" onclick="setTime('bed','${v}')">${v}</button>`
+  ).join('');
+}
+function updateWakePresets(){
+  document.getElementById('wake-presets').innerHTML = WAKE_PRESETS.map(v =>
+    `<button class="tpb${v===curWake?' on':''}" onclick="setTime('wake','${v}')">${v}</button>`
+  ).join('');
+}
+
+function setTime(which, val){
+  if(which==='bed'){ curBed=val; document.getElementById('bed-val').textContent=val; updateBedPresets(); }
+  else             { curWake=val; document.getElementById('wake-val').textContent=val; updateWakePresets(); }
+  renderDuration();
+}
+function adjTime(which, delta){
+  const cur = which==='bed' ? curBed : curWake;
+  setTime(which, minToTime(timeToMin(cur)+delta));
+}
+
+function editTime(which){
+  const id   = which==='bed' ? 'bed-val' : 'wake-val';
+  const el   = document.getElementById(id);
+  if(el.querySelector('input')) return;
+  const cur  = which==='bed' ? curBed : curWake;
+  el.innerHTML = `<input id="${id}-inp" type="time" value="${cur}"
+    style="background:none;border:none;border-bottom:2px solid var(--sl);
+    color:var(--ac2);font-family:'Bebas Neue',sans-serif;font-size:56px;letter-spacing:2px;
+    text-align:center;outline:none;-webkit-appearance:none;appearance:none;width:130px;">`;
+  const inp = document.getElementById(`${id}-inp`);
+  inp.focus();
+  let done = false;
+  function commit(){
+    if(done) return; done=true;
+    if(inp.value) setTime(which, inp.value);
+    else el.textContent = cur;
+  }
+  inp.addEventListener('blur', commit);
+  inp.addEventListener('change', ()=>inp.blur());
+}
+
+function setQuality(q){
+  curQuality = q;
+  document.querySelectorAll('.qlb').forEach((b,i) => b.classList.toggle('on', i+1===q));
+}
+
+function saveSleep(){
+  const mins = calcDur(curBed, curWake);
+  const rec = {
+    id:Date.now(), date:new Date().toISOString(), type:'sleep',
+    bedtime:curBed, wakeup:curWake, duration:mins,
+    quality:curQuality, memo:document.getElementById('sl-memo').value.trim()
+  };
+  const recs = loadSleepRecs(); recs.push(rec); saveSleepRecs(recs);
+  const btn = document.querySelector('.btn-sleep');
+  const orig = t('btn_sleep_save');
+  btn.textContent = t('sleepSaved');
+  btn.style.background = 'var(--green)'; btn.style.color = '#000';
+  setTimeout(()=>{ btn.textContent=orig; btn.style.background=''; btn.style.color=''; }, 1500);
+  document.getElementById('sl-memo').value = '';
+  curQuality = 0;
+  document.querySelectorAll('.qlb').forEach(b => b.classList.remove('on'));
+}
+
 // ── REST PRESETS ──────────────────────────────────────────
 function setRest(s){
   curRest = s;
@@ -757,13 +1078,47 @@ function setRest(s){
 }
 
 // ── AUTOCOMPLETE ──────────────────────────────────────────
-const JA_EX = ['ベンチプレス','スクワット','デッドリフト','ショルダープレス','ラットプルダウン',
-  'ダンベルカール','トライセプスプッシュダウン','レッグプレス','チェストフライ',
-  'ベントオーバーロウ','インクラインベンチプレス','レッグカール','カーフレイズ'];
-const EN_EX = ['Bench Press','Squat','Deadlift','Shoulder Press','Lat Pulldown',
-  'Bicep Curl','Tricep Pushdown','Leg Press','Chest Fly',
-  'Bent Over Row','Incline Bench Press','Leg Curl','Calf Raise'];
-function exList(){ return (lang==='ja'||lang==='ko'||lang==='zh') ? JA_EX : EN_EX; }
+const GROUPS = [
+  {id:'chest',    icon:'💪', name:{ja:'胸',    en:'Chest',     ko:'가슴', zh:'胸',  es:'Pecho'}},
+  {id:'back',     icon:'🔙', name:{ja:'背中',  en:'Back',      ko:'등',   zh:'背',  es:'Espalda'}},
+  {id:'shoulder', icon:'🏔', name:{ja:'肩',    en:'Shoulders', ko:'어깨', zh:'肩',  es:'Hombros'}},
+  {id:'arms',     icon:'💪', name:{ja:'腕',    en:'Arms',      ko:'팔',   zh:'臂',  es:'Brazos'}},
+  {id:'legs',     icon:'🦵', name:{ja:'脚',    en:'Legs',      ko:'다리', zh:'腿',  es:'Piernas'}},
+  {id:'abs',      icon:'🎯', name:{ja:'腹',    en:'Abs',       ko:'복근', zh:'腹',  es:'Abs'}},
+  {id:'other',    icon:'⚡', name:{ja:'その他',en:'Other',     ko:'기타', zh:'其他',es:'Otro'}},
+];
+const GROUP_EX = {
+  chest:   {ja:['ベンチプレス','インクラインベンチプレス','ダンベルフライ','チェストプレス','ディップス'],    en:['Bench Press','Incline Bench Press','Dumbbell Fly','Chest Press','Dips']},
+  back:    {ja:['デッドリフト','ラットプルダウン','ベントオーバーロウ','チンニング','シーテッドロウ'],      en:['Deadlift','Lat Pulldown','Bent Over Row','Pull-up','Seated Row']},
+  shoulder:{ja:['オーバーヘッドプレス','サイドレイズ','フロントレイズ','フェイスプル','アーノルドプレス'], en:['Overhead Press','Side Raise','Front Raise','Face Pull','Arnold Press']},
+  arms:    {ja:['バイセップカール','トライセップエクステンション','ハンマーカール','プリーチャーカール','スカルクラッシャー'],en:['Bicep Curl','Tricep Extension','Hammer Curl','Preacher Curl','Skull Crusher']},
+  legs:    {ja:['スクワット','レッグプレス','レッグカール','レッグエクステンション','ブルガリアンスクワット','カーフレイズ'],en:['Squat','Leg Press','Leg Curl','Leg Extension','Bulgarian Split Squat','Calf Raise']},
+  abs:     {ja:['クランチ','プランク','レッグレイズ','アブローラー','サイドベンド'],  en:['Crunch','Plank','Leg Raise','Ab Roller','Side Bend']},
+  other:   {ja:[], en:[]},
+};
+
+function gName(id){
+  const g = GROUPS.find(g=>g.id===id);
+  return g ? (g.name[lang]||g.name.en) : id;
+}
+
+function exList(){
+  const isJa = lang==='ja'||lang==='ko'||lang==='zh';
+  const key = isJa ? 'ja' : 'en';
+  let base;
+  if(curGroup && curGroup!=='other'){
+    base = GROUP_EX[curGroup]?.[key] || [];
+  } else if(!curGroup){
+    base = Object.values(GROUP_EX).flatMap(g => g[key]||[]);
+  } else {
+    base = [];
+  }
+  const past = [...new Set(loadRecs()
+    .filter(r => !curGroup || (r.group||'other')===curGroup)
+    .map(r => r.exercise)
+  )];
+  return [...new Set([...base, ...past])];
+}
 
 let acT = null;
 function acInput(){ clearTimeout(acT); acT = setTimeout(showAC, 60); }
@@ -804,7 +1159,8 @@ function quickLog(){
   recs.push({
     id:Date.now(), date:new Date().toISOString(),
     exercise:ex, weight:curW, reps:curR, sets:curS,
-    volume:curW*curR*curS, est1rm:Math.round(curW*(1+curR/30))
+    volume:curW*curR*curS, est1rm:Math.round(curW*(1+curR/30)),
+    group:curGroup||'other'
   });
   saveRecs(recs); updateStats(); renderHistory();
   const b = document.querySelector('.btn-log');
@@ -826,7 +1182,7 @@ function startWorkout(){
     return;
   }
   WS = { exercise:ex, weight:curW, reps:curR, sets:curS, restSecs:curRest,
-          curSet:1, phase:'active', completedSets:[], paused:false };
+          curSet:1, phase:'active', completedSets:[], paused:false, group:curGroup||'other' };
   openWo();
   window.addEventListener('beforeunload', onUnload);
 }
@@ -1033,7 +1389,8 @@ function saveWoRecord(partial = false){
     id: Date.now(), date: new Date().toISOString(),
     exercise: WS.exercise, weight: WS.weight, reps: WS.reps, sets: setsN,
     volume: WS.weight * WS.reps * setsN,
-    est1rm: Math.round(WS.weight * (1 + WS.reps / 30))
+    est1rm: Math.round(WS.weight * (1 + WS.reps / 30)),
+    group: WS.group || 'other'
   });
   saveRecs(recs);
 }
@@ -1045,45 +1402,92 @@ function switchTab(id){
   document.getElementById(`tb-${id}`).classList.add('on');
   document.getElementById(`pane-${id}`).classList.add('on');
   if(id === 'history') renderHistory();
-  if(id === 'progress'){ initPexList(); renderChart(); }
+  if(id === 'progress'){
+    if(progSection === 'workout'){ initPexList(); renderChart(); }
+    else renderSleepChart();
+  }
+}
+
+// ── PROGRESS TABS ─────────────────────────────────────────
+function switchProg(which){
+  progSection = which;
+  ['workout','sleep'].forEach(k => {
+    document.getElementById('ptb-'+k).classList.toggle('on', k===which);
+    document.getElementById('prog-'+k).style.display    = k===which ? '' : 'none';
+    document.getElementById('chart-'+k+'-wrap').style.display = k===which ? '' : 'none';
+  });
+  if(which==='workout'){ initPexList(); renderChart(); }
+  else renderSleepChart();
 }
 
 // ── HISTORY ───────────────────────────────────────────────
-function renderHistory(){
-  const recs = loadRecs().slice().reverse();
-  const period = document.getElementById('fp').value;
-  const exf = document.getElementById('fex').value;
-  const now = Date.now();
-  const cut = period === 'all' ? null : now - Number(period) * 864e5;
-  const filtered = recs.filter(r => {
-    if(cut && new Date(r.date).getTime() < cut) return false;
-    if(exf !== 'all' && r.exercise !== exf) return false;
-    return true;
+function setHistType(type){
+  histType = type;
+  histGroup = '';
+  ['all','workout','sleep'].forEach(k => {
+    const el = document.getElementById('htb-'+k);
+    if(el) el.classList.toggle('on', k===type);
   });
+  const wrap = document.getElementById('grp-chips-wrap');
+  if(wrap) wrap.style.display = type==='workout' ? '' : 'none';
+  if(type==='workout') renderGrpChips();
+  renderHistory();
+}
 
-  const allEx = [...new Set(recs.map(r => r.exercise))];
-  const fexEl = document.getElementById('fex');
-  const prev = fexEl.value;
-  fexEl.innerHTML = `<option value="all">${t('fall_ex')}</option>` +
-    allEx.map(e => `<option value="${esc(e)}"${e===prev?' selected':''}>${esc(e)}</option>`).join('');
+function renderHistory(){
+  const wRecs = loadRecs().map(r => ({...r, _type:'workout'}));
+  const sRecs = loadSleepRecs().map(r => ({...r, _type:'sleep'}));
+  let all;
+  if(histType==='workout') all = wRecs;
+  else if(histType==='sleep') all = sRecs;
+  else all = [...wRecs, ...sRecs];
+  // Apply group filter (workout only)
+  if(histGroup && histType==='workout') all = all.filter(r => (r.group||'other')===histGroup);
+  all.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+  const period = document.getElementById('fp').value;
+  const cut = period==='all' ? null : Date.now() - Number(period)*864e5;
+  const filtered = all.filter(r => !cut || new Date(r.date).getTime() >= cut);
 
   const list = document.getElementById('hist-list');
   if(!filtered.length){
-    list.innerHTML = `<div class="empty"><div class="empty-ic">🏋️</div>${esc(t('empty'))}</div>`;
+    const ic = histType==='sleep' ? '🌙' : '🏋️';
+    list.innerHTML = `<div class="empty"><div class="empty-ic">${ic}</div>${esc(t('empty'))}</div>`;
     return;
   }
-  list.innerHTML = filtered.map(r => `
+  list.innerHTML = filtered.map(r => {
+    if(r._type==='sleep'){
+      const qem = r.quality ? ['😫','😞','😐','😊','😁'][r.quality-1] : '';
+      return `
+    <div class="rc" style="border-color:rgba(149,128,255,.25)">
+      <div class="ri" style="background:rgba(149,128,255,.15)">🌙</div>
+      <div class="rinfo">
+        <div class="rex" style="color:var(--sl)">${esc(r.bedtime)} → ${esc(r.wakeup)}${qem?' '+qem:''}</div>
+        <div class="rdet">${r.memo ? esc(r.memo) : ''}</div>
+      </div>
+      <div>
+        <div class="rmt" style="color:var(--sl)">${esc(fmtDur(r.duration))}</div>
+        <div class="rdate">${esc(fmtDate(r.date))}</div>
+      </div>
+    </div>`;
+    }
+    const grp = r.group||'other';
+    const grpG = GROUPS.find(g=>g.id===grp);
+    const grpLabel = grpG && grp!=='other' ? `<div style="font-size:11px;color:var(--t3);margin-top:1px">${grpG.icon} ${esc(gName(grp))}</div>` : '';
+    return `
     <div class="rc">
       <div class="ri">🏋️</div>
       <div class="rinfo">
         <div class="rex">${esc(r.exercise)}</div>
+        ${grpLabel}
         <div class="rdet">${esc(String(r.weight))}kg × ${esc(String(r.reps))}reps × ${esc(String(r.sets))}sets</div>
       </div>
       <div>
         <div class="rmt">${esc(String(r.weight))}kg</div>
         <div class="rdate">${esc(fmtDate(r.date))}</div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function fmtDate(iso){
@@ -1099,19 +1503,64 @@ function fmtDate(iso){
 let chart = null;
 function initPexList(){
   const recs = loadRecs();
-  const exs = [...new Set(recs.map(r => r.exercise))];
   const sel = document.getElementById('pex');
   const prev = sel.value;
-  sel.innerHTML = `<option value="">${t('sel_ex')}</option>` +
-    exs.map(e => `<option value="${esc(e)}"${e===prev?' selected':''}>${esc(e)}</option>`).join('');
+  // Group exercises by muscle group
+  const exByGroup = {};
+  GROUPS.forEach(g => exByGroup[g.id] = new Set());
+  recs.forEach(r => {
+    const g = r.group||'other';
+    if(exByGroup[g]) exByGroup[g].add(r.exercise);
+  });
+  let html = `<option value="">${t('sel_ex')}</option>`;
+  GROUPS.forEach(g => {
+    const exs = [...exByGroup[g.id]];
+    if(!exs.length) return;
+    html += `<optgroup label="${esc(gName(g.id))}">`;
+    html += exs.map(e=>`<option value="${esc(e)}"${e===prev?' selected':''}>${esc(e)}</option>`).join('');
+    html += '</optgroup>';
+  });
+  sel.innerHTML = html;
 }
 function setMetric(m){
   curMetric = m;
-  ['weight','volume','1rm'].forEach(k =>
-    document.getElementById(`mb-${k}`).classList.toggle('on', k===m));
+  ['weight','volume','1rm','group'].forEach(k => {
+    const el = document.getElementById(`mb-${k}`);
+    if(el) el.classList.toggle('on', k===m);
+  });
+  const pexEl = document.getElementById('pex');
+  if(pexEl) pexEl.style.display = m==='group' ? 'none' : '';
   renderChart();
 }
 function renderChart(){
+  // GROUP VOLUME chart (bar)
+  if(curMetric==='group'){
+    document.getElementById('cyl').textContent = 'Volume (kg·reps)';
+    const recs = loadRecs();
+    const vols = {};
+    GROUPS.forEach(g => vols[g.id]=0);
+    recs.forEach(r => { const g=r.group||'other'; vols[g]=(vols[g]||0)+(r.volume||r.weight*r.reps*r.sets); });
+    const ctx = document.getElementById('pchart').getContext('2d');
+    if(chart) chart.destroy();
+    chart = new Chart(ctx, {
+      type:'bar',
+      data:{ labels:GROUPS.map(g=>gName(g.id)), datasets:[{
+        data:GROUPS.map(g=>vols[g.id]),
+        backgroundColor:'rgba(200,208,216,.12)', borderColor:'#c8d0d8',
+        borderWidth:1, borderRadius:4,
+      }]},
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{display:false} },
+        scales:{
+          x:{ ticks:{color:'#555',font:{size:10}}, grid:{color:'rgba(255,255,255,.04)'}, border:{color:'#242424'} },
+          y:{ ticks:{color:'#555',font:{size:11}}, grid:{color:'rgba(255,255,255,.04)'}, border:{color:'#242424'} },
+        }
+      }
+    });
+    return;
+  }
+  // Exercise-based line chart
   initPexList();
   const ex = document.getElementById('pex').value;
   if(!ex){ if(chart){ chart.destroy(); chart=null; } return; }
@@ -1144,12 +1593,59 @@ function renderChart(){
   });
 }
 
+function renderSleepChart(){
+  const recs = loadSleepRecs()
+    .sort((a,b) => new Date(a.date) - new Date(b.date))
+    .slice(-30);
+  if(sleepChart){ sleepChart.destroy(); sleepChart=null; }
+  const wrap = document.getElementById('chart-sleep-wrap');
+  if(!recs.length){
+    wrap.innerHTML = `<div class="empty"><div class="empty-ic">🌙</div>${esc(t('sleepChartEmpty')||'No sleep data')}</div>`;
+    return;
+  }
+  // Restore canvas if it was replaced
+  if(!document.getElementById('schart')){
+    wrap.innerHTML = '<div class="chart-yl">HOURS</div><div class="chart-wrap"><canvas id="schart"></canvas></div>';
+  }
+  const labels = recs.map(r =>{ const d=new Date(r.date); return `${d.getMonth()+1}/${d.getDate()}`; });
+  const data   = recs.map(r => +(r.duration/60).toFixed(2));
+  const ctx    = document.getElementById('schart').getContext('2d');
+  sleepChart = new Chart(ctx, {
+    type:'line',
+    data:{ labels, datasets:[{
+      data, borderColor:'#9580ff', backgroundColor:'rgba(149,128,255,.07)',
+      pointBackgroundColor:'#9580ff', pointRadius:4, pointHoverRadius:6,
+      borderWidth:2, tension:.3, fill:true,
+    }]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false} },
+      scales:{
+        x:{ ticks:{color:'#555',font:{size:11}}, grid:{color:'rgba(255,255,255,.04)'}, border:{color:'#242424'} },
+        y:{
+          min:0, max:12, ticks:{color:'#555',font:{size:11}},
+          grid:{ color: ctx2 => {
+            const v = ctx2.tick?.value;
+            if(v===7||v===8) return 'rgba(61,220,132,.35)';
+            return 'rgba(255,255,255,.04)';
+          }},
+          border:{color:'#242424'}
+        },
+      }
+    }
+  });
+}
+
 // ── SERVICE WORKER ────────────────────────────────────────
 if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
 
 // ── INIT ──────────────────────────────────────────────────
 (function init(){
   initPresets();
+  renderGrpBtns();
+  updateBedPresets();
+  updateWakePresets();
+  renderDuration();
   applyLang();
   updateStats();
 })();
