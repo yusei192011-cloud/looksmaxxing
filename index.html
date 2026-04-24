@@ -1014,7 +1014,7 @@ function setGroup(id){
   curGroup = curGroup===id ? '' : id;
   document.getElementById('ex-inp').value = '';
   renderGrpBtns();
-  showAC();
+  setTimeout(showAC, 0);
   const onBtn = document.querySelector('#grp-btns .grpb.on');
   if(onBtn) onBtn.scrollIntoView({inline:'nearest',block:'nearest',behavior:'smooth'});
 }
@@ -1130,7 +1130,7 @@ const GROUPS = [
 const GROUP_EX = {
   chest:   {ja:['ベンチプレス','インクラインベンチプレス','ダンベルフライ','チェストプレス','ディップス'],    en:['Bench Press','Incline Bench Press','Dumbbell Fly','Chest Press','Dips']},
   back:    {ja:['デッドリフト','ラットプルダウン','ベントオーバーロウ','チンニング','シーテッドロウ'],      en:['Deadlift','Lat Pulldown','Bent Over Row','Pull-up','Seated Row']},
-  shoulder:{ja:['オーバーヘッドプレス','サイドレイズ','フロントレイズ','フェイスプル','アーノルドプレス'], en:['Overhead Press','Side Raise','Front Raise','Face Pull','Arnold Press']},
+  shoulder:{ja:['ショルダープレス','オーバーヘッドプレス','サイドレイズ','フロントレイズ','フェイスプル','アーノルドプレス'], en:['Shoulder Press','Overhead Press','Side Raise','Front Raise','Face Pull','Arnold Press']},
   arms:    {ja:['バイセップカール','トライセップエクステンション','ハンマーカール','プリーチャーカール','スカルクラッシャー'],en:['Bicep Curl','Tricep Extension','Hammer Curl','Preacher Curl','Skull Crusher']},
   legs:    {ja:['スクワット','レッグプレス','レッグカール','レッグエクステンション','ブルガリアンスクワット','カーフレイズ'],en:['Squat','Leg Press','Leg Curl','Leg Extension','Bulgarian Split Squat','Calf Raise']},
   abs:     {ja:['クランチ','プランク','レッグレイズ','アブローラー','サイドベンド'],  en:['Crunch','Plank','Leg Raise','Ab Roller','Side Bend']},
@@ -1175,7 +1175,12 @@ function showAC(){
   ).join('');
   list.classList.add('open');
 }
-function pickEx(n){ document.getElementById('ex-inp').value = n; document.getElementById('ac-list').classList.remove('open'); }
+function pickEx(n){
+  const inp = document.getElementById('ex-inp');
+  inp.value = n;
+  document.getElementById('ac-list').classList.remove('open');
+  inp.blur();
+}
 
 // ── STATS ─────────────────────────────────────────────────
 function updateStats(){
@@ -1697,6 +1702,13 @@ if('serviceWorker' in navigator){
     .then(reg => reg.update())
     .catch(()=>{});
 }
+
+// ── AUTOCOMPLETE CLOSE ────────────────────────────────────
+document.addEventListener('click', function(e){
+  const wrap = document.querySelector('.ac-wrap');
+  const list = document.getElementById('ac-list');
+  if(list && wrap && !wrap.contains(e.target)) list.classList.remove('open');
+});
 
 // ── DOUBLE-TAP ZOOM PREVENTION ────────────────────────────
 document.addEventListener('touchend', function(e){
