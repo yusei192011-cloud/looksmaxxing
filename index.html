@@ -1684,7 +1684,11 @@ function renderSleepChart(){
 }
 
 // ── SERVICE WORKER ────────────────────────────────────────
-if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js')
+    .then(reg => reg.update())
+    .catch(()=>{});
+}
 
 // ── DOUBLE-TAP ZOOM PREVENTION ────────────────────────────
 document.addEventListener('touchend', function(e){
