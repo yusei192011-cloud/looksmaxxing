@@ -920,7 +920,7 @@ let curBed = '23:00', curWake = '07:00', curQuality = 0;
 let histType = 'all', histGroup = '', progSection = 'workout', sleepChart = null;
 
 // ── WEIGHT CONTROLS ───────────────────────────────────────
-const W_PRESETS = [40,50,60,70,80,90,100,110,120,140,160];
+const W_PRESETS = [5,10,15,20,25,30,35,40,50,60,70,80,90,100,110,120,140,160];
 function initPresets(){
   document.getElementById('wpbtns').innerHTML = W_PRESETS.map(w =>
     `<button class="wpb${w===curW?' on':''}" onclick="setW(${w})">${w}</button>`
@@ -1186,10 +1186,10 @@ function pickEx(n){
 function updateStats(){
   const recs = loadRecs();
   const now = Date.now();
-  const wk = recs.filter(r => now - new Date(r.date).getTime() < 7*864e5).length;
-  document.getElementById('st-total').textContent = recs.length;
-  document.getElementById('st-week').textContent = wk;
   const days = new Set(recs.map(r => r.date.slice(0,10)));
+  const wkDays = new Set(recs.filter(r => now - new Date(r.date).getTime() < 7*864e5).map(r => r.date.slice(0,10)));
+  document.getElementById('st-total').textContent = days.size;
+  document.getElementById('st-week').textContent = wkDays.size;
   let streak = 0;
   const d = new Date();
   while(days.has(d.toISOString().slice(0,10))){ streak++; d.setDate(d.getDate()-1); }
@@ -1711,7 +1711,15 @@ document.addEventListener('click', function(e){
 });
 
 // ── DOUBLE-TAP ZOOM PREVENTION ────────────────────────────
+let _tsX = 0, _tsY = 0;
+document.addEventListener('touchstart', function(e){
+  _tsX = e.touches[0].clientX;
+  _tsY = e.touches[0].clientY;
+}, {passive:true});
 document.addEventListener('touchend', function(e){
+  const dx = e.changedTouches[0].clientX - _tsX;
+  const dy = e.changedTouches[0].clientY - _tsY;
+  if(Math.hypot(dx, dy) >= 10) return;
   const t = e.target.closest('button,.ncb,.ab,.wpb,.rpb,.tpb,.qlb');
   if(t){
     e.preventDefault();
@@ -1725,8 +1733,10 @@ function makeLongPress(el, fn){
   let timer=null, iv=null;
   el._lpActive=false; el._lpWas=false;
 
-  function start(){
+  function start(e){
     clearAll();
+    const tc = e.touches ? e.touches[0] : e;
+    el._lpSX = tc.clientX; el._lpSY = tc.clientY;
     timer=setTimeout(()=>{
       el._lpActive=true;
       if(navigator.vibrate) navigator.vibrate(20);
@@ -1739,6 +1749,12 @@ function makeLongPress(el, fn){
         }
       },150);
     },400);
+  }
+  function move(e){
+    const tc = e.touches[0];
+    const dx = tc.clientX - (el._lpSX||0);
+    const dy = tc.clientY - (el._lpSY||0);
+    if(Math.hypot(dx, dy) >= 10) clearAll();
   }
   function stop(e){
     if(el._lpActive){ e.stopPropagation(); el._lpWas=true; }
@@ -1753,6 +1769,7 @@ function makeLongPress(el, fn){
     if(el._lpWas){ el._lpWas=false; e.preventDefault(); e.stopImmediatePropagation(); }
   });
   el.addEventListener('touchstart',start,{passive:true});
+  el.addEventListener('touchmove',move,{passive:true});
   el.addEventListener('touchend',stop,{passive:false});
   el.addEventListener('touchcancel',clearAll,{passive:true});
   el.addEventListener('mousedown',start);
