@@ -177,11 +177,11 @@ body::after{
   display:flex;align-items:center;justify-content:center;
 }
 .ab.m{color:#8b5cf6;border-color:rgba(139,92,246,0.5)}.ab.m:hover{background:rgba(139,92,246,0.18)}
-.ab.p{color:#c4b5fd;border-color:rgba(196,181,253,0.6)}.ab.p:hover{background:rgba(139,92,246,0.28)}
+.ab.p{color:#4f6ef5;border-color:rgba(79,110,245,0.6)}.ab.p:hover{background:rgba(79,110,245,0.18)}
 .wdisp .ncb:first-child,.nc-row .ncb:first-child,.tdisp .ncb:first-child{color:#8b5cf6;border-color:rgba(139,92,246,0.5)}
 .wdisp .ncb:first-child:hover,.nc-row .ncb:first-child:hover,.tdisp .ncb:first-child:hover{background:rgba(139,92,246,0.18)}
-.wdisp .ncb:last-child,.nc-row .ncb:last-child,.tdisp .ncb:last-child{color:#c4b5fd;border-color:rgba(196,181,253,0.6)}
-.wdisp .ncb:last-child:hover,.nc-row .ncb:last-child:hover,.tdisp .ncb:last-child:hover{background:rgba(139,92,246,0.28)}
+.wdisp .ncb:last-child,.nc-row .ncb:last-child,.tdisp .ncb:last-child{color:#4f6ef5;border-color:rgba(79,110,245,0.6)}
+.wdisp .ncb:last-child:hover,.nc-row .ncb:last-child:hover,.tdisp .ncb:last-child:hover{background:rgba(79,110,245,0.18)}
 .ab:active{transform:scale(.94)}
 
 /* REPS/SETS */
@@ -190,8 +190,8 @@ body::after{
 .nc-l{font-size:14px;font-weight:600;letter-spacing:2px;color:#999;text-align:center;padding:10px 0 0}
 .nc-row{display:flex;align-items:center;justify-content:space-between;padding:4px 8px 10px;gap:4px}
 .ncb{
-  width:56px;height:56px;background:var(--s2);border:1px solid var(--b2);
-  border-radius:10px;color:var(--t1);font-size:32px;font-weight:600;
+  width:46px;height:46px;background:var(--s2);border:1px solid var(--b2);
+  border-radius:10px;color:var(--t1);font-size:24px;font-weight:600;
   cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s;
 }
 .ncb:hover{background:var(--b2)}.ncb:active{transform:scale(.9)}
@@ -539,10 +539,10 @@ body::after{
       <div class="sec-ttl" data-i18n="sec_weight"></div>
       <div id="wbox">
         <div class="wdisp">
-          <button class="ncb" style="width:56px;height:56px;font-size:32px;font-weight:600" onclick="adjW(-0.5)">−</button>
+          <button class="ncb" style="width:46px;height:46px;font-size:24px;font-weight:600" onclick="adjW(-0.5)">−</button>
           <div class="wval" id="wval" onclick="editW()">60</div>
           <span class="wunit">kg</span>
-          <button class="ncb" style="width:56px;height:56px;font-size:32px;font-weight:600" onclick="adjW(0.5)">+</button>
+          <button class="ncb" style="width:46px;height:46px;font-size:24px;font-weight:600" onclick="adjW(0.5)">+</button>
         </div>
         <div class="wpresets" id="wpresets">
           <button class="wpl-toggle" onclick="togglePresets()">
@@ -597,7 +597,7 @@ body::after{
 
     <div class="sec" style="border-bottom:none">
       <button class="btn btn-start" onclick="startWorkout()">
-        <span>▶</span><span data-i18n="btn_start"></span>
+        <span data-i18n="btn_start"></span>
       </button>
       <button class="btn btn-log" onclick="quickLog()" data-i18n="btn_log"></button>
     </div>
@@ -609,9 +609,9 @@ body::after{
       <div class="sec-ttl" data-i18n="sec_bedtime"></div>
       <div class="tbox">
         <div class="tdisp">
-          <button class="ncb" style="width:56px;height:56px;font-size:32px;font-weight:600" onclick="adjTime('bed',-15)">−</button>
+          <button class="ncb" style="width:46px;height:46px;font-size:24px;font-weight:600" onclick="adjTime('bed',-15)">−</button>
           <div class="tval" id="bed-val" onclick="editTime('bed')">23:00</div>
-          <button class="ncb" style="width:56px;height:56px;font-size:32px;font-weight:600" onclick="adjTime('bed',15)">+</button>
+          <button class="ncb" style="width:46px;height:46px;font-size:24px;font-weight:600" onclick="adjTime('bed',15)">+</button>
         </div>
         <div class="tpreset" id="bed-presets"></div>
       </div>
@@ -621,9 +621,9 @@ body::after{
       <div class="sec-ttl" data-i18n="sec_wakeup"></div>
       <div class="tbox">
         <div class="tdisp">
-          <button class="ncb" style="width:56px;height:56px;font-size:32px;font-weight:600" onclick="adjTime('wake',-15)">−</button>
+          <button class="ncb" style="width:46px;height:46px;font-size:24px;font-weight:600" onclick="adjTime('wake',-15)">−</button>
           <div class="tval" id="wake-val" onclick="editTime('wake')">07:00</div>
-          <button class="ncb" style="width:56px;height:56px;font-size:32px;font-weight:600" onclick="adjTime('wake',15)">+</button>
+          <button class="ncb" style="width:46px;height:46px;font-size:24px;font-weight:600" onclick="adjTime('wake',15)">+</button>
         </div>
         <div class="tpreset" id="wake-presets"></div>
       </div>
@@ -790,7 +790,7 @@ const LANGS = {
     sec_group:'部位',sec_exercise:'種目',sec_weight:'重量',sec_rest:'休憩時間',
     ph_ex:'例: ベンチプレス',
     lbl_reps:'回数',lbl_sets:'セット数',u_reps:'回',u_sets:'セット',
-    btn_start:'ワークアウト開始',btn_log:'ログだけ保存',wpl_preset:'プリセット & 調整',
+    btn_start:'LET\'S GO',btn_log:'ログだけ保存',wpl_preset:'プリセット & 調整',
     f7d:'7日間',f30d:'30日間',f90d:'90日間',fall:'全期間',
     fall_ex:'全種目',sel_ex:'種目を選択',
     m_weight:'最大重量',m_volume:'ボリューム',
@@ -811,7 +811,7 @@ const LANGS = {
     sec_group:'MUSCLE GROUP',sec_exercise:'EXERCISE',sec_weight:'WEIGHT',sec_rest:'REST TIME',
     ph_ex:'e.g. Bench Press',
     lbl_reps:'REPS',lbl_sets:'SETS',u_reps:'reps',u_sets:'sets',
-    btn_start:'START WORKOUT',btn_log:'Quick Log',wpl_preset:'PRESET & ADJUST',
+    btn_start:'LET\'S GO',btn_log:'Quick Log',wpl_preset:'PRESET & ADJUST',
     f7d:'7 days',f30d:'30 days',f90d:'90 days',fall:'All time',
     fall_ex:'All exercises',sel_ex:'Select exercise',
     m_weight:'Max Weight',m_volume:'Volume',
@@ -833,7 +833,7 @@ const LANGS = {
     sec_exercise:'운동',sec_weight:'중량',sec_rest:'휴식 시간',
     ph_ex:'예: 벤치프레스',
     lbl_reps:'횟수',lbl_sets:'세트',u_reps:'회',u_sets:'세트',
-    btn_start:'운동 시작',btn_log:'빠른 저장',
+    btn_start:'LET\'S GO',btn_log:'빠른 저장',
     f7d:'7일',f30d:'30일',f90d:'90일',fall:'전체',
     fall_ex:'전체 운동',sel_ex:'운동 선택',
     m_weight:'최대 중량',m_volume:'볼륨',
@@ -855,7 +855,7 @@ const LANGS = {
     sec_exercise:'动作',sec_weight:'重量',sec_rest:'休息时间',
     ph_ex:'例如: 卧推',
     lbl_reps:'次数',lbl_sets:'组数',u_reps:'次',u_sets:'组',
-    btn_start:'开始训练',btn_log:'快速记录',
+    btn_start:'LET\'S GO',btn_log:'快速记录',
     f7d:'7天',f30d:'30天',f90d:'90天',fall:'全部',
     fall_ex:'所有动作',sel_ex:'选择动作',
     m_weight:'最大重量',m_volume:'训练量',
@@ -877,7 +877,7 @@ const LANGS = {
     sec_exercise:'EJERCICIO',sec_weight:'PESO',sec_rest:'DESCANSO',
     ph_ex:'Ej: Press de banca',
     lbl_reps:'REPS',lbl_sets:'SERIES',u_reps:'reps',u_sets:'series',
-    btn_start:'INICIAR',btn_log:'Guardar rápido',
+    btn_start:'LET\'S GO',btn_log:'Guardar rápido',
     f7d:'7 días',f30d:'30 días',f90d:'90 días',fall:'Todo',
     fall_ex:'Todos',sel_ex:'Seleccionar ejercicio',
     m_weight:'Peso máx.',m_volume:'Volumen',
