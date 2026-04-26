@@ -107,12 +107,8 @@ body::after{
 .sec{padding:24px;border-bottom:1px solid transparent;border-image:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent) 1}
 .sec-ttl{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px;color:#999;margin-bottom:14px}
 
-/* STATS BAR */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--b1)}
-.stat{background:var(--bg);padding:12px 8px;text-align:center;border-right:1px solid var(--b1)}
-.stat:last-child{border-right:none}
-.stat-v{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--ac2);letter-spacing:1px;line-height:1;text-shadow:0 1px 8px rgba(255,255,255,0.08)}
-.stat-l{font-size:12px;letter-spacing:1.5px;color:#999;margin-top:2px}
+/* STREAK BADGE */
+#streak-bar{display:flex;justify-content:flex-end;padding:8px 16px 0;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;}
 
 /* INPUT */
 .inp{
@@ -345,10 +341,10 @@ body::after{
 }
 .grp-row::-webkit-scrollbar{display:none}
 .grpb{
-  padding:8px 16px;border-radius:6px;border:1.5px solid var(--b2);
+  padding:4px 14px;border-radius:6px;border:1.5px solid var(--b2);
   background:rgba(255,255,255,0.03);color:var(--t2);font-family:'Space Grotesk',sans-serif;
-  font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;
-  display:flex;align-items:center;min-height:38px;
+  font-size:15px;font-weight:600;cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;min-height:30px;
   letter-spacing:.5px;white-space:nowrap;flex-shrink:0;
 }
 .grpb.on{background:var(--s2);border-color:var(--ac);color:var(--ac2);border-width:2px;
@@ -508,11 +504,7 @@ body::after{
 
 <!-- RECORD PANE -->
 <div id="pane-record" class="pane on">
-  <div class="stats">
-    <div class="stat"><div class="stat-v" id="st-total">0</div><div class="stat-l" data-i18n="stat_total"></div></div>
-    <div class="stat"><div class="stat-v" id="st-week">0</div><div class="stat-l" data-i18n="stat_week"></div></div>
-    <div class="stat"><div class="stat-v" id="st-streak">0</div><div class="stat-l" data-i18n="stat_streak"></div></div>
-  </div>
+  <div id="streak-bar"><span id="st-streak-lbl"></span></div>
 
   <!-- Sub-tab switcher -->
   <div class="subtabs">
@@ -544,7 +536,7 @@ body::after{
         </div>
         <div class="wpresets" id="wpresets">
           <button class="wpl-toggle" onclick="togglePresets()">
-            <span class="wpl-toggle-lbl">PRESET & ADJUST</span>
+            <span class="wpl-toggle-lbl" data-i18n="wpl_preset">PRESET & ADJUST</span>
             <span class="wpl-cur" id="wpl-cur">60kg</span>
             <span class="wpl-arrow" id="wpl-arrow">▾</span>
           </button>
@@ -784,34 +776,32 @@ body::after{
 // ── I18N ──────────────────────────────────────────────────
 const LANGS = {
   ja:{
-    tab_record:'TRAINING',tab_history:'HISTORY',tab_progress:'PROGRESS',
-    stat_total:'TOTAL',stat_week:'今週',stat_streak:'連続',
-    sec_group:'MUSCLE GROUP',sec_exercise:'EXERCISE',sec_weight:'WEIGHT',sec_rest:'REST TIME',
+    tab_record:'トレーニング',tab_history:'履歴',tab_progress:'進捗',
+    sec_group:'部位',sec_exercise:'種目',sec_weight:'重量',sec_rest:'休憩時間',
     ph_ex:'例: ベンチプレス',
-    lbl_reps:'REPS',lbl_sets:'SETS',u_reps:'回',u_sets:'セット',
-    btn_start:'START WORKOUT',btn_log:'ログだけ保存',
+    lbl_reps:'回数',lbl_sets:'セット数',u_reps:'回',u_sets:'セット',
+    btn_start:'ワークアウト開始',btn_log:'ログだけ保存',wpl_preset:'プリセット & 調整',
     f7d:'7日間',f30d:'30日間',f90d:'90日間',fall:'全期間',
     fall_ex:'全種目',sel_ex:'種目を選択',
     m_weight:'最大重量',m_volume:'ボリューム',
-    wo_ttl:'WORKOUT',wo_set_lbl:'SET',wo_rest_lbl:'REST',
+    wo_ttl:'ワークアウト',wo_set_lbl:'SET',wo_rest_lbl:'REST',
     wo_rest_done:"LET'S START TRAINING!!",btn_done:'DONE ✓',btn_next:'NEXT SET →',
     wo_complete:'COMPLETE!',
     dlg_ttl:'ワークアウトをリセット',dlg_body:'どうしますか？',
     dlg_save:'完了したセットを保存',dlg_disc:'破棄する',dlg_cancel:'キャンセル',
     empty:'記録がありません',today:'今日',yesterday:'昨日',dago:'日前',no_data:'データなし',
-    tab_sleep:'SLEEP',
-    sec_bedtime:'就寝時刻',sec_wakeup:'起床時刻',sec_duration:'睡眠時間',sec_quality:'睡眠の質',sec_memo:'メモ（任意）',
+    tab_sleep:'睡眠',
+    sec_bedtime:'就寝時間',sec_wakeup:'起床時間',sec_duration:'睡眠時間',sec_quality:'睡眠の質',sec_memo:'メモ（任意）',
     ph_memo:'メモを入力...',
     btn_sleep_save:'睡眠を記録',sleepSaved:'記録しました ✓',
-    hf_all:'全て',hf_workout:'WORKOUT',hf_sleep:'SLEEP',m_group:'部位別',
+    hf_all:'全て',hf_workout:'ワークアウト',hf_sleep:'睡眠',m_group:'部位別',
   },
   en:{
     tab_record:'TRAINING',tab_history:'HISTORY',tab_progress:'PROGRESS',
-    stat_total:'TOTAL',stat_week:'THIS WEEK',stat_streak:'STREAK',
     sec_group:'MUSCLE GROUP',sec_exercise:'EXERCISE',sec_weight:'WEIGHT',sec_rest:'REST TIME',
     ph_ex:'e.g. Bench Press',
     lbl_reps:'REPS',lbl_sets:'SETS',u_reps:'reps',u_sets:'sets',
-    btn_start:'START WORKOUT',btn_log:'Quick Log',
+    btn_start:'START WORKOUT',btn_log:'Quick Log',wpl_preset:'PRESET & ADJUST',
     f7d:'7 days',f30d:'30 days',f90d:'90 days',fall:'All time',
     fall_ex:'All exercises',sel_ex:'Select exercise',
     m_weight:'Max Weight',m_volume:'Volume',
@@ -1061,7 +1051,7 @@ function renderDuration(){
 }
 
 const BED_PRESETS  = ['21:00','21:30','22:00','22:30','23:00','23:30','00:00','00:30','01:00','01:30'];
-const WAKE_PRESETS = ['05:00','05:30','06:00','06:30','07:00','07:30','08:00','08:30','09:00','09:30','10:00','10:30'];
+const WAKE_PRESETS = ['05:00','05:30','06:00','06:30','07:00','07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30'];
 
 function updateBedPresets(){
   document.getElementById('bed-presets').innerHTML = BED_PRESETS.map(v =>
@@ -1231,15 +1221,18 @@ function trainMsg(){ return TRAIN_MSGS[Math.floor(Math.random()*TRAIN_MSGS.lengt
 // ── STATS ─────────────────────────────────────────────────
 function updateStats(){
   const recs = loadRecs();
-  const now = Date.now();
   const days = new Set(recs.map(r => r.date.slice(0,10)));
-  const wkDays = new Set(recs.filter(r => now - new Date(r.date).getTime() < 7*864e5).map(r => r.date.slice(0,10)));
-  document.getElementById('st-total').textContent = days.size;
-  document.getElementById('st-week').textContent = wkDays.size;
   let streak = 0;
   const d = new Date();
   while(days.has(d.toISOString().slice(0,10))){ streak++; d.setDate(d.getDate()-1); }
-  document.getElementById('st-streak').textContent = streak;
+  const el = document.getElementById('st-streak-lbl');
+  if(streak > 0){
+    el.textContent = '🔥 ' + streak + (lang==='ja' ? '日連続' : ' day streak');
+    el.style.color = 'var(--green)';
+  } else {
+    el.textContent = lang==='ja' ? '連続記録なし' : 'No streak';
+    el.style.color = 'var(--t2)';
+  }
 }
 
 // ── QUICK LOG ─────────────────────────────────────────────
