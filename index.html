@@ -15,7 +15,8 @@
 <title>LOOKSMAXXING</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;touch-action:manipulation}
-button{user-select:none;-webkit-user-select:none}
+button{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.ncb,.ab,.rpb,.grpb,.tpb,.qlb,.wval,.ncv,.inp{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{
   font-family:'Space Grotesk',sans-serif;
@@ -112,6 +113,7 @@ body::after{
 /* SECTION */
 .sec{padding:12px 16px}
 #sub-workout .sec{padding:10px 16px}
+#sub-sleep .sec{padding:6px 16px}
 .sec-ttl{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:3px;color:#999;margin-bottom:7px}
 #sub-workout .sec-ttl{margin-bottom:4px}
 
@@ -200,6 +202,17 @@ body::after{
 .ncv{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--ac2);min-width:40px;text-align:center;line-height:1;cursor:pointer;text-shadow:0 2px 12px rgba(255,255,255,0.06)}
 .ncu{font-size:11px;color:#aaa;text-align:center;padding-bottom:2px}
 
+/* REST SELECT */
+#rest-select{
+  width:120px;height:38px;background:#161616;border:1px solid #2a2a2a;
+  color:#f0f0f0;font-size:13px;font-family:'Space Grotesk',sans-serif;
+  border-radius:8px;padding:0 10px;outline:none;cursor:pointer;
+  -webkit-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+}
+#rest-select:focus{border-color:var(--ac)}
+#rest-select option{background:#161616;color:#f0f0f0}
 /* REST PRESETS */
 .rp-row{display:flex;gap:6px}
 .rpb{
@@ -288,37 +301,38 @@ body::after{
 
 /* TIME BOX (sleep input) */
 .tbox{border:1px solid var(--b2);border-radius:var(--rl);overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.5)}
-.tdisp{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;border-bottom:1px solid var(--b1);background:var(--s1)}
-.tval{font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--ac2);letter-spacing:2px;line-height:1;min-width:130px;text-align:center;cursor:pointer}
-.tpreset{display:flex;gap:5px;padding:8px 10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tdisp{display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 10px;border-bottom:1px solid var(--b1);background:var(--s1)}
+.tval{font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--ac2);letter-spacing:2px;line-height:1;min-width:110px;text-align:center;cursor:pointer}
+.tpreset{display:flex;gap:5px;padding:5px 10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .tpreset::-webkit-scrollbar{display:none}
 .tpb{
   flex:1;background:var(--s2);border:1px solid var(--b2);color:var(--t2);
-  font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;
-  padding:6px 10px;border-radius:5px;cursor:pointer;transition:all .15s;min-height:32px;text-align:center;white-space:nowrap;flex-shrink:0;
+  font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;
+  padding:4px 8px;border-radius:5px;cursor:pointer;transition:all .15s;min-height:28px;text-align:center;white-space:nowrap;flex-shrink:0;
 }
 .tpb:hover,.tpb.on{background:var(--sl);border-color:var(--sl);color:#fff}
 
 /* DURATION display */
-.dur-box{background:#161616;border:1px solid var(--b2);border-radius:var(--r);padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.5)}
-.dur-v{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--sl);letter-spacing:2px;line-height:1}
-.dur-l{font-size:13px;letter-spacing:2px;color:var(--t2);margin-top:6px}
+.dur-box{background:#161616;border:1px solid var(--b2);border-radius:var(--r);padding:10px 16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.5)}
+.dur-v{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--sl);letter-spacing:2px;line-height:1}
+.dur-l{font-size:12px;letter-spacing:2px;color:var(--t2);margin-top:3px}
 
 /* QUALITY buttons */
 .ql-row{display:flex;gap:5px}
 .qlb{
   flex:1;background:var(--s1);border:1px solid var(--b2);border-radius:var(--r);
-  color:var(--t2);font-size:12px;font-weight:600;padding:8px 2px;cursor:pointer;
-  transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:62px;
+  color:var(--t2);font-size:11px;font-weight:600;padding:3px 2px;cursor:pointer;
+  transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:1px;min-height:38px;
 }
-.qlb .ql-em{font-size:20px}
-.qlb .ql-num{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--ac2);line-height:1}
+.qlb .ql-em{font-size:13px}
+.qlb .ql-num{font-family:'Bebas Neue',sans-serif;font-size:12px;color:var(--ac2);line-height:1}
 .qlb.on{background:rgba(149,128,255,.15);border-color:var(--sl);color:var(--sl)}
 .qlb.on .ql-num{color:var(--sl)}
 .qlb:hover:not(.on){background:var(--s2)}
+#sl-memo{padding:7px 10px;font-size:14px}
 
 /* SLEEP SAVE button */
-.btn-sleep{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:20px;min-height:62px;border-radius:var(--rl);box-shadow:0 4px 20px rgba(139,92,246,0.4)}
+.btn-sleep{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:18px;min-height:50px;border-radius:var(--rl);box-shadow:0 4px 20px rgba(139,92,246,0.4)}
 .btn-sleep:hover{background:linear-gradient(135deg,#7578f3,#9d6ef8);box-shadow:0 6px 28px rgba(139,92,246,0.5)}
 
 /* HISTORY type filter */
@@ -348,6 +362,17 @@ body::after{
 #ptb-sleep::before{content:'';display:inline-block;width:14px;height:14px;vertical-align:middle;margin-right:5px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M24 4 C12 4 4 13 4 24 C4 35 12 44 24 44 C17 40 12 33 12 24 C12 15 17 8 24 4Z' fill='white'/%3E%3C/svg%3E") no-repeat center/contain}
 
 /* MUSCLE GROUP BUTTONS */
+#grp-select{
+  width:100%;height:44px;background:#161616;border:1px solid #2a2a2a;
+  color:#f0f0f0;font-size:14px;font-family:'Space Grotesk',sans-serif;
+  border-radius:8px;padding:0 12px;outline:none;cursor:pointer;
+  -webkit-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;
+  transition:border-color .2s;
+}
+#grp-select:focus{border-color:var(--ac)}
+#grp-select option{background:#161616;color:#f0f0f0}
 .grp-row{
   display:flex;gap:5px;overflow-x:auto;-webkit-overflow-scrolling:touch;
   scrollbar-width:none;padding-bottom:3px;margin-bottom:6px;
@@ -527,9 +552,8 @@ body::after{
   <!-- WORKOUT sub-pane -->
   <div id="sub-workout" class="subpane on">
     <div class="sec">
-      <div class="sec-ttl" data-i18n="sec_group"></div>
-      <div class="grp-row" id="grp-btns"></div>
-      <div class="sec-ttl" data-i18n="sec_exercise"></div>
+      <select id="grp-select" onchange="setGroup(this.value)"></select>
+      <div class="sec-ttl" data-i18n="sec_exercise" style="margin-top:10px"></div>
       <div class="ac-wrap">
         <input type="text" id="ex-inp" class="inp" autocomplete="off"
                oninput="acInput()" onfocus="acFocus()" onblur="acBlur()">
@@ -587,16 +611,16 @@ body::after{
     </div>
 
     <div class="sec" style="padding:8px 16px">
-      <div style="display:flex;align-items:center;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
         <span style="font-size:11px;letter-spacing:2px;color:#999;font-weight:600;white-space:nowrap;flex-shrink:0" data-i18n="sec_rest"></span>
-        <div class="rp-row" id="rp-row" style="flex:1">
-          <button class="rpb" data-s="30" onclick="setRest(30)">30s</button>
-          <button class="rpb" data-s="60" onclick="setRest(60)">60s</button>
-          <button class="rpb on" data-s="90" onclick="setRest(90)">90s</button>
-          <button class="rpb" data-s="120" onclick="setRest(120)">2m</button>
-          <button class="rpb" data-s="180" onclick="setRest(180)">3m</button>
-          <button class="rpb" data-s="300" onclick="setRest(300)">5m</button>
-        </div>
+        <select id="rest-select" onchange="setRest(Number(this.value))">
+          <option value="30">30秒</option>
+          <option value="60">60秒</option>
+          <option value="90" selected>90秒</option>
+          <option value="120">2分</option>
+          <option value="180">3分</option>
+          <option value="300">5分</option>
+        </select>
       </div>
     </div>
 
@@ -614,9 +638,9 @@ body::after{
       <div class="sec-ttl" data-i18n="sec_bedtime"></div>
       <div class="tbox">
         <div class="tdisp">
-          <button class="ncb" style="width:46px;height:46px;font-size:24px;font-weight:600" onclick="adjTime('bed',-15)">−</button>
+          <button class="ncb" style="width:38px;height:38px;font-size:20px;font-weight:600" onclick="adjTime('bed',-15)">−</button>
           <div class="tval" id="bed-val" onclick="editTime('bed')">23:00</div>
-          <button class="ncb" style="width:46px;height:46px;font-size:24px;font-weight:600" onclick="adjTime('bed',15)">+</button>
+          <button class="ncb" style="width:38px;height:38px;font-size:20px;font-weight:600" onclick="adjTime('bed',15)">+</button>
         </div>
         <div class="tpreset" id="bed-presets"></div>
       </div>
@@ -626,9 +650,9 @@ body::after{
       <div class="sec-ttl" data-i18n="sec_wakeup"></div>
       <div class="tbox">
         <div class="tdisp">
-          <button class="ncb" style="width:46px;height:46px;font-size:24px;font-weight:600" onclick="adjTime('wake',-15)">−</button>
+          <button class="ncb" style="width:38px;height:38px;font-size:20px;font-weight:600" onclick="adjTime('wake',-15)">−</button>
           <div class="tval" id="wake-val" onclick="editTime('wake')">07:00</div>
-          <button class="ncb" style="width:46px;height:46px;font-size:24px;font-weight:600" onclick="adjTime('wake',15)">+</button>
+          <button class="ncb" style="width:38px;height:38px;font-size:20px;font-weight:600" onclick="adjTime('wake',15)">+</button>
         </div>
         <div class="tpreset" id="wake-presets"></div>
       </div>
@@ -792,7 +816,7 @@ body::after{
 const LANGS = {
   ja:{
     tab_record:'トレーニング',tab_history:'履歴',tab_progress:'進捗',
-    sec_group:'部位',sec_exercise:'種目',sec_weight:'重量',sec_rest:'休憩時間',
+    grp_placeholder:'部位を選択',sec_group:'部位',sec_exercise:'種目',sec_weight:'重量',sec_rest:'休憩時間',
     ph_ex:'例: ベンチプレス',
     lbl_reps:'回数',lbl_sets:'セット数',u_reps:'回',u_sets:'セット',
     btn_start:'LET\'S GO',btn_log:'ログだけ保存',wpl_preset:'プリセット & 調整',
@@ -813,7 +837,7 @@ const LANGS = {
   },
   en:{
     tab_record:'TRAINING',tab_history:'HISTORY',tab_progress:'PROGRESS',
-    sec_group:'MUSCLE GROUP',sec_exercise:'EXERCISE',sec_weight:'WEIGHT',sec_rest:'REST TIME',
+    grp_placeholder:'SELECT GROUP',sec_group:'MUSCLE GROUP',sec_exercise:'EXERCISE',sec_weight:'WEIGHT',sec_rest:'REST TIME',
     ph_ex:'e.g. Bench Press',
     lbl_reps:'REPS',lbl_sets:'SETS',u_reps:'reps',u_sets:'sets',
     btn_start:'LET\'S GO',btn_log:'Quick Log',wpl_preset:'PRESET & ADJUST',
@@ -835,7 +859,7 @@ const LANGS = {
   ko:{
     tab_record:'트레이닝',tab_history:'히스토리',tab_progress:'진행',
     stat_total:'총 기록',stat_week:'이번 주',stat_streak:'연속',
-    sec_exercise:'운동',sec_weight:'중량',sec_rest:'휴식 시간',
+    grp_placeholder:'부위 선택',sec_exercise:'운동',sec_weight:'중량',sec_rest:'휴식 시간',
     ph_ex:'예: 벤치프레스',
     lbl_reps:'횟수',lbl_sets:'세트',u_reps:'회',u_sets:'세트',
     btn_start:'LET\'S GO',btn_log:'빠른 저장',
@@ -857,7 +881,7 @@ const LANGS = {
   zh:{
     tab_record:'训练',tab_history:'历史',tab_progress:'进度',
     stat_total:'总计',stat_week:'本周',stat_streak:'连续',
-    sec_exercise:'动作',sec_weight:'重量',sec_rest:'休息时间',
+    grp_placeholder:'选择部位',sec_exercise:'动作',sec_weight:'重量',sec_rest:'休息时间',
     ph_ex:'例如: 卧推',
     lbl_reps:'次数',lbl_sets:'组数',u_reps:'次',u_sets:'组',
     btn_start:'LET\'S GO',btn_log:'快速记录',
@@ -879,7 +903,7 @@ const LANGS = {
   es:{
     tab_record:'ENTRENAMIENTO',tab_history:'HISTORIAL',tab_progress:'PROGRESO',
     stat_total:'TOTAL',stat_week:'ESTA SEMANA',stat_streak:'RACHA',
-    sec_exercise:'EJERCICIO',sec_weight:'PESO',sec_rest:'DESCANSO',
+    grp_placeholder:'SELECCIONAR',sec_exercise:'EJERCICIO',sec_weight:'PESO',sec_rest:'DESCANSO',
     ph_ex:'Ej: Press de banca',
     lbl_reps:'REPS',lbl_sets:'SERIES',u_reps:'reps',u_sets:'series',
     btn_start:'LET\'S GO',btn_log:'Guardar rápido',
@@ -1028,19 +1052,18 @@ function switchSub(which){
 
 // ── MUSCLE GROUPS ─────────────────────────────────────────
 function renderGrpBtns(){
-  const el = document.getElementById('grp-btns');
+  const el = document.getElementById('grp-select');
   if(!el) return;
-  el.innerHTML = GROUPS.map(g =>
-    `<button class="grpb${g.id===curGroup?' on':''}" onclick="setGroup('${g.id}')">${g.icon}${gName(g.id)}</button>`
-  ).join('');
+  el.innerHTML = `<option value="">${t('grp_placeholder')}</option>` +
+    GROUPS.map(g => `<option value="${g.id}">${g.icon} ${gName(g.id)}</option>`).join('');
+  el.value = curGroup || '';
+  el.style.borderColor = curGroup ? 'var(--ac)' : '#2a2a2a';
 }
 function setGroup(id){
-  curGroup = curGroup===id ? '' : id;
+  curGroup = id;
   document.getElementById('ex-inp').value = '';
   renderGrpBtns();
   setTimeout(showAC, 0);
-  const onBtn = document.querySelector('#grp-btns .grpb.on');
-  if(onBtn) onBtn.scrollIntoView({inline:'nearest',block:'nearest',behavior:'smooth'});
 }
 function renderGrpChips(){
   const el = document.getElementById('grp-chips');
@@ -1137,7 +1160,8 @@ function saveSleep(){
 // ── REST PRESETS ──────────────────────────────────────────
 function setRest(s){
   curRest = s;
-  document.querySelectorAll('.rpb').forEach(b => b.classList.toggle('on', Number(b.dataset.s)===s));
+  const sel = document.getElementById('rest-select');
+  if(sel) sel.value = s;
 }
 
 // ── AUTOCOMPLETE ──────────────────────────────────────────
