@@ -16,7 +16,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;touch-action:manipulation}
 button{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
-.ncb,.ab,.rpb,.grpb,.tpb,.qlb,.wval,.ncv,.inp{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+.ncb,.ab,.rpb,.grpb,.tpb,.qlb,.wval,.ncv,.tval,.dur-v,.inp{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{
   font-family:'Space Grotesk',sans-serif;
@@ -155,7 +155,11 @@ body::after{
   font-family:'Bebas Neue',sans-serif;font-size:52px;
   color:var(--ac2);letter-spacing:2px;line-height:1;min-width:72px;text-align:center;cursor:pointer;
   text-shadow:0 2px 12px rgba(255,255,255,0.06);
+  border-bottom:2px solid rgba(102,126,234,0.3);padding-bottom:2px;
+  transition:opacity .1s;
 }
+.wval:active{opacity:.7}
+.val-hint{font-size:10px;color:#555;text-align:center;display:block;margin-top:2px;letter-spacing:.5px}
 .wunit{font-size:14px;color:var(--t2);font-weight:600;align-self:flex-end;padding-bottom:6px}
 /* collapsible preset */
 .wpresets{border-bottom:1px solid var(--b1)}
@@ -201,7 +205,13 @@ body::after{
 }
 .nc-row .ncb{width:38px;height:38px;font-size:20px}
 .ncb:hover{background:var(--b2)}.ncb:active{transform:scale(.9)}
-.ncv{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--ac2);min-width:40px;text-align:center;line-height:1;cursor:pointer;text-shadow:0 2px 12px rgba(255,255,255,0.06)}
+.ncv{
+  font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--ac2);min-width:40px;text-align:center;line-height:1;cursor:pointer;
+  text-shadow:0 2px 12px rgba(255,255,255,0.06);
+  border-bottom:2px solid rgba(102,126,234,0.3);padding-bottom:1px;
+  transition:opacity .1s;
+}
+.ncv:active{opacity:.7}
 .ncu{font-size:11px;color:#aaa;text-align:center;padding-bottom:2px}
 
 /* REST SELECT */
@@ -524,6 +534,72 @@ body::after{
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
+
+/* DRUM PICKER */
+#picker-ov{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.65);z-index:600;
+  align-items:flex-end;justify-content:center;
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+}
+#picker-ov.open{display:flex}
+#picker-sh{
+  background:#111;border-radius:20px 20px 0 0;
+  width:100%;max-width:520px;
+  padding-bottom:env(safe-area-inset-bottom,0);
+  animation:pkUp .22s ease;
+}
+@keyframes pkUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+#picker-hdr{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 20px 10px;border-bottom:1px solid #1a1a1a;
+}
+#picker-ttl{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:3px;color:#777}
+.picker-x{background:none;border:none;color:#555;font-size:20px;cursor:pointer;padding:4px 8px;line-height:1}
+#picker-stage{
+  position:relative;height:220px;overflow:hidden;margin:0 20px;
+}
+#picker-drums{display:flex;align-items:center;height:100%}
+.picker-col{display:flex;align-items:center;flex:1;height:100%}
+.picker-drum{
+  flex:1;height:220px;
+  overflow-y:scroll;scroll-snap-type:y mandatory;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+.picker-drum::-webkit-scrollbar{display:none}
+.picker-list{padding:88px 0}
+.picker-item{
+  height:44px;scroll-snap-align:center;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:30px;color:#333;
+  transition:color .08s;
+}
+.picker-item.on{color:#f0f0f0}
+.picker-sfx{
+  font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;
+  color:#555;padding:0 6px;flex-shrink:0;
+}
+.picker-sep{
+  font-family:'Bebas Neue',sans-serif;font-size:30px;color:#444;
+  padding:0 2px;flex-shrink:0;
+}
+.pk-grad{position:absolute;left:0;right:0;pointer-events:none;z-index:2}
+.pk-grad.top{top:0;height:88px;background:linear-gradient(to bottom,#111 20%,transparent)}
+.pk-grad.bot{bottom:0;height:88px;background:linear-gradient(to top,#111 20%,transparent)}
+.pk-sel{
+  position:absolute;top:50%;transform:translateY(-50%);
+  left:0;right:0;height:44px;
+  border-top:1px solid #2c2c2c;border-bottom:1px solid #2c2c2c;
+  pointer-events:none;z-index:1;
+}
+#picker-ok{
+  display:block;width:calc(100% - 40px);margin:14px 20px 16px;
+  background:linear-gradient(135deg,#667eea,#764ba2);
+  color:#fff;border:none;border-radius:12px;
+  font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;
+  min-height:50px;cursor:pointer;transition:opacity .15s;
+}
+#picker-ok:active{opacity:.8}
 </style>
 </head>
 <body>
@@ -579,7 +655,10 @@ body::after{
       <div id="wbox">
         <div class="wdisp">
           <button class="ncb" style="width:48px;height:48px;font-size:22px;font-weight:700;border-radius:12px" onclick="adjW(-0.5)">−</button>
-          <div class="wval" id="wval" onclick="editW()">60</div>
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <div class="wval" id="wval" onclick="editW()">60</div>
+            <span class="val-hint">タップで選択</span>
+          </div>
           <span class="wunit">kg</span>
           <button class="ncb" style="width:48px;height:48px;font-size:22px;font-weight:700;border-radius:12px" onclick="adjW(0.5)">+</button>
         </div>
@@ -608,7 +687,7 @@ body::after{
           <div class="nc-l" data-i18n="lbl_reps"></div>
           <div class="nc-row">
             <button class="ncb" onclick="adjN('r',-1)">−</button>
-            <div><div class="ncv" id="rval" onclick="editN('r')">10</div><div class="ncu" data-i18n="u_reps"></div></div>
+            <div><div class="ncv" id="rval" onclick="editN('r')">10</div><div class="ncu" data-i18n="u_reps"></div><span class="val-hint">タップで選択</span></div>
             <button class="ncb" onclick="adjN('r',1)">+</button>
           </div>
         </div>
@@ -616,7 +695,7 @@ body::after{
           <div class="nc-l" data-i18n="lbl_sets"></div>
           <div class="nc-row">
             <button class="ncb" onclick="adjN('s',-1)">−</button>
-            <div><div class="ncv" id="sval" onclick="editN('s')">3</div><div class="ncu" data-i18n="u_sets"></div></div>
+            <div><div class="ncv" id="sval" onclick="editN('s')">3</div><div class="ncu" data-i18n="u_sets"></div><span class="val-hint">タップで選択</span></div>
             <button class="ncb" onclick="adjN('s',1)">+</button>
           </div>
         </div>
@@ -1005,48 +1084,96 @@ function togglePresets(){
   arrow.style.transform = open ? '' : 'rotate(180deg)';
 }
 
+// ── DRUM PICKER ───────────────────────────────────────────
+let _ac = null;
+function _getAC(){ if(!_ac) _ac=new(window.AudioContext||window.webkitAudioContext)(); return _ac; }
+function playTick(){
+  try{
+    const ac=_getAC(), n=Math.ceil(ac.sampleRate*0.018);
+    const buf=ac.createBuffer(1,n,ac.sampleRate), d=buf.getChannelData(0);
+    for(let i=0;i<n;i++) d[i]=(Math.random()*2-1)*(1-i/n)*0.45;
+    const src=ac.createBufferSource(); src.buffer=buf;
+    const g=ac.createGain(); g.gain.value=0.28;
+    src.connect(g); g.connect(ac.destination); src.start();
+  }catch(e){}
+}
+
+const PK_IH=44;
+let _pkCfg=null;
+
+function openPicker(cfg){
+  _pkCfg=cfg;
+  document.getElementById('picker-ttl').textContent=cfg.title;
+  const wrap=document.getElementById('picker-drums');
+  wrap.innerHTML='';
+  cfg.drums.forEach((drum,di)=>{
+    if(di>0 && cfg.sep){
+      const sep=document.createElement('div');
+      sep.className='picker-sep'; sep.textContent=cfg.sep;
+      wrap.appendChild(sep);
+    }
+    const col=document.createElement('div'); col.className='picker-col';
+    const drumEl=document.createElement('div'); drumEl.className='picker-drum'; drumEl.dataset.di=di;
+    const list=document.createElement('div'); list.className='picker-list';
+    const itemEls=drum.items.map(item=>{
+      const el=document.createElement('div'); el.className='picker-item';
+      el.textContent=item.label; list.appendChild(el); return el;
+    });
+    drumEl.appendChild(list); col.appendChild(drumEl);
+    if(drum.suffix){ const s=document.createElement('div'); s.className='picker-sfx'; s.textContent=drum.suffix; col.appendChild(s); }
+    wrap.appendChild(col);
+    let lastIdx=drum.current;
+    requestAnimationFrame(()=>{
+      drumEl.scrollTop=drum.current*PK_IH;
+      itemEls.forEach((el,i)=>el.classList.toggle('on',i===drum.current));
+    });
+    drumEl.addEventListener('scroll',()=>{
+      const idx=Math.round(drumEl.scrollTop/PK_IH);
+      if(idx>=0&&idx<drum.items.length){
+        itemEls.forEach((el,i)=>el.classList.toggle('on',i===idx));
+        if(idx!==lastIdx){ lastIdx=idx; playTick(); }
+      }
+    },{passive:true});
+  });
+  const ov=document.getElementById('picker-ov');
+  ov.style.display='flex';
+  requestAnimationFrame(()=>ov.classList.add('open'));
+}
+function confirmPicker(){
+  if(!_pkCfg) return;
+  const vals=Array.from(document.querySelectorAll('.picker-drum')).map((el,di)=>{
+    const idx=Math.round(el.scrollTop/PK_IH);
+    const items=_pkCfg.drums[di].items;
+    return items[Math.max(0,Math.min(idx,items.length-1))].value;
+  });
+  _pkCfg.onConfirm(vals);
+  closePicker();
+}
+function closePicker(){
+  const ov=document.getElementById('picker-ov');
+  ov.classList.remove('open'); ov.style.display='none';
+  _pkCfg=null;
+}
+
 function editW(){
-  const el = document.getElementById('wval');
-  if(el.querySelector('input')) return;
-  el.innerHTML = `<input id="w-inp" type="number" inputmode="decimal" step="0.5" min="0" value="${curW}"
-    style="width:130px;background:none;border:none;border-bottom:2px solid var(--ac);
-    color:var(--ac2);font-family:'Bebas Neue',sans-serif;font-size:72px;letter-spacing:2px;
-    line-height:1;text-align:center;outline:none;-webkit-appearance:none;appearance:none;">`;
-  const inp = document.getElementById('w-inp');
-  inp.focus(); inp.select();
-  let done = false;
-  function commit(){
-    if(done) return; done = true;
-    const v = parseFloat(inp.value);
-    if(!isNaN(v) && v >= 0) setW(v);
-    else { el.textContent = curW%1===0 ? String(curW) : curW.toFixed(1); }
-  }
-  inp.addEventListener('blur', commit);
-  inp.addEventListener('keydown', e => { if(e.key==='Enter') inp.blur(); });
+  const items=[];
+  for(let v=0;v<=200;v+=0.5) items.push({label:v%1===0?String(v):v.toFixed(1),value:v});
+  const idx=Math.max(0,items.findIndex(i=>i.value===curW));
+  openPicker({title:t('sec_weight'),drums:[{items,current:idx,suffix:'kg'}],onConfirm:([v])=>setW(v)});
 }
 
 function editN(type){
-  const id = type==='r' ? 'rval' : 'sval';
-  const el = document.getElementById(id);
-  if(el.querySelector('input')) return;
-  const cur = type==='r' ? curR : curS;
-  el.innerHTML = `<input id="${id}-inp" type="number" inputmode="numeric" min="1" max="${type==='r'?100:20}" value="${cur}"
-    style="width:70px;background:none;border:none;border-bottom:2px solid var(--ac);
-    color:var(--ac2);font-family:'Bebas Neue',sans-serif;font-size:48px;
-    text-align:center;outline:none;-webkit-appearance:none;appearance:none;">`;
-  const inp = document.getElementById(`${id}-inp`);
-  inp.focus(); inp.select();
-  let done = false;
-  function commit(){
-    if(done) return; done = true;
-    const v = parseInt(inp.value, 10);
-    if(!isNaN(v) && v >= 1){
-      if(type==='r'){ curR = Math.min(100, v); el.textContent = curR; }
-      else { curS = Math.min(20, v); el.textContent = curS; }
-    } else { el.textContent = cur; }
-  }
-  inp.addEventListener('blur', commit);
-  inp.addEventListener('keydown', e => { if(e.key==='Enter') inp.blur(); });
+  const isR=type==='r', max=isR?100:20;
+  const items=Array.from({length:max},(_,i)=>({label:String(i+1),value:i+1}));
+  const cur=isR?curR:curS;
+  openPicker({
+    title:t(isR?'lbl_reps':'lbl_sets'),
+    drums:[{items,current:cur-1,suffix:t(isR?'u_reps':'u_sets')}],
+    onConfirm:([v])=>{
+      if(isR){curR=v;document.getElementById('rval').textContent=v;}
+      else{curS=v;document.getElementById('sval').textContent=v;}
+    }
+  });
 }
 
 // ── REPS / SETS ───────────────────────────────────────────
@@ -1126,24 +1253,17 @@ function adjTime(which, delta){
 }
 
 function editTime(which){
-  const id   = which==='bed' ? 'bed-val' : 'wake-val';
-  const el   = document.getElementById(id);
-  if(el.querySelector('input')) return;
-  const cur  = which==='bed' ? curBed : curWake;
-  el.innerHTML = `<input id="${id}-inp" type="time" value="${cur}"
-    style="background:none;border:none;border-bottom:2px solid var(--sl);
-    color:var(--ac2);font-family:'Bebas Neue',sans-serif;font-size:56px;letter-spacing:2px;
-    text-align:center;outline:none;-webkit-appearance:none;appearance:none;width:130px;">`;
-  const inp = document.getElementById(`${id}-inp`);
-  inp.focus();
-  let done = false;
-  function commit(){
-    if(done) return; done=true;
-    if(inp.value) setTime(which, inp.value);
-    else el.textContent = cur;
-  }
-  inp.addEventListener('blur', commit);
-  inp.addEventListener('change', ()=>inp.blur());
+  const hours=Array.from({length:24},(_,i)=>({label:String(i).padStart(2,'0'),value:i}));
+  const mins=[0,5,10,15,20,25,30,35,40,45,50,55].map(m=>({label:String(m).padStart(2,'0'),value:m}));
+  const cur=which==='bed'?curBed:curWake;
+  const [h,m]=cur.split(':').map(Number);
+  const mIdx=Math.max(0,mins.findIndex(x=>x.value===Math.round(m/5)*5%60));
+  openPicker({
+    title:t(which==='bed'?'sec_bedtime':'sec_wakeup'),
+    sep:':',
+    drums:[{items:hours,current:h},{items:mins,current:mIdx>=0?mIdx:0}],
+    onConfirm:([hv,mv])=>setTime(which,String(hv).padStart(2,'0')+':'+String(mv).padStart(2,'0'))
+  });
 }
 
 function setQuality(q){
@@ -1910,5 +2030,22 @@ function initLongPress(){
 })();
 </script>
 <div id="toast"></div>
+
+<!-- DRUM PICKER OVERLAY -->
+<div id="picker-ov">
+  <div id="picker-sh">
+    <div id="picker-hdr">
+      <span id="picker-ttl"></span>
+      <button class="picker-x" onclick="closePicker()">✕</button>
+    </div>
+    <div id="picker-stage">
+      <div id="picker-drums"></div>
+      <div class="pk-grad top"></div>
+      <div class="pk-grad bot"></div>
+      <div class="pk-sel"></div>
+    </div>
+    <button id="picker-ok" onclick="confirmPicker()">決定</button>
+  </div>
+</div>
 </body>
 </html>
