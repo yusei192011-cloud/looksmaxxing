@@ -119,8 +119,49 @@ body::after{
 .sec-ttl{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:3px;color:#999;margin-bottom:7px}
 #sub-workout .sec-ttl{margin-bottom:4px}
 
-/* STREAK BADGE */
-#st-streak-lbl{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;margin-left:auto;margin-right:8px;flex-shrink:0;display:flex;align-items:center;gap:4px;}
+/* RANK BADGE */
+#rank-lbl{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;white-space:nowrap;margin-left:auto;margin-right:8px;flex-shrink:0;display:flex;align-items:center;gap:5px;cursor:pointer;transition:opacity .15s}
+#rank-lbl:active{opacity:.7}
+
+/* RANK MODAL (fullscreen) */
+#rank-ov{position:fixed;inset:0;background:#080808;z-index:700;display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#rank-ov.open{display:flex}
+#rank-sh{flex:1;display:flex;flex-direction:column;width:100%;max-width:520px;margin:0 auto;padding-bottom:calc(28px + env(safe-area-inset-bottom,0));position:relative}
+.rank-close-btn{position:absolute;top:14px;right:14px;background:none;border:none;color:#555;font-size:22px;cursor:pointer;padding:8px;line-height:1;transition:color .15s;z-index:1}
+.rank-close-btn:active{color:#fff}
+.rank-hero{display:flex;flex-direction:column;align-items:center;gap:6px;padding:52px 20px 20px}
+.rank-img-lg{width:200px;height:200px;object-fit:contain}
+.rank-name-lg{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;margin-top:6px}
+.rank-days-lg{font-family:'Space Grotesk',sans-serif;font-size:16px;color:#666;font-weight:600}
+.rank-mid{padding:0 20px 20px}
+.rank-prog-header{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#555;letter-spacing:.5px;margin-bottom:2px}
+.rank-prog-bar{height:8px;background:#1a1a1a;border-radius:4px;overflow:hidden;margin:8px 0 5px}
+.rank-prog-fill{height:100%;border-radius:4px}
+.rank-prog-sub{display:flex;justify-content:space-between;font-size:11px;color:#444}
+.rank-bottom{padding:0 20px}
+.rank-section-ttl{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:#444;margin-bottom:10px}
+.rank-list{display:flex;flex-direction:column;gap:8px}
+.rank-row{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:12px;background:#111;border:1px solid transparent}
+.rank-row.cur{background:rgba(0,0,0,.5)}
+.rank-img-sm{width:48px;height:48px;object-fit:contain;flex-shrink:0}
+.rank-row-name{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px}
+.rank-row-req{font-size:11px;color:#555;margin-top:2px}
+.rank-row-badge{font-size:12px;font-weight:700;letter-spacing:1px;flex-shrink:0}
+
+/* RANK UP OVERLAY */
+#rankup-ov{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:800;display:none;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden}
+#rankup-ov.open{display:flex}
+#rankup-particles{position:absolute;inset:0;pointer-events:none}
+.sp{position:absolute;border-radius:50%;animation:spFloat linear infinite;pointer-events:none}
+@keyframes spFloat{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-110vh) scale(0.3);opacity:0}}
+.rankup-label{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:4px;margin-bottom:10px;animation:rankupBounce .5s cubic-bezier(.34,1.56,.64,1) both}
+.rankup-trophy{width:240px;height:240px;object-fit:contain;animation:rankupBounce .5s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes rankupBounce{0%{transform:scale(.5);opacity:0}100%{transform:scale(1);opacity:1}}
+.rankup-texts{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:16px;animation:rankupFade .4s ease .3s both}
+@keyframes rankupFade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.rankup-name{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:3px}
+.rankup-msg{font-family:'Space Grotesk',sans-serif;font-size:14px;color:#888;text-align:center;max-width:280px;line-height:1.5}
+.rankup-hint{position:absolute;bottom:calc(32px + env(safe-area-inset-bottom,0));font-size:11px;color:#444;letter-spacing:2px}
 
 /* INPUT */
 .inp{
@@ -617,7 +658,7 @@ body::after{
     <div id="wo-dot"></div>
     LOOKSMAXXING
   </div>
-  <span id="st-streak-lbl"></span>
+  <div id="rank-lbl" onclick="openRankModal()"></div>
   <button id="lang-btn" onclick="toggleLang()">JA ▾</button>
 </div>
 <div id="lang-dd">
@@ -1413,22 +1454,149 @@ function sleepMsg(mins){
 }
 function trainMsg(){ return TRAIN_MSGS[Math.floor(Math.random()*TRAIN_MSGS.length)]; }
 
-// ── STATS ─────────────────────────────────────────────────
+// ── RANK ──────────────────────────────────────────────────
+const RANK_IMGS=['','rank1_bronze.png.png','rank2_silver.png.png','rank3_gold.png.png','rank4_platinum.png.png','rank5_master.png.png'];
+const RANK_DEFS=[
+  {level:1,name:'ブロンズ',nameEn:'BRONZE',color:'#cd7f32',req:'1〜7日',reqEn:'1-7 days'},
+  {level:2,name:'シルバー',nameEn:'SILVER',color:'#c0c0c0',req:'8〜30日',reqEn:'8-30 days'},
+  {level:3,name:'ゴールド',nameEn:'GOLD',color:'#ffd700',req:'31〜90日',reqEn:'31-90 days'},
+  {level:4,name:'プラチナ',nameEn:'PLATINUM',color:'#00e5ff',req:'91〜180日',reqEn:'91-180 days'},
+  {level:5,name:'マスター',nameEn:'MASTER',color:'#b44aff',req:'181日〜',reqEn:'181+ days'},
+];
+const RANK_FROM=[0,1,8,31,91,181];
+
+function getRank(records){
+  const uniqueDays=new Set(
+    records.filter(r=>r.type!=='sleep').map(r=>new Date(r.date).toLocaleDateString())
+  ).size;
+  if(uniqueDays>=181) return{level:5,name:'マスター',nameEn:'MASTER',color:'#b44aff',days:uniqueDays,next:null};
+  if(uniqueDays>=91)  return{level:4,name:'プラチナ',nameEn:'PLATINUM',color:'#00e5ff',days:uniqueDays,next:181};
+  if(uniqueDays>=31)  return{level:3,name:'ゴールド',nameEn:'GOLD',color:'#ffd700',days:uniqueDays,next:91};
+  if(uniqueDays>=8)   return{level:2,name:'シルバー',nameEn:'SILVER',color:'#c0c0c0',days:uniqueDays,next:31};
+  if(uniqueDays>=1)   return{level:1,name:'ブロンズ',nameEn:'BRONZE',color:'#cd7f32',days:uniqueDays,next:8};
+  return{level:0,name:'なし',nameEn:'NONE',color:'#555',days:0,next:1};
+}
+
 function updateStats(){
-  const recs = loadRecs();
-  const days = new Set(recs.map(r => r.date.slice(0,10)));
-  let streak = 0;
-  const d = new Date();
-  while(days.has(d.toISOString().slice(0,10))){ streak++; d.setDate(d.getDate()-1); }
-  const el = document.getElementById('st-streak-lbl');
-  if(streak > 0){
-    const svg = `<svg width="13" height="16" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M6.5 1C5 4 2 5.5 1.5 8.5C1 11.5 3.5 15 6.5 15C9.5 15 11.5 11.5 11 8.5C10.5 5.5 8 4 6.5 1ZM6.5 9C7.5 9 8.5 10 8.5 11.5C8.5 12.5 7.5 13.5 6.5 13.5C5.5 13.5 4.5 12.5 4.5 11.5C4.5 10 5.5 9 6.5 9Z" stroke="#4ade80" stroke-width="1.2" fill="none" stroke-linejoin="round"/></svg>`;
-    el.innerHTML = svg + streak + (lang==='ja' ? '日連続' : ' day streak');
-    el.style.color = '#4ade80';
+  const rank=getRank(loadRecs());
+  const el=document.getElementById('rank-lbl');
+  const isJa=lang==='ja'||lang==='ko'||lang==='zh';
+  if(rank.level===0){
+    el.innerHTML=`<span style="color:#555;font-size:11px">${isJa?'トレーニングを始めよう':'Start training!'}</span>`;
   } else {
-    el.textContent = lang==='ja' ? '連続記録なし' : 'No streak';
-    el.style.color = '#555';
+    const name=isJa?rank.name:rank.nameEn;
+    const dLabel=isJa?rank.days+'日':rank.days+'d';
+    el.innerHTML=`<img src="${RANK_IMGS[rank.level]}" style="width:28px;height:28px;object-fit:contain;flex-shrink:0"><span style="color:${rank.color}">${name}</span><span style="color:#555;font-size:11px">${dLabel}</span>`;
   }
+}
+
+function openRankModal(){
+  const rank=getRank(loadRecs());
+  const isJa=lang==='ja'||lang==='ko'||lang==='zh';
+
+  // Hero
+  const iconEl=document.getElementById('rank-icon-lg');
+  if(rank.level>0){ iconEl.src=RANK_IMGS[rank.level]; iconEl.style.display=''; }
+  else iconEl.style.display='none';
+  const nameEl=document.getElementById('rank-name-lg');
+  nameEl.textContent=isJa?rank.name:rank.nameEn;
+  nameEl.style.color=rank.color;
+  document.getElementById('rank-days-lg').textContent=
+    isJa?`${rank.days}日のトレーニング`:`${rank.days} training days`;
+
+  // Progress
+  const prog=document.getElementById('rank-progress');
+  if(rank.next!==null){
+    const from=RANK_FROM[rank.level];
+    const pct=Math.min(100,Math.round((rank.days-from)/(rank.next-from)*100));
+    const nextDef=RANK_DEFS.find(r=>r.level===rank.level+1);
+    const fromLabel=isJa?rank.name:rank.nameEn;
+    const toLabel=nextDef?(isJa?nextDef.name:nextDef.nameEn):'';
+    const remaining=rank.next-rank.days;
+    prog.innerHTML=`
+      <div class="rank-prog-header"><span>${fromLabel}(${RANK_FROM[rank.level]}${isJa?'日':'d'})</span><span>${toLabel}(${rank.next}${isJa?'日':'d'})</span></div>
+      <div class="rank-prog-bar"><div class="rank-prog-fill" style="width:${pct}%;background:${rank.color}"></div></div>
+      <div class="rank-prog-sub"><span>${isJa?'現在: ':'Now: '}${rank.days}${isJa?'日':'d'}</span><span>${isJa?`次まであと${remaining}日`:`${remaining}d to next`}</span></div>`;
+  } else {
+    prog.innerHTML=`<div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:${rank.color};padding:10px 0">${isJa?'MAX RANK ACHIEVED 🏆':'MAX RANK ACHIEVED 🏆'}</div>`;
+  }
+
+  // Rank list
+  document.getElementById('rank-list-ttl').textContent=isJa?'全ランク':'ALL RANKS';
+  document.getElementById('rank-list').innerHTML=RANK_DEFS.map(rd=>{
+    const isCur=rd.level===rank.level, isDone=rd.level<rank.level;
+    const imgStyle=isDone||isCur?'':'filter:grayscale(1);opacity:.4';
+    return `<div class="rank-row${isCur?' cur':''}" style="${isCur?`border-color:${rd.color}`:''}">
+      <img class="rank-img-sm" src="${RANK_IMGS[rd.level]}" alt="" style="${imgStyle}">
+      <div style="flex:1;min-width:0">
+        <div class="rank-row-name" style="color:${isCur||isDone?rd.color:'#3a3a3a'}">${isJa?rd.name:rd.nameEn}</div>
+        <div class="rank-row-req">${isJa?rd.req:rd.reqEn}</div>
+      </div>
+      ${isCur?`<span class="rank-row-badge" style="color:${rd.color}">NOW</span>`:''}
+      ${isDone?`<span class="rank-row-badge" style="color:#4ade80">✓</span>`:''}
+    </div>`;
+  }).join('');
+
+  // Body scroll lock
+  document.body.style.top=`-${window.scrollY}px`;
+  document.body.style.overflow='hidden';
+  document.body.style.position='fixed';
+  document.body.style.width='100%';
+  const ov=document.getElementById('rank-ov');
+  ov.style.display='flex';
+  requestAnimationFrame(()=>ov.classList.add('open'));
+}
+function closeRankModal(){
+  const scrollY=document.body.style.top;
+  document.body.style.overflow='';
+  document.body.style.position='';
+  document.body.style.width='';
+  document.body.style.top='';
+  window.scrollTo(0,parseInt(scrollY||'0')*-1);
+  const ov=document.getElementById('rank-ov');
+  ov.classList.remove('open'); ov.style.display='none';
+}
+
+// ── RANK UP ───────────────────────────────────────────────
+let _rankupTimer=null;
+function showRankUp(rank){
+  const isJa=lang==='ja'||lang==='ko'||lang==='zh';
+  document.getElementById('rankup-trophy').src=RANK_IMGS[rank.level];
+  const lbl=document.getElementById('rankup-label');
+  lbl.textContent='RANK UP!'; lbl.style.color=rank.color;
+  const nm=document.getElementById('rankup-name');
+  nm.textContent=isJa?rank.name:rank.nameEn; nm.style.color=rank.color;
+  const remaining=rank.next?rank.next-rank.days:0;
+  document.getElementById('rankup-msg').textContent=rank.next
+    ?(isJa?`🎉 おめでとう！次のランクまであと${remaining}日！`:`🎉 Congrats! ${remaining} days to next rank!`)
+    :(isJa?`🏆 おめでとう！最高ランク到達！`:'🏆 Congrats! Max rank achieved!');
+
+  // Reset animations
+  [lbl,'rankup-trophy','rankup-texts'].forEach(id=>{
+    const el=typeof id==='string'?document.getElementById(id):id;
+    el.style.animation='none'; void el.offsetWidth; el.style.animation='';
+  });
+
+  // Particles
+  const pc=document.getElementById('rankup-particles'); pc.innerHTML='';
+  for(let i=0;i<24;i++){
+    const sp=document.createElement('div'); sp.className='sp';
+    const sz=4+Math.random()*8;
+    sp.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;bottom:${-sz}px;background:${rank.color};animation-duration:${2+Math.random()*3}s;animation-delay:${Math.random()*2}s;opacity:${.4+Math.random()*.6}`;
+    pc.appendChild(sp);
+  }
+
+  const ov=document.getElementById('rankup-ov');
+  ov.style.display='flex';
+  requestAnimationFrame(()=>ov.classList.add('open'));
+  clearTimeout(_rankupTimer);
+  _rankupTimer=setTimeout(hideRankUp,3000);
+}
+function hideRankUp(){
+  clearTimeout(_rankupTimer);
+  const ov=document.getElementById('rankup-ov');
+  ov.classList.remove('open'); ov.style.display='none';
+  document.getElementById('rankup-particles').innerHTML='';
 }
 
 // ── QUICK LOG ─────────────────────────────────────────────
@@ -1442,7 +1610,10 @@ function quickLog(){
     volume:curW*curR*curS, est1rm:Math.round(curW*(1+curR/30)),
     group:curGroup||'other'
   });
+  const prevLevel=getRank(loadRecs()).level;
   saveRecs(recs); updateStats(); renderHistory();
+  const newRank=getRank(loadRecs());
+  if(newRank.level>prevLevel) setTimeout(()=>showRankUp(newRank),500);
   const b = document.querySelector('.btn-log');
   const orig = t('btn_log');
   b.textContent = '✓ SAVED'; b.style.color = 'var(--green)';
@@ -1681,6 +1852,7 @@ function saveWoRecord(partial = false){
   if(!WS) return;
   const setsN = partial ? WS.completedSets.length : WS.sets;
   if(setsN === 0) return;
+  const prevLevel=getRank(loadRecs()).level;
   const recs = loadRecs();
   recs.push({
     id: Date.now(), date: new Date().toISOString(),
@@ -1690,6 +1862,8 @@ function saveWoRecord(partial = false){
     group: WS.group || 'other'
   });
   saveRecs(recs);
+  const newRank=getRank(loadRecs());
+  if(newRank.level>prevLevel) setTimeout(()=>showRankUp(newRank),600);
 }
 
 // ── TABS ──────────────────────────────────────────────────
@@ -2085,6 +2259,37 @@ function initLongPress(){
 })();
 </script>
 <div id="toast"></div>
+
+<!-- RANK MODAL -->
+<div id="rank-ov">
+  <div id="rank-sh">
+    <button class="rank-close-btn" onclick="closeRankModal()">✕</button>
+    <div class="rank-hero">
+      <img class="rank-img-lg" id="rank-icon-lg" src="" alt="">
+      <div class="rank-name-lg" id="rank-name-lg"></div>
+      <div class="rank-days-lg" id="rank-days-lg"></div>
+    </div>
+    <div class="rank-mid">
+      <div id="rank-progress"></div>
+    </div>
+    <div class="rank-bottom">
+      <div class="rank-section-ttl" id="rank-list-ttl">ALL RANKS</div>
+      <div id="rank-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- RANK UP OVERLAY -->
+<div id="rankup-ov" onclick="hideRankUp()">
+  <div id="rankup-particles"></div>
+  <div class="rankup-label" id="rankup-label">RANK UP!</div>
+  <img class="rankup-trophy" id="rankup-trophy" src="" alt="">
+  <div class="rankup-texts" id="rankup-texts">
+    <div class="rankup-name" id="rankup-name"></div>
+    <div class="rankup-msg" id="rankup-msg"></div>
+  </div>
+  <div class="rankup-hint">TAP TO CLOSE</div>
+</div>
 
 <!-- DRUM PICKER OVERLAY -->
 <div id="picker-ov">
