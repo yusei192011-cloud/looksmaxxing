@@ -152,7 +152,7 @@ body::after{
   gap:4px;padding:8px 14px;border-bottom:1px solid var(--b1);background:#161616;
 }
 .wval{
-  font-family:'Bebas Neue',sans-serif;font-size:52px;
+  font-family:'Bebas Neue',sans-serif;font-size:64px;
   color:var(--ac2);letter-spacing:2px;line-height:1;min-width:72px;text-align:center;cursor:pointer;
   text-shadow:0 2px 12px rgba(255,255,255,0.06);
   border-bottom:2px solid rgba(102,126,234,0.3);padding-bottom:2px;
@@ -206,7 +206,7 @@ body::after{
 .nc-row .ncb{width:38px;height:38px;font-size:20px}
 .ncb:hover{background:var(--b2)}.ncb:active{transform:scale(.9)}
 .ncv{
-  font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--ac2);min-width:40px;text-align:center;line-height:1;cursor:pointer;
+  font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--ac2);min-width:40px;text-align:center;line-height:1;cursor:pointer;
   text-shadow:0 2px 12px rgba(255,255,255,0.06);
   border-bottom:2px solid rgba(102,126,234,0.3);padding-bottom:1px;
   transition:opacity .1s;
@@ -314,7 +314,12 @@ body::after{
 /* TIME BOX (sleep input) */
 .tbox{border:1px solid var(--b2);border-radius:var(--rl);overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.5)}
 .tdisp{display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 10px;border-bottom:1px solid var(--b1);background:var(--s1)}
-.tval{font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--ac2);letter-spacing:2px;line-height:1;min-width:110px;text-align:center;cursor:pointer}
+.tval{
+  font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--ac2);letter-spacing:2px;line-height:1;min-width:110px;text-align:center;cursor:pointer;
+  border-bottom:2px solid rgba(102,126,234,0.3);padding-bottom:2px;
+  transition:opacity .1s;
+}
+.tval:active{opacity:.7}
 .tpreset{display:flex;gap:5px;padding:5px 10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .tpreset::-webkit-scrollbar{display:none}
 .tpb{
@@ -326,7 +331,7 @@ body::after{
 
 /* DURATION display */
 .dur-box{background:#161616;border:1px solid var(--b2);border-radius:var(--r);padding:10px 16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.5)}
-.dur-v{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--sl);letter-spacing:2px;line-height:1}
+.dur-v{font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--sl);letter-spacing:2px;line-height:1}
 .dur-l{font-size:12px;letter-spacing:2px;color:var(--t2);margin-top:3px}
 
 /* QUALITY buttons */
@@ -731,7 +736,10 @@ body::after{
       <div class="tbox">
         <div class="tdisp">
           <button class="ncb" style="width:38px;height:38px;font-size:20px;font-weight:600" onclick="adjTime('bed',-15)">−</button>
-          <div class="tval" id="bed-val" onclick="editTime('bed')">23:00</div>
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <div class="tval" id="bed-val" onclick="editTime('bed')">23:00</div>
+            <span class="val-hint">タップで選択</span>
+          </div>
           <button class="ncb" style="width:38px;height:38px;font-size:20px;font-weight:600" onclick="adjTime('bed',15)">+</button>
         </div>
         <div class="tpreset" id="bed-presets"></div>
@@ -743,7 +751,10 @@ body::after{
       <div class="tbox">
         <div class="tdisp">
           <button class="ncb" style="width:38px;height:38px;font-size:20px;font-weight:600" onclick="adjTime('wake',-15)">−</button>
-          <div class="tval" id="wake-val" onclick="editTime('wake')">07:00</div>
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <div class="tval" id="wake-val" onclick="editTime('wake')">07:00</div>
+            <span class="val-hint">タップで選択</span>
+          </div>
           <button class="ncb" style="width:38px;height:38px;font-size:20px;font-weight:600" onclick="adjTime('wake',15)">+</button>
         </div>
         <div class="tpreset" id="wake-presets"></div>
@@ -1089,12 +1100,14 @@ let _ac = null;
 function _getAC(){ if(!_ac) _ac=new(window.AudioContext||window.webkitAudioContext)(); return _ac; }
 function playTick(){
   try{
-    const ac=_getAC(), n=Math.ceil(ac.sampleRate*0.018);
-    const buf=ac.createBuffer(1,n,ac.sampleRate), d=buf.getChannelData(0);
-    for(let i=0;i<n;i++) d[i]=(Math.random()*2-1)*(1-i/n)*0.45;
-    const src=ac.createBufferSource(); src.buffer=buf;
-    const g=ac.createGain(); g.gain.value=0.28;
-    src.connect(g); g.connect(ac.destination); src.start();
+    const ac=_getAC(), now=ac.currentTime;
+    const osc=ac.createOscillator();
+    const g=ac.createGain();
+    osc.type='sine'; osc.frequency.value=3800;
+    g.gain.setValueAtTime(0.08,now);
+    g.gain.exponentialRampToValueAtTime(0.001,now+0.03);
+    osc.connect(g); g.connect(ac.destination);
+    osc.start(now); osc.stop(now+0.03);
   }catch(e){}
 }
 
@@ -1135,6 +1148,10 @@ function openPicker(cfg){
       }
     },{passive:true});
   });
+  document.body.style.top=`-${window.scrollY}px`;
+  document.body.style.overflow='hidden';
+  document.body.style.position='fixed';
+  document.body.style.width='100%';
   const ov=document.getElementById('picker-ov');
   ov.style.display='flex';
   requestAnimationFrame(()=>ov.classList.add('open'));
@@ -1150,6 +1167,12 @@ function confirmPicker(){
   closePicker();
 }
 function closePicker(){
+  const scrollY=document.body.style.top;
+  document.body.style.overflow='';
+  document.body.style.position='';
+  document.body.style.width='';
+  document.body.style.top='';
+  window.scrollTo(0,parseInt(scrollY||'0')*-1);
   const ov=document.getElementById('picker-ov');
   ov.classList.remove('open'); ov.style.display='none';
   _pkCfg=null;
@@ -1310,12 +1333,12 @@ const GROUPS = [
   {id:'other',    icon:'', name:{ja:'その他',en:'Other',     ko:'기타', zh:'其他',es:'Otro'}},
 ];
 const GROUP_EX = {
-  chest:   {ja:['ベンチプレス','インクラインベンチプレス','ダンベルフライ','チェストプレス','ディップス'],    en:['Bench Press','Incline Bench Press','Dumbbell Fly','Chest Press','Dips']},
-  back:    {ja:['デッドリフト','ラットプルダウン','ベントオーバーロウ','チンニング','シーテッドロウ'],      en:['Deadlift','Lat Pulldown','Bent Over Row','Pull-up','Seated Row']},
-  shoulder:{ja:['ショルダープレス','オーバーヘッドプレス','サイドレイズ','フロントレイズ','フェイスプル','アーノルドプレス'], en:['Shoulder Press','Overhead Press','Side Raise','Front Raise','Face Pull','Arnold Press']},
-  arms:    {ja:['ダンベルカール','バイセップカール','トライセップエクステンション','ハンマーカール','プリーチャーカール','スカルクラッシャー'],en:['Dumbbell Curl','Bicep Curl','Tricep Extension','Hammer Curl','Preacher Curl','Skull Crusher']},
-  legs:    {ja:['スクワット','レッグプレス','レッグカール','レッグエクステンション','ブルガリアンスクワット','カーフレイズ'],en:['Squat','Leg Press','Leg Curl','Leg Extension','Bulgarian Split Squat','Calf Raise']},
-  abs:     {ja:['クランチ','プランク','レッグレイズ','アブローラー','サイドベンド'],  en:['Crunch','Plank','Leg Raise','Ab Roller','Side Bend']},
+  chest:   {ja:['ベンチプレス','ダンベルプレス','腕立て伏せ','インクラインベンチプレス','ダンベルフライ','チェストプレス（マシン）','ディップス'],    en:['Bench Press','Dumbbell Press','Push-up','Incline Bench Press','Dumbbell Fly','Chest Press (Machine)','Dips']},
+  back:    {ja:['懸垂（チンニング）','ラットプルダウン','ダンベルロウ','デッドリフト','ベントオーバーロウ','シーテッドロウ'],      en:['Pull-up','Lat Pulldown','Dumbbell Row','Deadlift','Bent Over Row','Seated Row']},
+  shoulder:{ja:['ショルダープレス','サイドレイズ','フロントレイズ','オーバーヘッドプレス','フェイスプル','アーノルドプレス'], en:['Shoulder Press','Side Raise','Front Raise','Overhead Press','Face Pull','Arnold Press']},
+  arms:    {ja:['アームカール','ダンベルカール','トライセップス','ハンマーカール','プリーチャーカール','スカルクラッシャー'],en:['Arm Curl','Dumbbell Curl','Triceps','Hammer Curl','Preacher Curl','Skull Crusher']},
+  legs:    {ja:['スクワット','レッグプレス','レッグカール','レッグエクステンション','ランジ','ブルガリアンスクワット','カーフレイズ'],en:['Squat','Leg Press','Leg Curl','Leg Extension','Lunge','Bulgarian Split Squat','Calf Raise']},
+  abs:     {ja:['クランチ','プランク','レッグレイズ','腹筋ローラー','サイドベンド'],  en:['Crunch','Plank','Leg Raise','Ab Roller','Side Bend']},
   other:   {ja:[], en:[]},
 };
 
@@ -2027,6 +2050,38 @@ function initLongPress(){
   applyLang();
   updateStats();
   initLongPress();
+  document.getElementById('picker-ov').addEventListener('touchmove',function(e){
+    if(!e.target.closest('.picker-drum')) e.preventDefault();
+  },{passive:false});
+
+  let _activePkDrum=null, _lastPkTouchY=0;
+  const stage=document.getElementById('picker-stage');
+  stage.addEventListener('touchstart',function(e){
+    if(e.target.closest('.picker-drum')) return;
+    const drums=Array.from(this.querySelectorAll('.picker-drum'));
+    if(!drums.length) return;
+    if(drums.length===1){
+      _activePkDrum=drums[0];
+    } else {
+      const tx=e.touches[0].clientX;
+      _activePkDrum=drums.reduce((best,d)=>{
+        const r=d.getBoundingClientRect(), br=best.getBoundingClientRect();
+        return Math.abs(tx-(r.left+r.width/2))<Math.abs(tx-(br.left+br.width/2))?d:best;
+      });
+    }
+    _lastPkTouchY=e.touches[0].clientY;
+    e.preventDefault();
+  },{passive:false});
+  stage.addEventListener('touchmove',function(e){
+    if(!_activePkDrum) return;
+    const dy=_lastPkTouchY-e.touches[0].clientY;
+    _activePkDrum.scrollTop+=dy;
+    _lastPkTouchY=e.touches[0].clientY;
+    e.preventDefault();
+  },{passive:false});
+  stage.addEventListener('touchend',function(){
+    _activePkDrum=null;
+  },{passive:true});
 })();
 </script>
 <div id="toast"></div>
