@@ -103,6 +103,25 @@ body::after{
 #tb-record::before{content:'';display:block;width:20px;height:12px;margin:0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 24'%3E%3Crect x='0' y='2' width='7' height='20' rx='2' fill='white'/%3E%3Crect x='7' y='5' width='4' height='14' rx='1' fill='white'/%3E%3Crect x='11' y='9' width='18' height='6' rx='3' fill='white'/%3E%3Crect x='29' y='5' width='4' height='14' rx='1' fill='white'/%3E%3Crect x='33' y='2' width='7' height='20' rx='2' fill='white'/%3E%3C/svg%3E") no-repeat center/contain}
 #tb-history::before{content:'';display:block;width:20px;height:20px;margin:0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='19' stroke='white' stroke-width='3.5' fill='none'/%3E%3Cline x1='24' y1='24' x2='24' y2='11' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='24' y1='24' x2='33' y2='30' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/contain}
 #tb-progress::before{content:'';display:block;width:20px;height:20px;margin:0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect x='4' y='28' width='11' height='16' rx='2' fill='white'/%3E%3Crect x='18' y='18' width='11' height='26' rx='2' fill='white'/%3E%3Crect x='32' y='8' width='11' height='36' rx='2' fill='white'/%3E%3C/svg%3E") no-repeat center/contain}
+#tb-status::before{content:'';display:block;width:20px;height:20px;margin:0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M4 38 L8 18 L18 28 L24 6 L30 28 L40 18 L44 38 Z' fill='white'/%3E%3Crect x='6' y='40' width='36' height='5' rx='2' fill='white'/%3E%3Ccircle cx='8' cy='18' r='3' fill='white'/%3E%3Ccircle cx='24' cy='6' r='3' fill='white'/%3E%3Ccircle cx='40' cy='18' r='3' fill='white'/%3E%3C/svg%3E") no-repeat center/contain}
+
+/* STATUS PANE */
+.status-inner{padding:16px 16px 80px}
+.status-hero{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 0 14px}
+.status-rank-img{width:180px;height:180px;object-fit:contain}
+.status-rank-name{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;margin-top:4px}
+.status-rank-days{font-family:'Space Grotesk',sans-serif;font-size:16px;color:#888;font-weight:600}
+.status-no-rank-ic{font-size:56px;margin-bottom:4px;opacity:.4}
+.status-no-rank-msg{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:#444}
+.status-prog-wrap{background:#111;border:1px solid #1a1a1a;border-radius:12px;padding:14px 16px;margin-bottom:20px}
+.status-prog-bar{height:8px;background:#1a1a1a;border-radius:4px;overflow:hidden;margin:8px 0 7px}
+.status-prog-fill{height:100%;border-radius:4px}
+.status-prog-meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#555}
+.status-max-rank{text-align:center;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;padding:4px 0}
+.status-list-ttl{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:#444;margin-bottom:10px}
+.status-rank-list{display:flex;flex-direction:column;gap:8px}
+.status-rank-row{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:12px;background:#111;border:1px solid transparent}
+.status-rank-row.cur{background:rgba(0,0,0,.5)}
 .tb.on{color:var(--ac2);border-bottom:none;background:rgba(102,126,234,.06)}
 .tb.on::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#667eea,#764ba2)}
 .tb:not(.on):hover{color:#888}
@@ -173,6 +192,14 @@ body::after{
 .inp:focus{border-color:#667eea;box-shadow:0 0 0 3px rgba(102,126,234,0.15)}
 .inp::placeholder{color:var(--t3)}
 .ac-wrap{position:relative}
+.ex-clear{
+  position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  width:32px;height:32px;border:none;background:none;
+  color:#777;font-size:18px;line-height:32px;text-align:center;
+  cursor:pointer;display:none;padding:0;border-radius:50%;
+  transition:color .1s;z-index:5;
+}
+.ex-clear:active{color:#fff}
 .ac-list{
   position:absolute;top:calc(100% + 4px);left:0;right:0;
   background:var(--s2);border:1px solid var(--b2);border-radius:var(--r);
@@ -601,7 +628,11 @@ body::after{
   padding:16px 20px 10px;border-bottom:1px solid #1a1a1a;
 }
 #picker-ttl{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:3px;color:#777}
-.picker-x{background:none;border:none;color:#555;font-size:20px;cursor:pointer;padding:4px 8px;line-height:1}
+.picker-x{
+  background:none;border:none;color:#666;font-size:28px;cursor:pointer;
+  width:44px;height:44px;line-height:44px;text-align:center;padding:0;
+  min-width:48px;min-height:48px;display:flex;align-items:center;justify-content:center;
+}
 #picker-stage{
   position:relative;height:220px;overflow:hidden;margin:0 20px;
 }
@@ -617,10 +648,10 @@ body::after{
 .picker-item{
   height:44px;scroll-snap-align:center;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Bebas Neue',sans-serif;font-size:30px;color:#333;
-  transition:color .08s;
+  font-family:'Bebas Neue',sans-serif;font-size:28px;color:#555;
+  transition:color .08s,font-size .08s,font-weight .08s;
 }
-.picker-item.on{color:#f0f0f0}
+.picker-item.on{color:#fff;font-size:36px;font-weight:700}
 .picker-sfx{
   font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;
   color:#555;padding:0 6px;flex-shrink:0;
@@ -674,6 +705,7 @@ body::after{
   <button class="tb on" id="tb-record" onclick="switchTab('record')" data-i18n="tab_record"></button>
   <button class="tb" id="tb-history" onclick="switchTab('history')" data-i18n="tab_history"></button>
   <button class="tb" id="tb-progress" onclick="switchTab('progress')" data-i18n="tab_progress"></button>
+  <button class="tb" id="tb-status" onclick="switchTab('status')" data-i18n="tab_status"></button>
 </div>
 
 <!-- RECORD PANE -->
@@ -691,7 +723,9 @@ body::after{
       <div class="sec-ttl" data-i18n="sec_exercise" style="margin-top:10px"></div>
       <div class="ac-wrap">
         <input type="text" id="ex-inp" class="inp" autocomplete="off"
+               style="padding-right:38px"
                oninput="acInput()" onfocus="acFocus()" onblur="acBlur()">
+        <button class="ex-clear" id="ex-clear" onmousedown="event.preventDefault()" onclick="clearExInp()">✕</button>
         <div id="ac-list" class="ac-list"></div>
       </div>
     </div>
@@ -758,6 +792,9 @@ body::after{
           <option value="120">2分</option>
           <option value="180">3分</option>
           <option value="300">5分</option>
+          <option value="600">10分</option>
+          <option value="900">15分</option>
+          <option value="1200">20分</option>
         </select>
       </div>
     </div>
@@ -884,6 +921,11 @@ body::after{
   </div>
 </div>
 
+<!-- STATUS PANE -->
+<div id="pane-status" class="pane">
+  <div id="status-content"></div>
+</div>
+
 <!-- WORKOUT OVERLAY -->
 <div id="wo">
   <div class="woh">
@@ -959,7 +1001,7 @@ body::after{
 // ── I18N ──────────────────────────────────────────────────
 const LANGS = {
   ja:{
-    tab_record:'トレーニング',tab_history:'履歴',tab_progress:'進捗',
+    tab_record:'トレーニング',tab_history:'履歴',tab_progress:'進捗',tab_status:'ステータス',
     grp_placeholder:'部位を選択',sec_group:'部位',sec_exercise:'種目',sec_weight:'重量',sec_rest:'休憩時間',
     ph_ex:'例: ベンチプレス',
     lbl_reps:'回数',lbl_sets:'セット数',u_reps:'回',u_sets:'セット',
@@ -980,7 +1022,7 @@ const LANGS = {
     hf_all:'全て',hf_workout:'ワークアウト',hf_sleep:'睡眠',m_group:'部位別',
   },
   en:{
-    tab_record:'TRAINING',tab_history:'HISTORY',tab_progress:'PROGRESS',
+    tab_record:'TRAINING',tab_history:'HISTORY',tab_progress:'PROGRESS',tab_status:'STATUS',
     grp_placeholder:'SELECT GROUP',sec_group:'MUSCLE GROUP',sec_exercise:'EXERCISE',sec_weight:'WEIGHT',sec_rest:'REST TIME',
     ph_ex:'e.g. Bench Press',
     lbl_reps:'REPS',lbl_sets:'SETS',u_reps:'reps',u_sets:'sets',
@@ -1001,7 +1043,7 @@ const LANGS = {
     hf_all:'ALL',hf_workout:'WORKOUT',hf_sleep:'SLEEP',m_group:'By Group',
   },
   ko:{
-    tab_record:'트레이닝',tab_history:'히스토리',tab_progress:'진행',
+    tab_record:'트레이닝',tab_history:'히스토리',tab_progress:'진행',tab_status:'상태',
     stat_total:'총 기록',stat_week:'이번 주',stat_streak:'연속',
     grp_placeholder:'부위 선택',sec_exercise:'운동',sec_weight:'중량',sec_rest:'휴식 시간',
     ph_ex:'예: 벤치프레스',
@@ -1023,7 +1065,7 @@ const LANGS = {
     hf_all:'전체',hf_workout:'운동',hf_sleep:'수면',m_group:'부위별',
   },
   zh:{
-    tab_record:'训练',tab_history:'历史',tab_progress:'进度',
+    tab_record:'训练',tab_history:'历史',tab_progress:'进度',tab_status:'状态',
     stat_total:'总计',stat_week:'本周',stat_streak:'连续',
     grp_placeholder:'选择部位',sec_exercise:'动作',sec_weight:'重量',sec_rest:'休息时间',
     ph_ex:'例如: 卧推',
@@ -1045,7 +1087,7 @@ const LANGS = {
     hf_all:'全部',hf_workout:'训练',hf_sleep:'睡眠',m_group:'部位',
   },
   es:{
-    tab_record:'ENTRENAMIENTO',tab_history:'HISTORIAL',tab_progress:'PROGRESO',
+    tab_record:'ENTRENAMIENTO',tab_history:'HISTORIAL',tab_progress:'PROGRESO',tab_status:'ESTADO',
     stat_total:'TOTAL',stat_week:'ESTA SEMANA',stat_streak:'RACHA',
     grp_placeholder:'SELECCIONAR',sec_exercise:'EJERCICIO',sec_weight:'PESO',sec_rest:'DESCANSO',
     ph_ex:'Ej: Press de banca',
@@ -1082,6 +1124,7 @@ function applyLang(){
   renderGrpBtns();
   updateStats();
   renderHistory();
+  if(document.getElementById('tb-status').classList.contains('on')) renderStatus();
 }
 function setLang(l){
   lang = l; localStorage.setItem('lang', l);
@@ -1377,7 +1420,7 @@ const GROUP_EX = {
   chest:   {ja:['ベンチプレス','ダンベルプレス','腕立て伏せ','インクラインベンチプレス','ダンベルフライ','チェストプレス（マシン）','ディップス'],    en:['Bench Press','Dumbbell Press','Push-up','Incline Bench Press','Dumbbell Fly','Chest Press (Machine)','Dips']},
   back:    {ja:['懸垂（チンニング）','ラットプルダウン','ダンベルロウ','デッドリフト','ベントオーバーロウ','シーテッドロウ'],      en:['Pull-up','Lat Pulldown','Dumbbell Row','Deadlift','Bent Over Row','Seated Row']},
   shoulder:{ja:['ショルダープレス','サイドレイズ','フロントレイズ','オーバーヘッドプレス','フェイスプル','アーノルドプレス'], en:['Shoulder Press','Side Raise','Front Raise','Overhead Press','Face Pull','Arnold Press']},
-  arms:    {ja:['アームカール','ダンベルカール','トライセップス','ハンマーカール','プリーチャーカール','スカルクラッシャー'],en:['Arm Curl','Dumbbell Curl','Triceps','Hammer Curl','Preacher Curl','Skull Crusher']},
+  arms:    {ja:['アームカール','ダンベルカール','トライセップス','フレンチプレス','ハンマーカール','プリーチャーカール','スカルクラッシャー'],en:['Arm Curl','Dumbbell Curl','Triceps','French Press','Hammer Curl','Preacher Curl','Skull Crusher']},
   legs:    {ja:['スクワット','レッグプレス','レッグカール','レッグエクステンション','ランジ','ブルガリアンスクワット','カーフレイズ'],en:['Squat','Leg Press','Leg Curl','Leg Extension','Lunge','Bulgarian Split Squat','Calf Raise']},
   abs:     {ja:['クランチ','プランク','レッグレイズ','腹筋ローラー','サイドベンド'],  en:['Crunch','Plank','Leg Raise','Ab Roller','Side Bend']},
   other:   {ja:[], en:[]},
@@ -1407,9 +1450,24 @@ function exList(){
 }
 
 let acT = null;
-function acInput(){ clearTimeout(acT); acT = setTimeout(showAC, 60); }
-function acFocus(){ showAC(); }
-function acBlur(){ setTimeout(()=>document.getElementById('ac-list').classList.remove('open'), 160); }
+function _toggleClearBtn(){
+  const v = document.getElementById('ex-inp').value;
+  document.getElementById('ex-clear').style.display = v ? 'block' : 'none';
+}
+function clearExInp(){
+  document.getElementById('ex-inp').value = '';
+  document.getElementById('ex-clear').style.display = 'none';
+  showAC();
+  document.getElementById('ex-inp').focus();
+}
+function acInput(){ clearTimeout(acT); _toggleClearBtn(); acT = setTimeout(showAC, 60); }
+function acFocus(){ _toggleClearBtn(); showAC(); }
+function acBlur(){
+  setTimeout(()=>{
+    document.getElementById('ac-list').classList.remove('open');
+    document.getElementById('ex-clear').style.display = 'none';
+  }, 160);
+}
 function showAC(){
   const inp = document.getElementById('ex-inp');
   const list = document.getElementById('ac-list');
@@ -1731,25 +1789,34 @@ function onNext(){
 // ── TIMER ─────────────────────────────────────────────────
 const CIRC = 552.92; // 2π × 88
 let timerIv = null, timerRem = 0, timerTotal = 0;
+let timerStartTime = 0, _timerLastCountdown = -1;
 
 function startTimer(){
-  clearTimer(); // 二重起動を防ぐ
+  clearTimer();
   timerTotal = WS.restSecs;
   timerRem = timerTotal;
+  timerStartTime = Date.now();
+  _timerLastCountdown = -1;
   WS.paused = false;
   document.getElementById('pause-btn').textContent = '⏸';
   renderTimer();
-  timerIv = setInterval(function(){
-    if(!WS || WS.paused) return;
-    timerRem = Math.max(0, timerRem - 1);
-    renderTimer();
-    if(timerRem <= 0){
-      clearTimer();
-      timerDone();
-    } else if(timerRem <= 5){
-      playCountdown(timerRem);
-    }
-  }, 1000);
+  timerIv = setInterval(tickTimer, 300);
+}
+
+function tickTimer(){
+  if(!WS || WS.paused) return;
+  const elapsed = Math.floor((Date.now() - timerStartTime) / 1000);
+  const newRem = Math.max(0, timerTotal - elapsed);
+  if(newRem === timerRem) return;
+  timerRem = newRem;
+  renderTimer();
+  if(timerRem <= 0){
+    clearTimer();
+    timerDone();
+  } else if(timerRem <= 5 && timerRem !== _timerLastCountdown){
+    _timerLastCountdown = timerRem;
+    playCountdown(timerRem);
+  }
 }
 
 function clearTimer(){
@@ -1786,6 +1853,14 @@ function timerDone(){
 function togglePause(){
   if(!WS || WS.phase !== 'rest') return;
   WS.paused = !WS.paused;
+  if(WS.paused){
+    // 正確な残り時間を保存
+    const elapsed = Math.floor((Date.now() - timerStartTime) / 1000);
+    timerRem = Math.max(0, timerTotal - elapsed);
+  } else {
+    // 再開時: 残り時間から逆算して startTime を再設定
+    timerStartTime = Date.now() - (timerTotal - timerRem) * 1000;
+  }
   document.getElementById('pause-btn').textContent = WS.paused ? '▶' : '⏸';
 }
 
@@ -1866,6 +1941,63 @@ function saveWoRecord(partial = false){
   if(newRank.level>prevLevel) setTimeout(()=>showRankUp(newRank),600);
 }
 
+// ── STATUS ────────────────────────────────────────────────
+function renderStatus(){
+  const rank=getRank(loadRecs());
+  const isJa=lang==='ja'||lang==='ko'||lang==='zh';
+  const el=document.getElementById('status-content');
+
+  // Hero
+  let heroHtml;
+  if(rank.level===0){
+    heroHtml=`<div class="status-hero">
+      <div class="status-no-rank-ic">🏋️</div>
+      <div class="status-no-rank-msg">${isJa?'トレーニングを始めよう！':'Start Training!'}</div>
+    </div>`;
+  } else {
+    heroHtml=`<div class="status-hero">
+      <img class="status-rank-img" src="${RANK_IMGS[rank.level]}" alt="">
+      <div class="status-rank-name" style="color:${rank.color}">${isJa?rank.name:rank.nameEn}</div>
+      <div class="status-rank-days">${rank.days}${isJa?'日達成':' days achieved'}</div>
+    </div>`;
+  }
+
+  // Progress
+  let progHtml;
+  if(rank.next!==null){
+    const from=RANK_FROM[rank.level];
+    const pct=Math.min(100,Math.round((rank.days-from)/(rank.next-from)*100));
+    const nextDef=RANK_DEFS.find(r=>r.level===rank.level+1);
+    const nextLabel=nextDef?(isJa?nextDef.name:nextDef.nameEn):'';
+    progHtml=`<div class="status-prog-wrap">
+      <div class="status-prog-bar"><div class="status-prog-fill" style="width:${pct}%;background:${rank.color}"></div></div>
+      <div class="status-prog-meta">
+        <span>${rank.days}${isJa?'日':'d'} / ${rank.next}${isJa?'日':'d'}</span>
+        <span style="color:${rank.color}">${isJa?`次: ${rank.next}日 (${nextLabel})`:`Next: ${rank.next}d (${nextLabel})`}</span>
+      </div>
+    </div>`;
+  } else {
+    progHtml=`<div class="status-prog-wrap"><div class="status-max-rank" style="color:${rank.color}">MAX RANK 🏆</div></div>`;
+  }
+
+  // Rank list
+  const listHtml=RANK_DEFS.map(rd=>{
+    const isCur=rd.level===rank.level, isDone=rd.level<rank.level;
+    const imgStyle=isDone||isCur?'':'filter:grayscale(1);opacity:.4';
+    return `<div class="status-rank-row${isCur?' cur':''}" style="${isCur?`border-color:${rd.color}`:''}">
+      <img src="${RANK_IMGS[rd.level]}" alt="" style="width:48px;height:48px;object-fit:contain;flex-shrink:0;${imgStyle}">
+      <div style="flex:1;min-width:0">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:${isCur||isDone?rd.color:'#3a3a3a'}">${isJa?rd.name:rd.nameEn}</div>
+        <div style="font-size:11px;color:#555;margin-top:2px">${isJa?rd.req:rd.reqEn}</div>
+      </div>
+      ${isCur?`<span style="font-size:12px;font-weight:700;letter-spacing:1px;color:${rd.color};flex-shrink:0">NOW</span>`:''}
+      ${isDone?`<span style="font-size:12px;font-weight:700;color:#4ade80;flex-shrink:0">✓</span>`:''}
+    </div>`;
+  }).join('');
+
+  el.innerHTML=`<div class="status-inner">${heroHtml}${progHtml}<div class="status-list-ttl">${isJa?'全ランク':'ALL RANKS'}</div><div class="status-rank-list">${listHtml}</div></div>`;
+}
+
 // ── TABS ──────────────────────────────────────────────────
 function switchTab(id){
   document.querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
@@ -1877,6 +2009,7 @@ function switchTab(id){
     if(progSection === 'workout'){ initPexList(); renderChart(); }
     else renderSleepChart();
   }
+  if(id === 'status') renderStatus();
 }
 
 // ── PROGRESS TABS ─────────────────────────────────────────
@@ -2224,6 +2357,13 @@ function initLongPress(){
   applyLang();
   updateStats();
   initLongPress();
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden || !WS || WS.phase !== 'rest' || WS.paused || timerIv === null) return;
+    const elapsed = Math.floor((Date.now() - timerStartTime) / 1000);
+    timerRem = Math.max(0, timerTotal - elapsed);
+    renderTimer();
+    if(timerRem <= 0){ clearTimer(); timerDone(); }
+  });
   document.getElementById('picker-ov').addEventListener('touchmove',function(e){
     if(!e.target.closest('.picker-drum')) e.preventDefault();
   },{passive:false});
