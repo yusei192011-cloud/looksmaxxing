@@ -106,6 +106,13 @@ body::after{
 #tb-status::before{content:'';display:block;width:20px;height:20px;margin:0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M4 38 L8 18 L18 28 L24 6 L30 28 L40 18 L44 38 Z' fill='white'/%3E%3Crect x='6' y='40' width='36' height='5' rx='2' fill='white'/%3E%3Ccircle cx='8' cy='18' r='3' fill='white'/%3E%3Ccircle cx='24' cy='6' r='3' fill='white'/%3E%3Ccircle cx='40' cy='18' r='3' fill='white'/%3E%3C/svg%3E") no-repeat center/contain}
 
 /* STATUS PANE */
+#muscle-bg{
+  position:fixed;top:0;left:0;right:0;bottom:70px;
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;z-index:0;
+}
+#muscle-bg svg{height:68vh;max-height:480px;width:auto}
+#status-content{position:relative;z-index:1}
 .status-inner{padding:16px 16px 80px}
 .status-hero{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 0 14px}
 .status-rank-img{width:180px;height:180px;object-fit:contain}
@@ -922,6 +929,71 @@ body::after{
 
 <!-- STATUS PANE -->
 <div id="pane-status" class="pane">
+  <div id="muscle-bg">
+    <svg id="muscle-svg" viewBox="0 0 200 560" xmlns="http://www.w3.org/2000/svg">
+      <!-- HEAD -->
+      <circle cx="100" cy="38" r="26" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
+      <!-- NECK -->
+      <path d="M92,63 L92,88 Q100,93 108,88 L108,63 Q100,58 92,63 Z" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
+      <!-- LEFT FOREARM -->
+      <path d="M42,244 C38,260 36,280 38,298 C40,314 46,324 54,326 C60,328 66,320 68,306 C70,290 68,266 64,250 Z" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
+      <!-- RIGHT FOREARM -->
+      <path d="M158,244 C162,260 164,280 162,298 C160,314 154,324 146,326 C140,328 134,320 132,306 C130,290 132,266 136,250 Z" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
+      <!-- LEFT HAND -->
+      <ellipse cx="52" cy="346" rx="13" ry="18" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
+      <!-- RIGHT HAND -->
+      <ellipse cx="148" cy="346" rx="13" ry="18" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
+      <!-- LEFT CALF -->
+      <path d="M68,428 C62,446 60,468 63,486 C65,500 72,510 82,512 C88,514 92,508 92,494 C92,478 90,454 86,438 Z" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
+      <!-- RIGHT CALF -->
+      <path d="M132,428 C138,446 140,468 137,486 C135,500 128,510 118,512 C112,514 108,508 108,494 C108,478 110,454 114,438 Z" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
+      <!-- LEFT FOOT -->
+      <ellipse cx="82" cy="522" rx="20" ry="10" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
+      <!-- RIGHT FOOT -->
+      <ellipse cx="118" cy="522" rx="20" ry="10" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
+
+      <!-- MUSCLE-SHOULDER: deltoids -->
+      <g id="muscle-shoulder" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2">
+        <path d="M64,90 C52,82 36,94 36,118 C36,138 48,152 60,150 C68,148 72,138 70,124 C68,110 66,98 64,90 Z"/>
+        <path d="M136,90 C148,82 164,94 164,118 C164,138 152,152 140,150 C132,148 128,138 130,124 C132,110 134,98 136,90 Z"/>
+      </g>
+
+      <!-- MUSCLE-BACK: lats (visible as side panels) -->
+      <g id="muscle-back" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2">
+        <path d="M64,116 C56,134 54,160 56,184 C58,204 68,216 80,218 C84,219 88,214 88,206 L88,174 C78,160 70,142 66,124 Z"/>
+        <path d="M136,116 C144,134 146,160 144,184 C142,204 132,216 120,218 C116,219 112,214 112,206 L112,174 C122,160 130,142 134,124 Z"/>
+      </g>
+
+      <!-- MUSCLE-CHEST: pectorals -->
+      <g id="muscle-chest" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2">
+        <path d="M100,92 C86,90 68,98 64,116 C60,134 62,152 70,164 C76,172 88,176 100,174 Z"/>
+        <path d="M100,92 C114,90 132,98 136,116 C140,134 138,152 130,164 C124,172 112,176 100,174 Z"/>
+      </g>
+
+      <!-- MUSCLE-ABS: rectus abdominis -->
+      <g id="muscle-abs" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2">
+        <path d="M88,174 C83,188 81,212 81,236 C81,260 84,280 92,292 C96,300 100,304 100,304 C100,304 104,300 108,292 C116,280 119,260 119,236 C119,212 117,188 112,174 Z"/>
+        <line x1="84" y1="199" x2="116" y2="199" fill="none" stroke-width="1" opacity="0.5"/>
+        <line x1="83" y1="224" x2="117" y2="224" fill="none" stroke-width="1" opacity="0.5"/>
+        <line x1="83" y1="249" x2="117" y2="249" fill="none" stroke-width="1" opacity="0.5"/>
+        <line x1="100" y1="174" x2="100" y2="304" fill="none" stroke-width="0.8" opacity="0.3"/>
+      </g>
+
+      <!-- MUSCLE-ARMS: upper arms (biceps/triceps) -->
+      <g id="muscle-arms" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2">
+        <path d="M60,150 C50,158 42,176 40,196 C38,216 40,236 46,248 C50,256 58,260 66,258 C72,256 76,246 76,230 C76,212 74,188 72,168 C70,152 64,146 60,150 Z"/>
+        <path d="M140,150 C150,158 158,176 160,196 C162,216 160,236 154,248 C150,256 142,260 134,258 C128,256 124,246 124,230 C124,212 126,188 128,168 C130,152 136,146 140,150 Z"/>
+      </g>
+
+      <!-- MUSCLE-LEGS: quadriceps -->
+      <g id="muscle-legs" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2">
+        <path d="M81,306 C73,320 67,346 65,372 C63,398 66,422 74,434 C79,442 87,446 95,444 C100,442 100,432 100,420 L100,380 C99,352 97,322 94,308 Z"/>
+        <path d="M119,306 C127,320 133,346 135,372 C137,398 134,422 126,434 C121,442 113,446 105,444 C100,442 100,432 100,420 L100,380 C101,352 103,322 106,308 Z"/>
+        <line x1="89" y1="326" x2="78" y2="418" fill="none" stroke-width="0.8" opacity="0.3"/>
+        <line x1="111" y1="326" x2="122" y2="418" fill="none" stroke-width="0.8" opacity="0.3"/>
+      </g>
+    </svg>
+  </div>
   <div id="status-content"></div>
 </div>
 
@@ -1000,7 +1072,7 @@ body::after{
 // ── I18N ──────────────────────────────────────────────────
 const LANGS = {
   ja:{
-    tab_record:'トレーニング',tab_history:'履歴',tab_progress:'進捗',tab_status:'ステータス',
+    tab_record:'トレーニング',tab_history:'履歴',tab_progress:'進捗',tab_status:'ランク',
     grp_placeholder:'部位を選択',sec_group:'部位',sec_exercise:'種目',sec_weight:'重量',sec_rest:'休憩時間',
     ph_ex:'例: ベンチプレス',
     lbl_reps:'回数',lbl_sets:'セット数',u_reps:'回',u_sets:'セット',
@@ -1021,7 +1093,7 @@ const LANGS = {
     hf_all:'全て',hf_workout:'ワークアウト',hf_sleep:'睡眠',m_group:'部位別',
   },
   en:{
-    tab_record:'TRAINING',tab_history:'HISTORY',tab_progress:'PROGRESS',tab_status:'STATUS',
+    tab_record:'TRAINING',tab_history:'HISTORY',tab_progress:'PROGRESS',tab_status:'RANK',
     grp_placeholder:'SELECT GROUP',sec_group:'MUSCLE GROUP',sec_exercise:'EXERCISE',sec_weight:'WEIGHT',sec_rest:'REST TIME',
     ph_ex:'e.g. Bench Press',
     lbl_reps:'REPS',lbl_sets:'SETS',u_reps:'reps',u_sets:'sets',
@@ -1042,7 +1114,7 @@ const LANGS = {
     hf_all:'ALL',hf_workout:'WORKOUT',hf_sleep:'SLEEP',m_group:'By Group',
   },
   ko:{
-    tab_record:'트레이닝',tab_history:'히스토리',tab_progress:'진행',tab_status:'상태',
+    tab_record:'트레이닝',tab_history:'히스토리',tab_progress:'진행',tab_status:'랭크',
     stat_total:'총 기록',stat_week:'이번 주',stat_streak:'연속',
     grp_placeholder:'부위 선택',sec_exercise:'운동',sec_weight:'중량',sec_rest:'휴식 시간',
     ph_ex:'예: 벤치프레스',
@@ -1064,7 +1136,7 @@ const LANGS = {
     hf_all:'전체',hf_workout:'운동',hf_sleep:'수면',m_group:'부위별',
   },
   zh:{
-    tab_record:'训练',tab_history:'历史',tab_progress:'进度',tab_status:'状态',
+    tab_record:'训练',tab_history:'历史',tab_progress:'进度',tab_status:'排名',
     stat_total:'总计',stat_week:'本周',stat_streak:'连续',
     grp_placeholder:'选择部位',sec_exercise:'动作',sec_weight:'重量',sec_rest:'休息时间',
     ph_ex:'例如: 卧推',
@@ -1086,7 +1158,7 @@ const LANGS = {
     hf_all:'全部',hf_workout:'训练',hf_sleep:'睡眠',m_group:'部位',
   },
   es:{
-    tab_record:'ENTRENAMIENTO',tab_history:'HISTORIAL',tab_progress:'PROGRESO',tab_status:'ESTADO',
+    tab_record:'ENTRENAMIENTO',tab_history:'HISTORIAL',tab_progress:'PROGRESO',tab_status:'RANGO',
     stat_total:'TOTAL',stat_week:'ESTA SEMANA',stat_streak:'RACHA',
     grp_placeholder:'SELECCIONAR',sec_exercise:'EJERCICIO',sec_weight:'PESO',sec_rest:'DESCANSO',
     ph_ex:'Ej: Press de banca',
@@ -1985,6 +2057,32 @@ function saveWoRecord(partial = false){
 }
 
 // ── STATUS ────────────────────────────────────────────────
+const MUSCLE_GROUPS = {
+  'muscle-chest':    ['chest'],
+  'muscle-back':     ['back'],
+  'muscle-shoulder': ['shoulder'],
+  'muscle-arms':     ['arms'],
+  'muscle-legs':     ['legs'],
+  'muscle-abs':      ['abs'],
+};
+function highlightMuscles(recs){
+  const now = Date.now();
+  const week = 7 * 24 * 3600 * 1000;
+  const active = new Set(
+    recs.filter(r => (now - new Date(r.date).getTime()) < week)
+        .map(r => r.group).filter(Boolean)
+  );
+  const AF = 'rgba(102,126,234,0.22)', AS = 'rgba(102,126,234,0.38)';
+  const DF = 'rgba(102,126,234,0.04)', DS = 'rgba(102,126,234,0.08)';
+  Object.entries(MUSCLE_GROUPS).forEach(([id, groups]) => {
+    const el = document.getElementById(id);
+    if(!el) return;
+    const hit = groups.some(g => active.has(g));
+    el.setAttribute('fill',   hit ? AF : DF);
+    el.setAttribute('stroke', hit ? AS : DS);
+  });
+}
+
 function renderStatus(){
   const rank=getRank(loadRecs());
   const isJa=lang==='ja'||lang==='ko'||lang==='zh';
@@ -2039,6 +2137,7 @@ function renderStatus(){
   }).join('');
 
   el.innerHTML=`<div class="status-inner">${heroHtml}${progHtml}<div class="status-list-ttl">${isJa?'全ランク':'ALL RANKS'}</div><div class="status-rank-list">${listHtml}</div></div>`;
+  highlightMuscles(loadRecs());
 }
 
 // ── TABS ──────────────────────────────────────────────────
