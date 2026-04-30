@@ -93,17 +93,17 @@ body::after{
 }
 .tb{
   flex:1;background:none;border:none;border-bottom:2px solid transparent;
-  color:#555;font-family:'Bebas Neue',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;
-  padding:8px 4px 6px;cursor:pointer;transition:all .2s;
-  display:flex;flex-direction:column;align-items:center;gap:3px;
-  position:relative;
+  color:#555;font-family:'Bebas Neue',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;
+  padding:6px 2px;cursor:pointer;transition:all .2s;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  position:relative;white-space:nowrap;
 }
-.tb::before{font-size:20px;line-height:1;opacity:.45;transition:opacity .2s}
+.tb::before{font-size:18px;line-height:1;opacity:.45;transition:opacity .2s}
 .tb.on::before{opacity:1;filter:drop-shadow(0 0 4px rgba(102,126,234,0.5))}
-#tb-record::before{content:'';display:block;width:20px;height:12px;margin:0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 24'%3E%3Crect x='0' y='2' width='7' height='20' rx='2' fill='white'/%3E%3Crect x='7' y='5' width='4' height='14' rx='1' fill='white'/%3E%3Crect x='11' y='9' width='18' height='6' rx='3' fill='white'/%3E%3Crect x='29' y='5' width='4' height='14' rx='1' fill='white'/%3E%3Crect x='33' y='2' width='7' height='20' rx='2' fill='white'/%3E%3C/svg%3E") no-repeat center/contain}
-#tb-history::before{content:'';display:block;width:20px;height:20px;margin:0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='19' stroke='white' stroke-width='3.5' fill='none'/%3E%3Cline x1='24' y1='24' x2='24' y2='11' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='24' y1='24' x2='33' y2='30' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/contain}
-#tb-progress::before{content:'';display:block;width:20px;height:20px;margin:0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect x='4' y='28' width='11' height='16' rx='2' fill='white'/%3E%3Crect x='18' y='18' width='11' height='26' rx='2' fill='white'/%3E%3Crect x='32' y='8' width='11' height='36' rx='2' fill='white'/%3E%3C/svg%3E") no-repeat center/contain}
-#tb-status::before{content:'';display:block;width:20px;height:20px;margin:0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M4 38 L8 18 L18 28 L24 6 L30 28 L40 18 L44 38 Z' fill='white'/%3E%3Crect x='6' y='40' width='36' height='5' rx='2' fill='white'/%3E%3Ccircle cx='8' cy='18' r='3' fill='white'/%3E%3Ccircle cx='24' cy='6' r='3' fill='white'/%3E%3Ccircle cx='40' cy='18' r='3' fill='white'/%3E%3C/svg%3E") no-repeat center/contain}
+#tb-record::before{content:'';display:block;width:18px;height:11px;margin:0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 24'%3E%3Crect x='0' y='2' width='7' height='20' rx='2' fill='white'/%3E%3Crect x='7' y='5' width='4' height='14' rx='1' fill='white'/%3E%3Crect x='11' y='9' width='18' height='6' rx='3' fill='white'/%3E%3Crect x='29' y='5' width='4' height='14' rx='1' fill='white'/%3E%3Crect x='33' y='2' width='7' height='20' rx='2' fill='white'/%3E%3C/svg%3E") no-repeat center/contain}
+#tb-history::before{content:'';display:block;width:18px;height:18px;margin:0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='19' stroke='white' stroke-width='3.5' fill='none'/%3E%3Cline x1='24' y1='24' x2='24' y2='11' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='24' y1='24' x2='33' y2='30' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/contain}
+#tb-progress::before{content:'';display:block;width:18px;height:18px;margin:0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect x='4' y='28' width='11' height='16' rx='2' fill='white'/%3E%3Crect x='18' y='18' width='11' height='26' rx='2' fill='white'/%3E%3Crect x='32' y='8' width='11' height='36' rx='2' fill='white'/%3E%3C/svg%3E") no-repeat center/contain}
+#tb-status::before{content:'';display:block;width:18px;height:18px;margin:0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M4 38 L8 18 L18 28 L24 6 L30 28 L40 18 L44 38 Z' fill='white'/%3E%3Crect x='6' y='40' width='36' height='5' rx='2' fill='white'/%3E%3Ccircle cx='8' cy='18' r='3' fill='white'/%3E%3Ccircle cx='24' cy='6' r='3' fill='white'/%3E%3Ccircle cx='40' cy='18' r='3' fill='white'/%3E%3C/svg%3E") no-repeat center/contain}
 
 /* STATUS PANE */
 #muscle-bg{
@@ -370,6 +370,10 @@ body::after{
 .mb.on{background:var(--ac2);border-color:var(--ac2);color:#000}
 .chart-yl{font-size:12px;color:#777;letter-spacing:1px;margin-bottom:4px}
 .chart-wrap{position:relative;height:220px;margin-bottom:4px}
+
+/* CHARACTER IMAGE */
+#char-wrap{text-align:center;padding:10px 0 0;line-height:0}
+#char-img{width:120px;display:inline-block;opacity:0.9;mix-blend-mode:screen;filter:drop-shadow(0 0 12px rgba(102,126,234,0.25))}
 
 /* SUB-TABS (RECORD pane) */
 .subtabs{display:flex;gap:8px;padding:7px 16px;border-bottom:1px solid var(--b1);background:var(--bg)}
@@ -723,6 +727,9 @@ body::after{
 
 <!-- RECORD PANE -->
 <div id="pane-record" class="pane on">
+  <div id="char-wrap">
+    <img src="looksmaxfocus.png.png" id="char-img" alt="" draggable="false">
+  </div>
   <!-- Sub-tab switcher -->
   <div class="subtabs">
     <button class="stb on" id="stb-workout" onclick="switchSub('workout')" data-i18n="tab_record"></button>
@@ -1072,7 +1079,7 @@ body::after{
 // ── I18N ──────────────────────────────────────────────────
 const LANGS = {
   ja:{
-    tab_record:'トレーニング',tab_history:'履歴',tab_progress:'進捗',tab_status:'ランク',
+    tab_record:'記録',tab_history:'履歴',tab_progress:'進捗',tab_status:'ランク',
     grp_placeholder:'部位を選択',sec_group:'部位',sec_exercise:'種目',sec_weight:'重量',sec_rest:'休憩時間',
     ph_ex:'例: ベンチプレス',
     lbl_reps:'回数',lbl_sets:'セット数',u_reps:'回',u_sets:'セット',
@@ -1093,7 +1100,7 @@ const LANGS = {
     hf_all:'全て',hf_workout:'ワークアウト',hf_sleep:'睡眠',m_group:'部位別',
   },
   en:{
-    tab_record:'TRAINING',tab_history:'HISTORY',tab_progress:'PROGRESS',tab_status:'RANK',
+    tab_record:'REC',tab_history:'LOG',tab_progress:'STATS',tab_status:'RANK',
     grp_placeholder:'SELECT GROUP',sec_group:'MUSCLE GROUP',sec_exercise:'EXERCISE',sec_weight:'WEIGHT',sec_rest:'REST TIME',
     ph_ex:'e.g. Bench Press',
     lbl_reps:'REPS',lbl_sets:'SETS',u_reps:'reps',u_sets:'sets',
@@ -1114,7 +1121,7 @@ const LANGS = {
     hf_all:'ALL',hf_workout:'WORKOUT',hf_sleep:'SLEEP',m_group:'By Group',
   },
   ko:{
-    tab_record:'트레이닝',tab_history:'히스토리',tab_progress:'진행',tab_status:'랭크',
+    tab_record:'기록',tab_history:'기록부',tab_progress:'진행',tab_status:'랭크',
     stat_total:'총 기록',stat_week:'이번 주',stat_streak:'연속',
     grp_placeholder:'부위 선택',sec_exercise:'운동',sec_weight:'중량',sec_rest:'휴식 시간',
     ph_ex:'예: 벤치프레스',
@@ -1158,7 +1165,7 @@ const LANGS = {
     hf_all:'全部',hf_workout:'训练',hf_sleep:'睡眠',m_group:'部位',
   },
   es:{
-    tab_record:'ENTRENAMIENTO',tab_history:'HISTORIAL',tab_progress:'PROGRESO',tab_status:'RANGO',
+    tab_record:'REC',tab_history:'LOG',tab_progress:'PROGRESO',tab_status:'RANGO',
     stat_total:'TOTAL',stat_week:'ESTA SEMANA',stat_streak:'RACHA',
     grp_placeholder:'SELECCIONAR',sec_exercise:'EJERCICIO',sec_weight:'PESO',sec_rest:'DESCANSO',
     ph_ex:'Ej: Press de banca',
