@@ -282,17 +282,23 @@ body::after{
 .ncv:active{opacity:.7}
 .ncu{font-size:11px;color:#aaa;text-align:center;padding-bottom:2px}
 
-/* REST SELECT */
-#rest-select{
-  width:120px;height:38px;background:#161616;border:1px solid #2a2a2a;
-  color:#f0f0f0;font-size:13px;font-family:'Space Grotesk',sans-serif;
-  border-radius:8px;padding:0 10px;outline:none;cursor:pointer;
-  -webkit-appearance:none;appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 10px center;
+/* REST VAL */
+.rest-val{
+  font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--ac2);
+  letter-spacing:2px;line-height:1;min-width:80px;text-align:right;cursor:pointer;
+  border-bottom:2px solid rgba(102,126,234,0.3);padding-bottom:2px;
+  transition:opacity .1s;
 }
-#rest-select:focus{border-color:var(--ac)}
-#rest-select option{background:#161616;color:#f0f0f0}
+.rest-val:active{opacity:.7}
+/* PICKER LABEL ROW */
+#picker-lbl-row{
+  display:none;padding:8px 20px 0;
+}
+.picker-drum-lbl{
+  flex:1;text-align:center;
+  font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:1.5px;
+  color:#666;font-weight:600;text-transform:uppercase;
+}
 /* REST PRESETS */
 .rp-row{display:flex;gap:6px}
 .rpb{
@@ -785,17 +791,10 @@ body::after{
     <div class="sec" style="padding:8px 16px">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <span style="font-size:11px;letter-spacing:2px;color:#999;font-weight:600;white-space:nowrap;flex-shrink:0" data-i18n="sec_rest"></span>
-        <select id="rest-select" onchange="setRest(Number(this.value))">
-          <option value="30">30秒</option>
-          <option value="60">60秒</option>
-          <option value="90" selected>90秒</option>
-          <option value="120">2分</option>
-          <option value="180">3分</option>
-          <option value="300">5分</option>
-          <option value="600">10分</option>
-          <option value="900">15分</option>
-          <option value="1200">20分</option>
-        </select>
+        <div style="text-align:right">
+          <div id="rest-val" class="rest-val" onclick="editRest()">1:30</div>
+          <span class="val-hint">タップで選択</span>
+        </div>
       </div>
     </div>
 
@@ -1201,6 +1200,26 @@ let _pkCfg=null;
 function openPicker(cfg){
   _pkCfg=cfg;
   document.getElementById('picker-ttl').textContent=cfg.title;
+  // Drum label row
+  const lblRow=document.getElementById('picker-lbl-row');
+  if(cfg.drums.some(d=>d.label)){
+    lblRow.innerHTML='';
+    lblRow.style.display='flex';
+    cfg.drums.forEach((drum,di)=>{
+      if(di>0&&cfg.sep){
+        const sp=document.createElement('div');
+        sp.style.cssText='flex-shrink:0;width:20px';
+        lblRow.appendChild(sp);
+      }
+      const lbl=document.createElement('div');
+      lbl.className='picker-drum-lbl';
+      lbl.textContent=drum.label||'';
+      lblRow.appendChild(lbl);
+    });
+  } else {
+    lblRow.style.display='none';
+    lblRow.innerHTML='';
+  }
   const wrap=document.getElementById('picker-drums');
   wrap.innerHTML='';
   cfg.drums.forEach((drum,di)=>{
@@ -1259,6 +1278,8 @@ function closePicker(){
   window.scrollTo(0,parseInt(scrollY||'0')*-1);
   const ov=document.getElementById('picker-ov');
   ov.classList.remove('open'); ov.style.display='none';
+  const lblRow=document.getElementById('picker-lbl-row');
+  lblRow.style.display='none'; lblRow.innerHTML='';
   _pkCfg=null;
 }
 
@@ -1397,11 +1418,33 @@ function saveSleep(){
   document.querySelectorAll('.qlb').forEach(b => b.classList.remove('on'));
 }
 
-// ── REST PRESETS ──────────────────────────────────────────
+// ── REST ──────────────────────────────────────────────────
+function fmtRest(s){
+  const m=Math.floor(s/60), sec=s%60;
+  return m+':'+String(sec).padStart(2,'0');
+}
 function setRest(s){
-  curRest = s;
-  const sel = document.getElementById('rest-select');
-  if(sel) sel.value = s;
+  curRest=s;
+  const el=document.getElementById('rest-val');
+  if(el) el.textContent=fmtRest(s);
+}
+function editRest(){
+  const left5=Array.from({length:13},(_,i)=>({label:String(i*5),value:i*5}));
+  const min1=Array.from({length:10},(_,i)=>({label:String(i),value:i}));
+  const sec5=[0,5,10,15,20,25,30,35,40,45,50,55].map(v=>({label:String(v).padStart(2,'0'),value:v}));
+  const roundedSec=Math.min(55,Math.round((curRest%60)/5)*5);
+  const remainMins=Math.floor((curRest-roundedSec)/60);
+  const leftMins=Math.min(60,Math.floor(remainMins/5)*5);
+  const midMins=Math.min(9,remainMins-leftMins);
+  openPicker({
+    title:t('sec_rest'),
+    drums:[
+      {items:left5, current:leftMins/5,   label:'×5分'},
+      {items:min1,  current:midMins,       label:'分'},
+      {items:sec5,  current:roundedSec/5,  label:'秒'},
+    ],
+    onConfirm:([lv,mv,rv])=>setRest(lv*60+mv*60+rv)
+  });
 }
 
 // ── AUTOCOMPLETE ──────────────────────────────────────────
@@ -2438,6 +2481,7 @@ function initLongPress(){
       <span id="picker-ttl"></span>
       <button class="picker-x" onclick="closePicker()">✕</button>
     </div>
+    <div id="picker-lbl-row"></div>
     <div id="picker-stage">
       <div id="picker-drums"></div>
       <div class="pk-grad top"></div>
