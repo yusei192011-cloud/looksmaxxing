@@ -106,12 +106,17 @@ body::after{
 #tb-status::before{content:'';display:block;width:18px;height:18px;margin:0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M4 38 L8 18 L18 28 L24 6 L30 28 L40 18 L44 38 Z' fill='white'/%3E%3Crect x='6' y='40' width='36' height='5' rx='2' fill='white'/%3E%3Ccircle cx='8' cy='18' r='3' fill='white'/%3E%3Ccircle cx='24' cy='6' r='3' fill='white'/%3E%3Ccircle cx='40' cy='18' r='3' fill='white'/%3E%3C/svg%3E") no-repeat center/contain}
 
 /* STATUS PANE */
-#muscle-bg{
-  position:fixed;top:0;left:0;right:0;bottom:70px;
-  display:flex;align-items:center;justify-content:center;
+#pane-status::before{
+  content:'';position:fixed;top:0;left:0;right:0;bottom:70px;
+  background:radial-gradient(ellipse at center,rgba(102,126,234,0.08) 0%,rgba(0,0,0,0) 70%);
   pointer-events:none;z-index:0;
 }
-#muscle-bg svg{height:68vh;max-height:480px;width:auto}
+#pane-status::after{
+  content:'';position:fixed;top:0;left:0;right:0;bottom:70px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104'%3E%3Cg stroke='%23667eea' stroke-opacity='0.05' stroke-width='.7' fill='none'%3E%3Cpolygon points='0,0 60,0 30,52'/%3E%3Cpolygon points='60,0 120,0 90,52'/%3E%3Cpolygon points='30,52 90,52 60,0'/%3E%3Cpolygon points='30,52 90,52 60,104'/%3E%3Cpolygon points='0,104 60,104 30,52'/%3E%3Cpolygon points='60,104 120,104 90,52'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:120px 104px;
+  pointer-events:none;z-index:0;
+}
 #status-content{position:relative;z-index:1}
 .status-inner{padding:16px 16px 80px}
 .status-hero{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 0 14px}
@@ -539,16 +544,33 @@ body::after{
 .woc:hover{background:var(--b2)}.woc:disabled{opacity:.3;cursor:default}
 .wo-setinfo{
   display:flex;flex-direction:column;align-items:center;
-  padding:20px 16px 10px;gap:4px;flex-shrink:0;
+  padding:8px 16px 6px;gap:3px;flex-shrink:0;
 }
 .wo-setlbl{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:var(--t2)}
 .wo-setnum{font-family:'Bebas Neue',sans-serif;font-size:72px;color:var(--ac2);letter-spacing:4px;line-height:1}
 .wo-exname{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:var(--ac);margin-top:4px}
 .wo-winfo{font-size:17px;color:var(--t2);font-weight:600}
 
-/* Phase areas */
-.wo-phase{flex:1;display:none;flex-direction:column;align-items:center;justify-content:center;padding:16px}
+/* Progress dots */
+.wo-setlbl-sm{font-size:12px;color:#777;letter-spacing:1px;font-family:'Space Grotesk',sans-serif}
+.wo-dots{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:4px}
+.wo-dot{width:12px;height:12px;border-radius:50%;background:none;border:2px solid #555;transition:all .3s;flex-shrink:0}
+.wo-dot.done{background:var(--ac);border-color:var(--ac)}
+
+/* Workout main area (model + phase overlay) */
+#wo-main{flex:1;position:relative;overflow:hidden;min-height:0}
+.wo-phase{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:16px;z-index:1}
 .wo-phase.on{display:flex}
+
+/* Body image background */
+#wo-body-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:0}
+.muscle-container{margin:0 auto}
+.muscle-img{height:48vh;max-height:400px;width:auto;display:block;animation:muscle-glow 2s ease-in-out infinite}
+.woh,.wo-setinfo,#wo-action{position:relative;z-index:1}
+@keyframes muscle-glow{
+  0%,100%{opacity:.7;filter:drop-shadow(0 0 6px rgba(102,126,234,0.3))}
+  50%{opacity:1;filter:drop-shadow(0 0 14px rgba(102,126,234,0.6))}
+}
 
 /* Timer */
 .timer-wrap{position:relative;width:200px;height:200px}
@@ -936,71 +958,6 @@ body::after{
 
 <!-- STATUS PANE -->
 <div id="pane-status" class="pane">
-  <div id="muscle-bg">
-    <svg id="muscle-svg" viewBox="0 0 200 560" xmlns="http://www.w3.org/2000/svg">
-      <!-- HEAD -->
-      <circle cx="100" cy="38" r="26" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
-      <!-- NECK -->
-      <path d="M92,63 L92,88 Q100,93 108,88 L108,63 Q100,58 92,63 Z" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
-      <!-- LEFT FOREARM -->
-      <path d="M42,244 C38,260 36,280 38,298 C40,314 46,324 54,326 C60,328 66,320 68,306 C70,290 68,266 64,250 Z" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
-      <!-- RIGHT FOREARM -->
-      <path d="M158,244 C162,260 164,280 162,298 C160,314 154,324 146,326 C140,328 134,320 132,306 C130,290 132,266 136,250 Z" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
-      <!-- LEFT HAND -->
-      <ellipse cx="52" cy="346" rx="13" ry="18" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
-      <!-- RIGHT HAND -->
-      <ellipse cx="148" cy="346" rx="13" ry="18" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
-      <!-- LEFT CALF -->
-      <path d="M68,428 C62,446 60,468 63,486 C65,500 72,510 82,512 C88,514 92,508 92,494 C92,478 90,454 86,438 Z" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
-      <!-- RIGHT CALF -->
-      <path d="M132,428 C138,446 140,468 137,486 C135,500 128,510 118,512 C112,514 108,508 108,494 C108,478 110,454 114,438 Z" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
-      <!-- LEFT FOOT -->
-      <ellipse cx="82" cy="522" rx="20" ry="10" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
-      <!-- RIGHT FOOT -->
-      <ellipse cx="118" cy="522" rx="20" ry="10" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2"/>
-
-      <!-- MUSCLE-SHOULDER: deltoids -->
-      <g id="muscle-shoulder" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2">
-        <path d="M64,90 C52,82 36,94 36,118 C36,138 48,152 60,150 C68,148 72,138 70,124 C68,110 66,98 64,90 Z"/>
-        <path d="M136,90 C148,82 164,94 164,118 C164,138 152,152 140,150 C132,148 128,138 130,124 C132,110 134,98 136,90 Z"/>
-      </g>
-
-      <!-- MUSCLE-BACK: lats (visible as side panels) -->
-      <g id="muscle-back" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2">
-        <path d="M64,116 C56,134 54,160 56,184 C58,204 68,216 80,218 C84,219 88,214 88,206 L88,174 C78,160 70,142 66,124 Z"/>
-        <path d="M136,116 C144,134 146,160 144,184 C142,204 132,216 120,218 C116,219 112,214 112,206 L112,174 C122,160 130,142 134,124 Z"/>
-      </g>
-
-      <!-- MUSCLE-CHEST: pectorals -->
-      <g id="muscle-chest" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2">
-        <path d="M100,92 C86,90 68,98 64,116 C60,134 62,152 70,164 C76,172 88,176 100,174 Z"/>
-        <path d="M100,92 C114,90 132,98 136,116 C140,134 138,152 130,164 C124,172 112,176 100,174 Z"/>
-      </g>
-
-      <!-- MUSCLE-ABS: rectus abdominis -->
-      <g id="muscle-abs" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2">
-        <path d="M88,174 C83,188 81,212 81,236 C81,260 84,280 92,292 C96,300 100,304 100,304 C100,304 104,300 108,292 C116,280 119,260 119,236 C119,212 117,188 112,174 Z"/>
-        <line x1="84" y1="199" x2="116" y2="199" fill="none" stroke-width="1" opacity="0.5"/>
-        <line x1="83" y1="224" x2="117" y2="224" fill="none" stroke-width="1" opacity="0.5"/>
-        <line x1="83" y1="249" x2="117" y2="249" fill="none" stroke-width="1" opacity="0.5"/>
-        <line x1="100" y1="174" x2="100" y2="304" fill="none" stroke-width="0.8" opacity="0.3"/>
-      </g>
-
-      <!-- MUSCLE-ARMS: upper arms (biceps/triceps) -->
-      <g id="muscle-arms" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2">
-        <path d="M60,150 C50,158 42,176 40,196 C38,216 40,236 46,248 C50,256 58,260 66,258 C72,256 76,246 76,230 C76,212 74,188 72,168 C70,152 64,146 60,150 Z"/>
-        <path d="M140,150 C150,158 158,176 160,196 C162,216 160,236 154,248 C150,256 142,260 134,258 C128,256 124,246 124,230 C124,212 126,188 128,168 C130,152 136,146 140,150 Z"/>
-      </g>
-
-      <!-- MUSCLE-LEGS: quadriceps -->
-      <g id="muscle-legs" fill="rgba(102,126,234,0.06)" stroke="rgba(102,126,234,0.1)" stroke-width="1.2">
-        <path d="M81,306 C73,320 67,346 65,372 C63,398 66,422 74,434 C79,442 87,446 95,444 C100,442 100,432 100,420 L100,380 C99,352 97,322 94,308 Z"/>
-        <path d="M119,306 C127,320 133,346 135,372 C137,398 134,422 126,434 C121,442 113,446 105,444 C100,442 100,432 100,420 L100,380 C101,352 103,322 106,308 Z"/>
-        <line x1="89" y1="326" x2="78" y2="418" fill="none" stroke-width="0.8" opacity="0.3"/>
-        <line x1="111" y1="326" x2="122" y2="418" fill="none" stroke-width="0.8" opacity="0.3"/>
-      </g>
-    </svg>
-  </div>
   <div id="status-content"></div>
 </div>
 
@@ -1015,40 +972,49 @@ body::after{
   </div>
 
   <div class="wo-setinfo">
-    <div class="wo-setlbl" data-i18n="wo_set_lbl"></div>
-    <div class="wo-setnum" id="wo-setnum">1 / 3</div>
+    <div class="wo-setlbl-sm" id="wo-setlbl-sm">SET 1 / 3</div>
+    <div class="wo-dots" id="wo-dots"></div>
     <div class="wo-exname" id="wo-exname"></div>
     <div class="wo-winfo" id="wo-winfo"></div>
   </div>
 
-  <!-- ACTIVE: empty spacer, DONE button shown in action strip -->
-  <div class="wo-phase" id="ph-active"></div>
-
-  <!-- REST: timer circle -->
-  <div class="wo-phase" id="ph-rest">
-    <div class="timer-wrap">
-      <svg width="200" height="200" viewBox="0 0 200 200">
-        <circle id="t-bg" cx="100" cy="100" r="88"/>
-        <circle id="t-arc" cx="100" cy="100" r="88" stroke-dasharray="552.92" stroke-dashoffset="0"/>
-      </svg>
-      <div class="timer-over">
-        <div id="t-disp">1:30</div>
-        <div class="t-rl" data-i18n="wo_rest_lbl"></div>
+  <div id="wo-main">
+    <!-- Body image background -->
+    <div id="wo-body-bg">
+      <div class="muscle-container">
+        <img src="muscle_body.png.png" class="muscle-img" id="wo-muscle-img" alt="" draggable="false">
       </div>
     </div>
-  </div>
 
-  <!-- WAIT: rest finished, waiting for NEXT SET -->
-  <div class="wo-phase" id="ph-wait" style="gap:12px">
-    <span class="wo-fire"></span>
-    <div class="wo-done-txt" data-i18n="wo_rest_done"></div>
-  </div>
+    <!-- ACTIVE: model visible, DONE button in action strip -->
+    <div class="wo-phase" id="ph-active"></div>
 
-  <!-- COMPLETE -->
-  <div class="wo-phase" id="ph-complete" style="text-align:center;gap:0">
-    <div class="co-ic"></div>
-    <div class="co-ttl" data-i18n="wo_complete"></div>
-    <div class="co-det" id="co-det"></div>
+    <!-- REST: timer circle over model -->
+    <div class="wo-phase" id="ph-rest">
+      <div class="timer-wrap">
+        <svg width="200" height="200" viewBox="0 0 200 200">
+          <circle id="t-bg" cx="100" cy="100" r="88"/>
+          <circle id="t-arc" cx="100" cy="100" r="88" stroke-dasharray="552.92" stroke-dashoffset="0"/>
+        </svg>
+        <div class="timer-over">
+          <div id="t-disp">1:30</div>
+          <div class="t-rl" data-i18n="wo_rest_lbl"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WAIT: rest finished -->
+    <div class="wo-phase" id="ph-wait" style="gap:12px">
+      <span class="wo-fire"></span>
+      <div class="wo-done-txt" data-i18n="wo_rest_done"></div>
+    </div>
+
+    <!-- COMPLETE -->
+    <div class="wo-phase" id="ph-complete" style="text-align:center;gap:0">
+      <div class="co-ic"></div>
+      <div class="co-ttl" data-i18n="wo_complete"></div>
+      <div class="co-det" id="co-det"></div>
+    </div>
   </div>
 
   <div id="wo-action">
@@ -1839,13 +1805,37 @@ function closeWo(){
 
 function onUnload(e){ e.preventDefault(); e.returnValue = ''; }
 
+const MUSCLE_IMGS = ['chest','shoulder','arms','abs','legs','back'];
+const TRICEPS_EX  = ['トライセップス','フレンチプレス','スカルクラッシャー','Triceps','French Press','Skull Crusher'];
+function setWoMuscle(group, exercise){
+  const img = document.getElementById('wo-muscle-img');
+  if(!img) return;
+  if(group === 'arms' && TRICEPS_EX.includes(exercise)){
+    img.src = 'muscle_arms2.ping.png';
+    return;
+  }
+  const name = MUSCLE_IMGS.includes(group) ? group : 'body';
+  img.src = `muscle_${name}.png.png`;
+}
+
 function refreshWoUI(){
   if(!WS) return;
   const {exercise, weight, reps, sets, curSet, phase} = WS;
 
-  document.getElementById('wo-setnum').textContent = `${curSet} / ${sets}`;
+  const lblEl = document.getElementById('wo-setlbl-sm');
+  const dotsEl = document.getElementById('wo-dots');
+  if(lblEl) lblEl.textContent = `SET ${curSet} / ${sets}`;
+  if(dotsEl){
+    dotsEl.innerHTML = '';
+    for(let i=1;i<=sets;i++){
+      const d = document.createElement('div');
+      d.className = 'wo-dot' + (i <= curSet ? ' done' : '');
+      dotsEl.appendChild(d);
+    }
+  }
   document.getElementById('wo-exname').textContent = exercise;
   document.getElementById('wo-winfo').textContent = `${weight}kg × ${reps}reps`;
+  setWoMuscle(WS.group, WS.exercise);
 
   ['ph-active','ph-rest','ph-wait','ph-complete'].forEach(id =>
     document.getElementById(id).classList.remove('on'));
@@ -2064,31 +2054,6 @@ function saveWoRecord(partial = false){
 }
 
 // ── STATUS ────────────────────────────────────────────────
-const MUSCLE_GROUPS = {
-  'muscle-chest':    ['chest'],
-  'muscle-back':     ['back'],
-  'muscle-shoulder': ['shoulder'],
-  'muscle-arms':     ['arms'],
-  'muscle-legs':     ['legs'],
-  'muscle-abs':      ['abs'],
-};
-function highlightMuscles(recs){
-  const now = Date.now();
-  const week = 7 * 24 * 3600 * 1000;
-  const active = new Set(
-    recs.filter(r => (now - new Date(r.date).getTime()) < week)
-        .map(r => r.group).filter(Boolean)
-  );
-  const AF = 'rgba(102,126,234,0.22)', AS = 'rgba(102,126,234,0.38)';
-  const DF = 'rgba(102,126,234,0.04)', DS = 'rgba(102,126,234,0.08)';
-  Object.entries(MUSCLE_GROUPS).forEach(([id, groups]) => {
-    const el = document.getElementById(id);
-    if(!el) return;
-    const hit = groups.some(g => active.has(g));
-    el.setAttribute('fill',   hit ? AF : DF);
-    el.setAttribute('stroke', hit ? AS : DS);
-  });
-}
 
 function renderStatus(){
   const rank=getRank(loadRecs());
@@ -2144,7 +2109,6 @@ function renderStatus(){
   }).join('');
 
   el.innerHTML=`<div class="status-inner">${heroHtml}${progHtml}<div class="status-list-ttl">${isJa?'全ランク':'ALL RANKS'}</div><div class="status-rank-list">${listHtml}</div></div>`;
-  highlightMuscles(loadRecs());
 }
 
 // ── TABS ──────────────────────────────────────────────────
