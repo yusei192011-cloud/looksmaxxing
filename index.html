@@ -377,8 +377,19 @@ body::after{
 .chart-wrap{position:relative;height:220px;margin-bottom:4px}
 
 /* CHARACTER IMAGE */
-#char-wrap{text-align:center;padding:10px 0 0;line-height:0}
-#char-img{width:120px;display:inline-block;opacity:0.9;mix-blend-mode:screen;filter:drop-shadow(0 0 12px rgba(102,126,234,0.25))}
+#char-wrap{text-align:center;padding:10px 0 0;line-height:0;position:relative}
+#char-wrap::before{
+  content:'';position:absolute;inset:-16px -50px;
+  background:radial-gradient(ellipse at center,rgba(102,126,234,0.18) 0%,rgba(0,0,0,0) 70%);
+  pointer-events:none;z-index:0;
+}
+#char-wrap::after{
+  content:'';position:absolute;inset:-16px -50px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104'%3E%3Cg stroke='%23667eea' stroke-opacity='0.07' stroke-width='.7' fill='none'%3E%3Cpolygon points='0,0 60,0 30,52'/%3E%3Cpolygon points='60,0 120,0 90,52'/%3E%3Cpolygon points='30,52 90,52 60,0'/%3E%3Cpolygon points='30,52 90,52 60,104'/%3E%3Cpolygon points='0,104 60,104 30,52'/%3E%3Cpolygon points='60,104 120,104 90,52'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:120px 104px;
+  pointer-events:none;z-index:0;
+}
+#char-img{width:120px;display:inline-block;opacity:0.9;mix-blend-mode:screen;filter:drop-shadow(0 0 12px rgba(102,126,234,0.25));position:relative;z-index:1}
 
 /* SUB-TABS (RECORD pane) */
 .subtabs{display:flex;gap:8px;padding:7px 16px;border-bottom:1px solid var(--b1);background:var(--bg)}
