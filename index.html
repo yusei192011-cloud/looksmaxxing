@@ -17,7 +17,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;touch-action:manipulation}
 button{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .ncb,.ab,.rpb,.grpb,.tpb,.qlb,.wval,.ncv,.tval,.dur-v,.inp{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
-html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;text-size-adjust:100%;touch-action:pan-x pan-y}
 body{
   font-family:'Space Grotesk',sans-serif;
   background:var(--bg);color:#e8e8e8;
@@ -537,13 +537,23 @@ body::after{
 
 /* WORKOUT OVERLAY */
 #wo{
-  position:fixed;top:0;bottom:0;
-  left:50%;transform:translateX(-50%);
-  width:100%;max-width:520px;
-  background:var(--bg);z-index:500;
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:#050505;z-index:500;
   display:none;flex-direction:column;
+  overflow-y:auto;
 }
 #wo.on{display:flex}
+#wo::before{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse at center,rgba(102,126,234,0.08) 0%,rgba(0,0,0,0) 70%);
+  pointer-events:none;z-index:0;
+}
+#wo::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104'%3E%3Cg stroke='%23667eea' stroke-opacity='0.05' stroke-width='.7' fill='none'%3E%3Cpolygon points='0,0 60,0 30,52'/%3E%3Cpolygon points='60,0 120,0 90,52'/%3E%3Cpolygon points='30,52 90,52 60,0'/%3E%3Cpolygon points='30,52 90,52 60,104'/%3E%3Cpolygon points='0,104 60,104 30,52'/%3E%3Cpolygon points='60,104 120,104 90,52'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:120px 104px;
+  pointer-events:none;z-index:0;
+}
 .woh{
   display:flex;align-items:center;justify-content:space-between;
   padding:14px 16px;border-bottom:1px solid var(--b1);flex-shrink:0;
@@ -1803,6 +1813,7 @@ function openWo(){
   document.getElementById('wo').classList.add('on');
   document.getElementById('wo-dot').classList.add('on');
   document.querySelectorAll('.tb').forEach(b => b.disabled = true);
+  document.body.style.overflow = 'hidden';
   refreshWoUI();
 }
 
@@ -1812,6 +1823,7 @@ function closeWo(){
   document.getElementById('wo-dot').classList.remove('on');
   document.querySelectorAll('.tb').forEach(b => b.disabled = false);
   document.getElementById('reset-btn').style.display = '';
+  document.body.style.overflow = '';
   window.removeEventListener('beforeunload', onUnload);
   WS = null;
   updateStats(); renderHistory();
@@ -1971,6 +1983,7 @@ function renderTimer(){
 
 function timerDone(){
   playAlarm();
+  notifyTimerDone();
   flashScreen();
   if(WS){ WS.phase = 'wait'; refreshWoUI(); }
   renderTimer();
@@ -1995,7 +2008,9 @@ let actx = null;
 function getActx(){ if(!actx) actx = new (window.AudioContext||window.webkitAudioContext)(); return actx; }
 function beep(freq, dur, vol, type='sine'){
   try{
-    const c = getActx(), o = c.createOscillator(), g = c.createGain();
+    const c = getActx();
+    if(c.state === 'suspended') c.resume();
+    const o = c.createOscillator(), g = c.createGain();
     o.connect(g); g.connect(c.destination);
     o.frequency.value = freq; o.type = type;
     g.gain.setValueAtTime(vol, c.currentTime);
@@ -2013,14 +2028,32 @@ function playCountdown(rem){
   if(navigator.vibrate) navigator.vibrate(rem === 1 ? 80 : 30);
 }
 
-function playAlarm(){
-  // タン・タン・タン（短い上昇音）
-  beep(523, .09, .35, 'triangle');
-  setTimeout(()=>beep(659, .09, .4,  'triangle'), 120);
-  setTimeout(()=>beep(784, .09, .45, 'triangle'), 240);
-  // よっしゃーー！（高音サスティン＋低音パンチ）
-  setTimeout(()=>{ beep(1047, .65, .55, 'sine'); beep(130, .25, .45, 'sine'); }, 400);
-  if(navigator.vibrate) navigator.vibrate([60,40,60,40,60,80,300]);
+async function playAlarm(){
+  if(!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+  if(actx.state === 'suspended') await actx.resume();
+  for(let i = 0; i < 3; i++){
+    setTimeout(()=>{
+      try{
+        const o = actx.createOscillator(), g = actx.createGain();
+        o.connect(g); g.connect(actx.destination);
+        o.frequency.value = 880; o.type = 'sine';
+        g.gain.value = 0.3;
+        g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + 0.3);
+        o.start(actx.currentTime); o.stop(actx.currentTime + 0.3);
+      } catch(e){}
+    }, i * 400);
+  }
+  if(navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 200]);
+}
+function notifyTimerDone(){
+  if('Notification' in window && Notification.permission === 'granted'){
+    new Notification('LOOKSMAXXING', {
+      body: '休憩終了！次のセットを始めよう！',
+      icon: 'looksmaxfocus.png.png',
+      tag: 'timer-done',
+      requireInteraction: true
+    });
+  }
 }
 let _fc = 0;
 function flashScreen(){
@@ -2489,8 +2522,14 @@ function initLongPress(){
     const elapsed = Math.floor((Date.now() - timerStartTime) / 1000);
     timerRem = Math.max(0, timerTotal - elapsed);
     renderTimer();
-    if(timerRem <= 0){ clearTimer(); timerDone(); }
+    if(timerRem <= 0){ clearTimer(); playAlarm(); notifyTimerDone(); if(WS){ WS.phase='wait'; refreshWoUI(); } }
   });
+  if('Notification' in window && Notification.permission === 'default'){
+    document.addEventListener('click', function reqNotif(){
+      Notification.requestPermission();
+      document.removeEventListener('click', reqNotif);
+    }, {once:true});
+  }
   document.getElementById('picker-ov').addEventListener('touchmove',function(e){
     if(!e.target.closest('.picker-drum')) e.preventDefault();
   },{passive:false});
@@ -2524,6 +2563,13 @@ function initLongPress(){
     _activePkDrum=null;
   },{passive:true});
 })();
+
+document.addEventListener('touchstart', function(e){
+  if(e.touches.length > 1) e.preventDefault();
+},{passive:false});
+document.addEventListener('gesturestart', function(e){
+  e.preventDefault();
+},{passive:false});
 </script>
 <div id="toast"></div>
 
