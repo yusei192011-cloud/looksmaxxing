@@ -120,6 +120,9 @@ body::after{
 #status-content{position:relative;z-index:1}
 .status-inner{padding:16px 16px 80px}
 .status-hero{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 0 14px}
+/* Watermark clip wrapper */
+.img-clip{overflow:hidden;border-radius:8px;display:inline-block;line-height:0;flex-shrink:0}
+.img-clip img,.img-clip-scale{transform:scale(1.15);transform-origin:center center}
 .status-rank-img{width:180px;height:180px;object-fit:contain}
 .status-rank-name{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;margin-top:4px}
 .status-rank-days{font-family:'Space Grotesk',sans-serif;font-size:16px;color:#888;font-weight:600}
@@ -377,7 +380,7 @@ body::after{
 .chart-wrap{position:relative;height:220px;margin-bottom:4px}
 
 /* CHARACTER IMAGE */
-#char-wrap{text-align:center;padding:10px 0 0;line-height:0;position:relative}
+#char-wrap{text-align:center;padding:10px 0 0;line-height:0;position:relative;overflow:hidden;border-radius:8px}
 #char-wrap::before{
   content:'';position:absolute;inset:-16px -50px;
   background:radial-gradient(ellipse at center,rgba(102,126,234,0.18) 0%,rgba(0,0,0,0) 70%);
@@ -389,7 +392,7 @@ body::after{
   background-size:120px 104px;
   pointer-events:none;z-index:0;
 }
-#char-img{width:120px;display:inline-block;opacity:0.9;mix-blend-mode:screen;filter:drop-shadow(0 0 12px rgba(102,126,234,0.25));position:relative;z-index:1}
+#char-img{width:120px;display:inline-block;opacity:0.9;mix-blend-mode:screen;filter:drop-shadow(0 0 12px rgba(102,126,234,0.25));position:relative;z-index:1;transform:scale(1.25);transform-origin:center center}
 
 /* SUB-TABS (RECORD pane) */
 .subtabs{display:flex;gap:8px;padding:7px 16px;border-bottom:1px solid var(--b1);background:var(--bg)}
@@ -575,8 +578,8 @@ body::after{
 
 /* Body image background */
 #wo-body-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:0}
-.muscle-container{margin:0 auto}
-.muscle-img{height:48vh;max-height:400px;width:auto;display:block;animation:muscle-glow 2s ease-in-out infinite}
+.muscle-container{margin:0 auto;overflow:hidden;border-radius:8px}
+.muscle-img{height:48vh;max-height:400px;width:auto;display:block;animation:muscle-glow 2s ease-in-out infinite;transform:scale(1.15);transform-origin:center center}
 .woh,.wo-setinfo,#wo-action{position:relative;z-index:1}
 @keyframes muscle-glow{
   0%,100%{opacity:.7;filter:drop-shadow(0 0 6px rgba(102,126,234,0.3))}
@@ -1684,7 +1687,7 @@ function openRankModal(){
     const isCur=rd.level===rank.level, isDone=rd.level<rank.level;
     const imgStyle=isDone||isCur?'':'filter:grayscale(1);opacity:.4';
     return `<div class="rank-row${isCur?' cur':''}" style="${isCur?`border-color:${rd.color}`:''}">
-      <img class="rank-img-sm" src="${RANK_IMGS[rd.level]}" alt="" style="${imgStyle}">
+      <div class="img-clip"><img class="rank-img-sm" src="${RANK_IMGS[rd.level]}" alt="" style="${imgStyle}"></div>
       <div style="flex:1;min-width:0">
         <div class="rank-row-name" style="color:${isCur||isDone?rd.color:'#3a3a3a'}">${isJa?rd.name:rd.nameEn}</div>
         <div class="rank-row-req">${isJa?rd.req:rd.reqEn}</div>
@@ -2080,7 +2083,7 @@ function renderStatus(){
     </div>`;
   } else {
     heroHtml=`<div class="status-hero">
-      <img class="status-rank-img" src="${RANK_IMGS[rank.level]}" alt="">
+      <div class="img-clip"><img class="status-rank-img" src="${RANK_IMGS[rank.level]}" alt=""></div>
       <div class="status-rank-name" style="color:${rank.color}">${isJa?rank.name:rank.nameEn}</div>
       <div class="status-rank-days">${rank.days}${isJa?'日達成':' days achieved'}</div>
     </div>`;
@@ -2529,7 +2532,7 @@ function initLongPress(){
   <div id="rank-sh">
     <button class="rank-close-btn" onclick="closeRankModal()">✕</button>
     <div class="rank-hero">
-      <img class="rank-img-lg" id="rank-icon-lg" src="" alt="">
+      <div class="img-clip"><img class="rank-img-lg" id="rank-icon-lg" src="" alt=""></div>
       <div class="rank-name-lg" id="rank-name-lg"></div>
       <div class="rank-days-lg" id="rank-days-lg"></div>
     </div>
@@ -2547,7 +2550,7 @@ function initLongPress(){
 <div id="rankup-ov" onclick="hideRankUp()">
   <div id="rankup-particles"></div>
   <div class="rankup-label" id="rankup-label">RANK UP!</div>
-  <img class="rankup-trophy" id="rankup-trophy" src="" alt="">
+  <div class="img-clip"><img class="rankup-trophy" id="rankup-trophy" src="" alt=""></div>
   <div class="rankup-texts" id="rankup-texts">
     <div class="rankup-name" id="rankup-name"></div>
     <div class="rankup-msg" id="rankup-msg"></div>
