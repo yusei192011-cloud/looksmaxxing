@@ -67,13 +67,13 @@ export default function App() {
             <div className="sec-ttl" data-i18n="sec_weight"></div>
             <div id="wbox">
               <div className="wdisp">
-                <button className="ncb" style={{width:'48px',height:'48px',fontSize:'22px',fontWeight:'700',borderRadius:'12px'}} onClick={() => window.adjW && window.adjW(-0.5)}>−</button>
+                <button className="ncb" data-lp="adjW(-0.5)" style={{width:'48px',height:'48px',fontSize:'22px',fontWeight:'700',borderRadius:'12px'}} onClick={() => window.adjW && window.adjW(-0.5)}>−</button>
                 <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
                   <div className="wval" id="wval" onClick={() => window.editW && window.editW()}>60</div>
                   <span className="val-hint">タップで選択</span>
                 </div>
                 <span className="wunit">kg</span>
-                <button className="ncb" style={{width:'48px',height:'48px',fontSize:'22px',fontWeight:'700',borderRadius:'12px'}} onClick={() => window.adjW && window.adjW(0.5)}>+</button>
+                <button className="ncb" data-lp="adjW(0.5)" style={{width:'48px',height:'48px',fontSize:'22px',fontWeight:'700',borderRadius:'12px'}} onClick={() => window.adjW && window.adjW(0.5)}>+</button>
               </div>
               <div className="wpresets" id="wpresets">
                 <button className="wpl-toggle" onClick={() => window.togglePresets && window.togglePresets()}>
@@ -83,12 +83,12 @@ export default function App() {
                 </button>
                 <div className="wpbtns" id="wpbtns"></div>
                 <div className="wadj" id="wadj">
-                  <button className="ab m" onClick={() => window.adjW && window.adjW(-5)}>−5</button>
-                  <button className="ab m" onClick={() => window.adjW && window.adjW(-2.5)}>−2.5</button>
-                  <button className="ab m" onClick={() => window.adjW && window.adjW(-1)}>−1</button>
-                  <button className="ab p" onClick={() => window.adjW && window.adjW(1)}>+1</button>
-                  <button className="ab p" onClick={() => window.adjW && window.adjW(2.5)}>+2.5</button>
-                  <button className="ab p" onClick={() => window.adjW && window.adjW(5)}>+5</button>
+                  <button className="ab m" data-lp="adjW(-5)" onClick={() => window.adjW && window.adjW(-5)}>−5</button>
+                  <button className="ab m" data-lp="adjW(-2.5)" onClick={() => window.adjW && window.adjW(-2.5)}>−2.5</button>
+                  <button className="ab m" data-lp="adjW(-1)" onClick={() => window.adjW && window.adjW(-1)}>−1</button>
+                  <button className="ab p" data-lp="adjW(1)" onClick={() => window.adjW && window.adjW(1)}>+1</button>
+                  <button className="ab p" data-lp="adjW(2.5)" onClick={() => window.adjW && window.adjW(2.5)}>+2.5</button>
+                  <button className="ab p" data-lp="adjW(5)" onClick={() => window.adjW && window.adjW(5)}>+5</button>
                 </div>
               </div>
             </div>
@@ -99,17 +99,17 @@ export default function App() {
               <div className="nc">
                 <div className="nc-l" data-i18n="lbl_reps"></div>
                 <div className="nc-row">
-                  <button className="ncb" onClick={() => window.adjN && window.adjN('r',-1)}>−</button>
+                  <button className="ncb" data-lp="adjN('r',-1)" onClick={() => window.adjN && window.adjN('r',-1)}>−</button>
                   <div><div className="ncv" id="rval" onClick={() => window.editN && window.editN('r')}>10</div><div className="ncu" data-i18n="u_reps"></div><span className="val-hint">タップで選択</span></div>
-                  <button className="ncb" onClick={() => window.adjN && window.adjN('r',1)}>+</button>
+                  <button className="ncb" data-lp="adjN('r',1)" onClick={() => window.adjN && window.adjN('r',1)}>+</button>
                 </div>
               </div>
               <div className="nc">
                 <div className="nc-l" data-i18n="lbl_sets"></div>
                 <div className="nc-row">
-                  <button className="ncb" onClick={() => window.adjN && window.adjN('s',-1)}>−</button>
+                  <button className="ncb" data-lp="adjN('s',-1)" onClick={() => window.adjN && window.adjN('s',-1)}>−</button>
                   <div><div className="ncv" id="sval" onClick={() => window.editN && window.editN('s')}>3</div><div className="ncu" data-i18n="u_sets"></div><span className="val-hint">タップで選択</span></div>
-                  <button className="ncb" onClick={() => window.adjN && window.adjN('s',1)}>+</button>
+                  <button className="ncb" data-lp="adjN('s',1)" onClick={() => window.adjN && window.adjN('s',1)}>+</button>
                 </div>
               </div>
             </div>
@@ -139,12 +139,12 @@ export default function App() {
             <div className="sec-ttl" data-i18n="sec_bedtime"></div>
             <div className="tbox">
               <div className="tdisp">
-                <button className="ncb" style={{width:'38px',height:'38px',fontSize:'20px',fontWeight:'600'}} onClick={() => window.adjTime && window.adjTime('bed',-15)}>−</button>
+                <button className="ncb" data-lp="adjTime('bed',-15)" style={{width:'38px',height:'38px',fontSize:'20px',fontWeight:'600'}} onClick={() => window.adjTime && window.adjTime('bed',-15)}>−</button>
                 <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
                   <div className="tval" id="bed-val" onClick={() => window.editTime && window.editTime('bed')}>23:00</div>
                   <span className="val-hint">タップで選択</span>
                 </div>
-                <button className="ncb" style={{width:'38px',height:'38px',fontSize:'20px',fontWeight:'600'}} onClick={() => window.adjTime && window.adjTime('bed',15)}>+</button>
+                <button className="ncb" data-lp="adjTime('bed',15)" style={{width:'38px',height:'38px',fontSize:'20px',fontWeight:'600'}} onClick={() => window.adjTime && window.adjTime('bed',15)}>+</button>
               </div>
               <div className="tpreset" id="bed-presets"></div>
             </div>
@@ -154,12 +154,12 @@ export default function App() {
             <div className="sec-ttl" data-i18n="sec_wakeup"></div>
             <div className="tbox">
               <div className="tdisp">
-                <button className="ncb" style={{width:'38px',height:'38px',fontSize:'20px',fontWeight:'600'}} onClick={() => window.adjTime && window.adjTime('wake',-15)}>−</button>
+                <button className="ncb" data-lp="adjTime('wake',-15)" style={{width:'38px',height:'38px',fontSize:'20px',fontWeight:'600'}} onClick={() => window.adjTime && window.adjTime('wake',-15)}>−</button>
                 <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
                   <div className="tval" id="wake-val" onClick={() => window.editTime && window.editTime('wake')}>07:00</div>
                   <span className="val-hint">タップで選択</span>
                 </div>
-                <button className="ncb" style={{width:'38px',height:'38px',fontSize:'20px',fontWeight:'600'}} onClick={() => window.adjTime && window.adjTime('wake',15)}>+</button>
+                <button className="ncb" data-lp="adjTime('wake',15)" style={{width:'38px',height:'38px',fontSize:'20px',fontWeight:'600'}} onClick={() => window.adjTime && window.adjTime('wake',15)}>+</button>
               </div>
               <div className="tpreset" id="wake-presets"></div>
             </div>

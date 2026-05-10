@@ -1401,23 +1401,23 @@ function makeLongPress(el, fn){
 }
 
 function initLongPress(){
-  function byOC(v){ return document.querySelector(`[onclick="${v}"]`); }
-  makeLongPress(document.querySelector('button[onclick="adjW(-0.5)"]') || byOC('adjW(-0.5)'), ()=>window.adjW(-0.5));
-  makeLongPress(document.querySelector('button[onclick="adjW(0.5)"]')  || byOC('adjW(0.5)'),  ()=>window.adjW(0.5));
-  makeLongPress(byOC('adjW(-5)'),   ()=>window.adjW(-5));
-  makeLongPress(byOC('adjW(-2.5)'), ()=>window.adjW(-2.5));
-  makeLongPress(byOC('adjW(-1)'),   ()=>window.adjW(-1));
-  makeLongPress(byOC('adjW(1)'),    ()=>window.adjW(1));
-  makeLongPress(byOC('adjW(2.5)'),  ()=>window.adjW(2.5));
-  makeLongPress(byOC('adjW(5)'),    ()=>window.adjW(5));
-  makeLongPress(byOC("adjN('r',-1)"), ()=>window.adjN('r',-1));
-  makeLongPress(byOC("adjN('r',1)"),  ()=>window.adjN('r',1));
-  makeLongPress(byOC("adjN('s',-1)"), ()=>window.adjN('s',-1));
-  makeLongPress(byOC("adjN('s',1)"),  ()=>window.adjN('s',1));
-  makeLongPress(byOC("adjTime('bed',-15)"), ()=>window.adjTime('bed',-15));
-  makeLongPress(byOC("adjTime('bed',15)"),  ()=>window.adjTime('bed',15));
-  makeLongPress(byOC("adjTime('wake',-15)"), ()=>window.adjTime('wake',-15));
-  makeLongPress(byOC("adjTime('wake',15)"),  ()=>window.adjTime('wake',15));
+  function byLP(v){ return document.querySelector(`[data-lp="${v}"]`); }
+  makeLongPress(byLP('adjW(-0.5)'),        ()=>window.adjW(-0.5));
+  makeLongPress(byLP('adjW(0.5)'),         ()=>window.adjW(0.5));
+  makeLongPress(byLP('adjW(-5)'),          ()=>window.adjW(-5));
+  makeLongPress(byLP('adjW(-2.5)'),        ()=>window.adjW(-2.5));
+  makeLongPress(byLP('adjW(-1)'),          ()=>window.adjW(-1));
+  makeLongPress(byLP('adjW(1)'),           ()=>window.adjW(1));
+  makeLongPress(byLP('adjW(2.5)'),         ()=>window.adjW(2.5));
+  makeLongPress(byLP('adjW(5)'),           ()=>window.adjW(5));
+  makeLongPress(byLP("adjN('r',-1)"),      ()=>window.adjN('r',-1));
+  makeLongPress(byLP("adjN('r',1)"),       ()=>window.adjN('r',1));
+  makeLongPress(byLP("adjN('s',-1)"),      ()=>window.adjN('s',-1));
+  makeLongPress(byLP("adjN('s',1)"),       ()=>window.adjN('s',1));
+  makeLongPress(byLP("adjTime('bed',-15)"),()=>window.adjTime('bed',-15));
+  makeLongPress(byLP("adjTime('bed',15)"), ()=>window.adjTime('bed',15));
+  makeLongPress(byLP("adjTime('wake',-15)"),()=>window.adjTime('wake',-15));
+  makeLongPress(byLP("adjTime('wake',15)"),()=>window.adjTime('wake',15));
 }
 
 // ── INIT ──────────────────────────────────────────────────
