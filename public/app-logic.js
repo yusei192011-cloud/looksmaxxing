@@ -17,11 +17,10 @@ const LANGS = {
     dlg_ttl:'ワークアウトをリセット',dlg_body:'どうしますか？',
     dlg_save:'完了したセットを保存',dlg_disc:'破棄する',dlg_cancel:'キャンセル',
     empty:'記録がありません',today:'今日',yesterday:'昨日',dago:'日前',no_data:'データなし',
-    tab_sleep:'睡眠',
-    sec_bedtime:'就寝時間',sec_wakeup:'起床時間',sec_duration:'睡眠時間',sec_quality:'睡眠の質',sec_memo:'メモ（任意）',
-    ph_memo:'メモを入力...',
-    btn_sleep_save:'睡眠を記録',sleepSaved:'記録しました ✓',
-    hf_all:'全て',hf_workout:'ワークアウト',hf_sleep:'睡眠',m_group:'部位別',
+    tab_weight:'体重',
+    sec_bodyweight:'体重',sec_targetweight:'目標体重',
+    btn_weight_save:'体重を記録',weightSaved:'記録しました ✓',
+    hf_all:'全て',hf_workout:'ワークアウト',hf_weight:'体重',m_group:'部位別',
   },
   en:{
     tab_record:'REC',tab_history:'LOG',tab_progress:'STATS',tab_status:'RANK',
@@ -38,11 +37,10 @@ const LANGS = {
     dlg_ttl:'Reset Workout',dlg_body:'What would you like to do?',
     dlg_save:'Save completed sets',dlg_disc:'Discard',dlg_cancel:'Cancel',
     empty:'No records yet',today:'Today',yesterday:'Yesterday',dago:' days ago',no_data:'No data',
-    tab_sleep:'SLEEP',
-    sec_bedtime:'BEDTIME',sec_wakeup:'WAKE UP',sec_duration:'SLEEP DURATION',sec_quality:'SLEEP QUALITY',sec_memo:'MEMO (optional)',
-    ph_memo:'Add a note...',
-    btn_sleep_save:'SAVE SLEEP',sleepSaved:'Saved ✓',
-    hf_all:'ALL',hf_workout:'WORKOUT',hf_sleep:'SLEEP',m_group:'By Group',
+    tab_weight:'WEIGHT',
+    sec_bodyweight:'BODY WEIGHT',sec_targetweight:'TARGET WEIGHT',
+    btn_weight_save:'RECORD WEIGHT',weightSaved:'Saved ✓',
+    hf_all:'ALL',hf_workout:'WORKOUT',hf_weight:'WEIGHT',m_group:'By Group',
   },
   ko:{
     tab_record:'기록',tab_history:'기록부',tab_progress:'진행',tab_status:'랭크',
@@ -60,11 +58,10 @@ const LANGS = {
     dlg_ttl:'운동 초기화',dlg_body:'어떻게 하시겠습니까?',
     dlg_save:'완료된 세트 저장',dlg_disc:'삭제',dlg_cancel:'취소',
     empty:'기록 없음',today:'오늘',yesterday:'어제',dago:'일 전',no_data:'데이터 없음',
-    tab_sleep:'SLEEP',
-    sec_bedtime:'취침 시간',sec_wakeup:'기상 시간',sec_duration:'수면 시간',sec_quality:'수면 질',sec_memo:'메모（선택）',
-    ph_memo:'메모 입력...',
-    btn_sleep_save:'수면 기록',sleepSaved:'저장됨 ✓',
-    hf_all:'전체',hf_workout:'운동',hf_sleep:'수면',m_group:'부위별',
+    tab_weight:'WEIGHT',
+    sec_bodyweight:'체중',sec_targetweight:'목표 체중',
+    btn_weight_save:'체중 기록',weightSaved:'저장됨 ✓',
+    hf_all:'전체',hf_workout:'운동',hf_weight:'체중',m_group:'부위별',
   },
   zh:{
     tab_record:'训练',tab_history:'历史',tab_progress:'进度',tab_status:'排名',
@@ -82,11 +79,10 @@ const LANGS = {
     dlg_ttl:'重置训练',dlg_body:'请选择操作',
     dlg_save:'保存已完成的组',dlg_disc:'放弃',dlg_cancel:'取消',
     empty:'暂无记录',today:'今天',yesterday:'昨天',dago:'天前',no_data:'无数据',
-    tab_sleep:'SLEEP',
-    sec_bedtime:'就寝时间',sec_wakeup:'起床时间',sec_duration:'睡眠时长',sec_quality:'睡眠质量',sec_memo:'备注（选填）',
-    ph_memo:'添加备注...',
-    btn_sleep_save:'记录睡眠',sleepSaved:'已保存 ✓',
-    hf_all:'全部',hf_workout:'训练',hf_sleep:'睡眠',m_group:'部位',
+    tab_weight:'WEIGHT',
+    sec_bodyweight:'体重',sec_targetweight:'目标体重',
+    btn_weight_save:'记录体重',weightSaved:'已保存 ✓',
+    hf_all:'全部',hf_workout:'训练',hf_weight:'体重',m_group:'部位',
   },
   es:{
     tab_record:'REC',tab_history:'LOG',tab_progress:'PROGRESO',tab_status:'RANGO',
@@ -104,11 +100,10 @@ const LANGS = {
     dlg_ttl:'Reiniciar',dlg_body:'¿Qué deseas hacer?',
     dlg_save:'Guardar series completadas',dlg_disc:'Descartar',dlg_cancel:'Cancelar',
     empty:'Sin registros',today:'Hoy',yesterday:'Ayer',dago:' días atrás',no_data:'Sin datos',
-    tab_sleep:'SLEEP',
-    sec_bedtime:'HORA DE DORMIR',sec_wakeup:'HORA DE DESPERTAR',sec_duration:'DURACIÓN',sec_quality:'CALIDAD',sec_memo:'NOTA (opcional)',
-    ph_memo:'Añadir nota...',
-    btn_sleep_save:'GUARDAR SUEÑO',sleepSaved:'Guardado ✓',
-    hf_all:'TODO',hf_workout:'ENTRENO',hf_sleep:'SUEÑO',m_group:'Por grupo',
+    tab_weight:'PESO',
+    sec_bodyweight:'PESO CORPORAL',sec_targetweight:'PESO OBJETIVO',
+    btn_weight_save:'GUARDAR PESO',weightSaved:'Guardado ✓',
+    hf_all:'TODO',hf_workout:'ENTRENO',hf_weight:'PESO',m_group:'Por grupo',
   },
 };
 
@@ -118,8 +113,6 @@ function t(k){ return (LANGS[lang]||LANGS.en)[k] || LANGS.en[k] || k; }
 function applyLang(){
   document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n));
   document.getElementById('ex-inp').placeholder = t('ph_ex');
-  const memoEl = document.getElementById('sl-memo');
-  if(memoEl) memoEl.placeholder = t('ph_memo');
   document.getElementById('lang-btn').textContent = lang.toUpperCase() + ' ▾';
   document.querySelectorAll('.lang-opt').forEach(el => el.classList.toggle('on', el.dataset.l === lang));
   document.querySelectorAll('option[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n));
@@ -144,17 +137,19 @@ const KEY = 'workout_records_v2';
 function loadRecs(){ try{ return JSON.parse(localStorage.getItem(KEY)||'[]'); } catch{ return []; } }
 function saveRecs(r){ localStorage.setItem(KEY, JSON.stringify(r)); }
 
-const SLEEP_KEY = 'sleep_records_v1';
-function loadSleepRecs(){ try{ return JSON.parse(localStorage.getItem(SLEEP_KEY)||'[]'); } catch{ return []; } }
-function saveSleepRecs(r){ localStorage.setItem(SLEEP_KEY, JSON.stringify(r)); }
+const WEIGHT_KEY = 'weight_records_v1';
+const TARGET_W_KEY = 'target_weight_v1';
+function loadWeightRecs(){ try{ return JSON.parse(localStorage.getItem(WEIGHT_KEY)||'[]'); } catch{ return []; } }
+function saveWeightRecs(r){ localStorage.setItem(WEIGHT_KEY, JSON.stringify(r)); }
+function loadTargetW(){ const v=parseFloat(localStorage.getItem(TARGET_W_KEY)); return isNaN(v)?65.0:v; }
 
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 // ── STATE ─────────────────────────────────────────────────
 let curW = 60, curR = 10, curS = 3, curRest = 90, curMetric = 'weight';
 let curGroup = '';
-let curBed = '23:00', curWake = '07:00', curQuality = 0;
-let histType = 'all', histGroup = '', progSection = 'workout', sleepChart = null;
+let curBodyW = 70.0, curTargetW = 65.0, weightChart = null;
+let histType = 'all', histGroup = '', progSection = 'workout';
 
 // ── WEIGHT CONTROLS ───────────────────────────────────────
 const W_PRESETS = [5,10,15,20,25,30,35,40,50,60,70,80,90,100,110,120,140,160];
@@ -319,7 +314,7 @@ window.adjN = function(type, d){
 
 // ── SUB-TABS ──────────────────────────────────────────────
 window.switchSub = function(which){
-  ['workout','sleep'].forEach(k => {
+  ['workout','weight'].forEach(k => {
     document.getElementById('sub-'+k).classList.toggle('on', k===which);
     document.getElementById('stb-'+k).classList.toggle('on', k===which);
   });
@@ -379,76 +374,83 @@ window.setHistGroup = function(g){
   renderHistory();
 };
 
-// ── SLEEP ─────────────────────────────────────────────────
-function timeToMin(s){ const [h,m]=s.split(':').map(Number); return h*60+m; }
-function minToTime(m){ m=((m%1440)+1440)%1440; return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0'); }
-function calcDur(bed,wake){ let d=timeToMin(wake)-timeToMin(bed); if(d<=0) d+=1440; return d; }
-function fmtDur(mins){ return Math.floor(mins/60)+':'+String(mins%60).padStart(2,'0'); }
-
-function renderDuration(){
-  document.getElementById('dur-val').textContent = fmtDur(calcDur(curBed, curWake));
+// ── BODY WEIGHT ───────────────────────────────────────────
+function setBodyW(v){
+  curBodyW = Math.round(Math.max(20, Math.min(300, v)) * 10) / 10;
+  const el = document.getElementById('bw-val');
+  if(el) el.textContent = curBodyW.toFixed(1);
+  renderWeightProgress();
 }
+window.adjBodyW = function(d){ setBodyW(curBodyW + d); };
 
-const BED_PRESETS  = ['21:00','21:30','22:00','22:30','23:00','23:30','00:00','00:30','01:00','01:30'];
-const WAKE_PRESETS = ['05:00','05:30','06:00','06:30','07:00','07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30'];
-
-function updateBedPresets(){
-  document.getElementById('bed-presets').innerHTML = BED_PRESETS.map(v =>
-    `<button class="tpb${v===curBed?' on':''}" onclick="setTime('bed','${v}')">${v}</button>`
-  ).join('');
-}
-function updateWakePresets(){
-  document.getElementById('wake-presets').innerHTML = WAKE_PRESETS.map(v =>
-    `<button class="tpb${v===curWake?' on':''}" onclick="setTime('wake','${v}')">${v}</button>`
-  ).join('');
-}
-
-window.setTime = function(which, val){
-  if(which==='bed'){ curBed=val; document.getElementById('bed-val').textContent=val; updateBedPresets(); }
-  else             { curWake=val; document.getElementById('wake-val').textContent=val; updateWakePresets(); }
-  renderDuration();
-};
-window.adjTime = function(which, delta){
-  const cur = which==='bed' ? curBed : curWake;
-  window.setTime(which, minToTime(timeToMin(cur)+delta));
-};
-
-window.editTime = function(which){
-  const hours=Array.from({length:24},(_,i)=>({label:String(i).padStart(2,'0'),value:i}));
-  const mins=[0,5,10,15,20,25,30,35,40,45,50,55].map(m=>({label:String(m).padStart(2,'0'),value:m}));
-  const cur=which==='bed'?curBed:curWake;
-  const [h,m]=cur.split(':').map(Number);
-  const mIdx=Math.max(0,mins.findIndex(x=>x.value===Math.round(m/5)*5%60));
+window.editBodyW = function(){
+  const ints = Array.from({length:281},(_,i)=>({label:String(i+20),value:i+20}));
+  const decs = [0,1,2,3,4,5,6,7,8,9].map(v=>({label:String(v),value:v}));
+  const intPart = Math.floor(curBodyW);
+  const decPart = Math.round((curBodyW - intPart) * 10);
   window.openPicker({
-    title:t(which==='bed'?'sec_bedtime':'sec_wakeup'),
-    sep:':',
-    drums:[{items:hours,current:h},{items:mins,current:mIdx>=0?mIdx:0}],
-    onConfirm:([hv,mv])=>window.setTime(which,String(hv).padStart(2,'0')+':'+String(mv).padStart(2,'0'))
+    title:t('sec_bodyweight'),
+    sep:'.',
+    drums:[{items:ints,current:intPart-20},{items:decs,current:decPart}],
+    onConfirm:([iv,dv])=>setBodyW(iv + dv/10)
   });
 };
 
-window.setQuality = function(q){
-  curQuality = q;
-  document.querySelectorAll('.qlb').forEach((b,i) => b.classList.toggle('on', i+1===q));
+function setTargetW(v){
+  curTargetW = Math.round(Math.max(20, Math.min(300, v)) * 10) / 10;
+  localStorage.setItem(TARGET_W_KEY, String(curTargetW));
+  const el = document.getElementById('tw-val');
+  if(el) el.textContent = curTargetW.toFixed(1);
+  renderWeightProgress();
+}
+window.adjTargetW = function(d){ setTargetW(curTargetW + d); };
+
+window.editTargetW = function(){
+  const ints = Array.from({length:281},(_,i)=>({label:String(i+20),value:i+20}));
+  const decs = [0,1,2,3,4,5,6,7,8,9].map(v=>({label:String(v),value:v}));
+  const intPart = Math.floor(curTargetW);
+  const decPart = Math.round((curTargetW - intPart) * 10);
+  window.openPicker({
+    title:t('sec_targetweight'),
+    sep:'.',
+    drums:[{items:ints,current:intPart-20},{items:decs,current:decPart}],
+    onConfirm:([iv,dv])=>setTargetW(iv + dv/10)
+  });
 };
 
-window.saveSleep = function(){
-  const mins = calcDur(curBed, curWake);
-  const rec = {
-    id:Date.now(), date:new Date().toISOString(), type:'sleep',
-    bedtime:curBed, wakeup:curWake, duration:mins,
-    quality:curQuality, memo:document.getElementById('sl-memo').value.trim()
-  };
-  const recs = loadSleepRecs(); recs.push(rec); saveSleepRecs(recs);
-  const btn = document.querySelector('.btn-sleep');
-  const orig = t('btn_sleep_save');
-  btn.textContent = t('sleepSaved');
+function renderWeightProgress(){
+  const el = document.getElementById('wt-progress');
+  if(!el) return;
+  const isJa = lang==='ja'||lang==='ko'||lang==='zh';
+  const recs = loadWeightRecs();
+  const latest = recs.length ? recs[recs.length-1].weight : curBodyW;
+  const diff = latest - curTargetW;
+  if(Math.abs(diff) < 0.05){
+    el.innerHTML = `<div style="color:var(--green);font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;text-align:center">🎯 TARGET REACHED!</div>`;
+    return;
+  }
+  const absDiff = Math.abs(diff).toFixed(1);
+  const label = isJa
+    ? (diff>0 ? `目標まであと -${absDiff}kg` : `目標超過 +${absDiff}kg`)
+    : (diff>0 ? `-${absDiff}kg to goal` : `+${absDiff}kg over goal`);
+  const pct = recs.length ? Math.max(0, Math.min(100, Math.round((1 - Math.abs(diff)/Math.max(1,Math.abs(recs[0].weight - curTargetW)))*100))) : 0;
+  el.innerHTML = `
+    <div style="color:#888;font-size:12px;margin-bottom:6px;text-align:center">${label}</div>
+    <div style="height:6px;background:#1a1a1a;border-radius:3px;overflow:hidden">
+      <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:3px;transition:width .3s"></div>
+    </div>`;
+}
+
+window.saveBodyWeight = function(){
+  const rec = { id:Date.now(), date:new Date().toISOString(), type:'weight', weight:curBodyW };
+  const recs = loadWeightRecs(); recs.push(rec); saveWeightRecs(recs);
+  const btn = document.querySelector('.btn-weight');
+  const orig = t('btn_weight_save');
+  btn.textContent = t('weightSaved');
   btn.style.background = 'var(--green)'; btn.style.color = '#000';
   setTimeout(()=>{ btn.textContent=orig; btn.style.background=''; btn.style.color=''; }, 1500);
-  showToast(lang==='ja' ? sleepMsg(mins) : t('sleepSaved'));
-  document.getElementById('sl-memo').value = '';
-  curQuality = 0;
-  document.querySelectorAll('.qlb').forEach(b => b.classList.remove('on'));
+  showToast(t('weightSaved'));
+  renderWeightProgress();
 };
 
 // ── REST ──────────────────────────────────────────────────
@@ -1094,7 +1096,7 @@ window.switchTab = function(id){
   if(id === 'history') renderHistory();
   if(id === 'progress'){
     if(progSection === 'workout'){ initPexList(); renderChart(); }
-    else renderSleepChart();
+    else renderWeightChart();
   }
   if(id === 'status') renderStatus();
 };
@@ -1102,20 +1104,20 @@ window.switchTab = function(id){
 // ── PROGRESS TABS ─────────────────────────────────────────
 window.switchProg = function(which){
   progSection = which;
-  ['workout','sleep'].forEach(k => {
+  ['workout','weight'].forEach(k => {
     document.getElementById('ptb-'+k).classList.toggle('on', k===which);
     document.getElementById('prog-'+k).style.display    = k===which ? '' : 'none';
     document.getElementById('chart-'+k+'-wrap').style.display = k===which ? '' : 'none';
   });
   if(which==='workout'){ initPexList(); renderChart(); }
-  else renderSleepChart();
+  else renderWeightChart();
 };
 
 // ── HISTORY ───────────────────────────────────────────────
 window.setHistType = function(type){
   histType = type;
   histGroup = '';
-  ['all','workout','sleep'].forEach(k => {
+  ['all','workout','weight'].forEach(k => {
     const el = document.getElementById('htb-'+k);
     if(el) el.classList.toggle('on', k===type);
   });
@@ -1127,11 +1129,11 @@ window.setHistType = function(type){
 
 function renderHistory(){
   const wRecs = loadRecs().map(r => ({...r, _type:'workout'}));
-  const sRecs = loadSleepRecs().map(r => ({...r, _type:'sleep'}));
+  const bRecs = loadWeightRecs().map(r => ({...r, _type:'weight'}));
   let all;
   if(histType==='workout') all = wRecs;
-  else if(histType==='sleep') all = sRecs;
-  else all = [...wRecs, ...sRecs];
+  else if(histType==='weight') all = bRecs;
+  else all = [...wRecs, ...bRecs];
   if(histGroup && histType==='workout') all = all.filter(r => (r.group||'other')===histGroup);
   all.sort((a,b) => new Date(b.date) - new Date(a.date));
   const period = document.getElementById('fp').value;
@@ -1139,22 +1141,19 @@ function renderHistory(){
   const filtered = all.filter(r => !cut || new Date(r.date).getTime() >= cut);
   const list = document.getElementById('hist-list');
   if(!filtered.length){
-    const ic = histType==='sleep' ? '🌙' : '🏋️';
+    const ic = histType==='weight' ? '⚖️' : '🏋️';
     list.innerHTML = `<div class="empty"><div class="empty-ic">${ic}</div>${esc(t('empty'))}</div>`;
     return;
   }
   list.innerHTML = filtered.map(r => {
-    if(r._type==='sleep'){
-      const qem = r.quality ? ['😫','😞','😐','😊','😁'][r.quality-1] : '';
+    if(r._type==='weight'){
       return `
-    <div class="rc" style="border-color:rgba(139,92,246,.25);border-left:3px solid #8b5cf6">
-      <div class="ri" style="background:rgba(149,128,255,.15)">${IC_MOON}</div>
+    <div class="rc" style="border-color:rgba(102,126,234,.25);border-left:3px solid #667eea">
+      <div class="ri" style="background:rgba(102,126,234,.15)">⚖️</div>
       <div class="rinfo">
-        <div class="rex" style="color:var(--sl)">${esc(r.bedtime)} → ${esc(r.wakeup)}${qem?' '+qem:''}</div>
-        <div class="rdet">${r.memo ? esc(r.memo) : ''}</div>
+        <div class="rex" style="color:#667eea">${esc(String(r.weight))} kg</div>
       </div>
       <div>
-        <div class="rmt" style="color:var(--sl)">${esc(fmtDur(r.duration))}</div>
         <div class="rdate">${esc(fmtDate(r.date))}</div>
       </div>
     </div>`;
@@ -1278,26 +1277,26 @@ function renderChart(){
   });
 }
 
-function renderSleepChart(){
-  const recs = loadSleepRecs()
+function renderWeightChart(){
+  const recs = loadWeightRecs()
     .sort((a,b) => new Date(a.date) - new Date(b.date))
     .slice(-30);
-  if(sleepChart){ sleepChart.destroy(); sleepChart=null; }
-  const wrap = document.getElementById('chart-sleep-wrap');
+  if(weightChart){ weightChart.destroy(); weightChart=null; }
+  const wrap = document.getElementById('chart-weight-wrap');
   if(!recs.length){
-    wrap.innerHTML = `<div class="empty"><div class="empty-ic">🌙</div>${esc(t('sleepChartEmpty')||'No sleep data')}</div>`;
+    wrap.innerHTML = `<div class="empty"><div class="empty-ic">⚖️</div>${esc(t('empty'))}</div>`;
     return;
   }
-  if(!document.getElementById('schart')){
-    wrap.innerHTML = '<div class="chart-yl">HOURS</div><div class="chart-wrap"><canvas id="schart"></canvas></div>';
+  if(!document.getElementById('wchart')){
+    wrap.innerHTML = '<div class="chart-yl">kg</div><div class="chart-wrap"><canvas id="wchart"></canvas></div>';
   }
   const labels = recs.map(r =>{ const d=new Date(r.date); return `${d.getMonth()+1}/${d.getDate()}`; });
-  const data   = recs.map(r => +(r.duration/60).toFixed(2));
-  const ctx    = document.getElementById('schart').getContext('2d');
-  sleepChart = new Chart(ctx, {
+  const data   = recs.map(r => r.weight);
+  const ctx    = document.getElementById('wchart').getContext('2d');
+  weightChart = new Chart(ctx, {
     type:'line',
     data:{ labels, datasets:[{
-      data, borderColor:'#8b5cf6', backgroundColor:'rgba(139,92,246,.08)',
+      data, borderColor:'#667eea', backgroundColor:'rgba(102,126,234,.08)',
       pointBackgroundColor:'#fff', pointRadius:4, pointHoverRadius:6,
       borderWidth:2, tension:.3, fill:true,
     }]},
@@ -1306,15 +1305,7 @@ function renderSleepChart(){
       plugins:{ legend:{display:false} },
       scales:{
         x:{ ticks:{color:'#555',font:{size:11}}, grid:{color:'rgba(255,255,255,.04)'}, border:{color:'#242424'} },
-        y:{
-          min:0, max:12, ticks:{color:'#555',font:{size:11}},
-          grid:{ color: ctx2 => {
-            const v = ctx2.tick?.value;
-            if(v===7||v===8) return 'rgba(61,220,132,.35)';
-            return 'rgba(255,255,255,.04)';
-          }},
-          border:{color:'#242424'}
-        },
+        y:{ ticks:{color:'#555',font:{size:11}}, grid:{color:'rgba(255,255,255,.04)'}, border:{color:'#242424'} },
       }
     }
   });
@@ -1414,19 +1405,24 @@ function initLongPress(){
   makeLongPress(byLP("adjN('r',1)"),       ()=>window.adjN('r',1));
   makeLongPress(byLP("adjN('s',-1)"),      ()=>window.adjN('s',-1));
   makeLongPress(byLP("adjN('s',1)"),       ()=>window.adjN('s',1));
-  makeLongPress(byLP("adjTime('bed',-15)"),()=>window.adjTime('bed',-15));
-  makeLongPress(byLP("adjTime('bed',15)"), ()=>window.adjTime('bed',15));
-  makeLongPress(byLP("adjTime('wake',-15)"),()=>window.adjTime('wake',-15));
-  makeLongPress(byLP("adjTime('wake',15)"),()=>window.adjTime('wake',15));
+  makeLongPress(byLP('adjBodyW(-0.1)'),  ()=>window.adjBodyW(-0.1));
+  makeLongPress(byLP('adjBodyW(0.1)'),   ()=>window.adjBodyW(0.1));
+  makeLongPress(byLP('adjTargetW(-0.1)'),()=>window.adjTargetW(-0.1));
+  makeLongPress(byLP('adjTargetW(0.1)'), ()=>window.adjTargetW(0.1));
 }
 
 // ── INIT ──────────────────────────────────────────────────
 (function init(){
   initPresets();
   renderGrpBtns();
-  updateBedPresets();
-  updateWakePresets();
-  renderDuration();
+  curTargetW = loadTargetW();
+  const recs = loadWeightRecs();
+  if(recs.length > 0) curBodyW = recs[recs.length-1].w;
+  const bwEl = document.getElementById('bw-val');
+  const twEl = document.getElementById('tw-val');
+  if(bwEl) bwEl.textContent = curBodyW.toFixed(1);
+  if(twEl) twEl.textContent = curTargetW.toFixed(1);
+  renderWeightProgress();
   applyLang();
   updateStats();
   initLongPress();

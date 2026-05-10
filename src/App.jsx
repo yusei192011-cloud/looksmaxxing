@@ -42,7 +42,7 @@ export default function App() {
       <div id="pane-record" className="pane on">
         <div className="subtabs">
           <button className="stb on" id="stb-workout" onClick={() => window.switchSub && window.switchSub('workout')} data-i18n="tab_record"></button>
-          <button className="stb sl" id="stb-sleep" onClick={() => window.switchSub && window.switchSub('sleep')} data-i18n="tab_sleep"></button>
+          <button className="stb sl" id="stb-weight" onClick={() => window.switchSub && window.switchSub('weight')} data-i18n="tab_weight"></button>
         </div>
 
         {/* WORKOUT sub-pane */}
@@ -133,63 +133,38 @@ export default function App() {
           </div>
         </div>
 
-        {/* SLEEP sub-pane */}
-        <div id="sub-sleep" className="subpane">
+        {/* WEIGHT sub-pane */}
+        <div id="sub-weight" className="subpane">
           <div className="sec">
-            <div className="sec-ttl" data-i18n="sec_bedtime"></div>
-            <div className="tbox">
-              <div className="tdisp">
-                <button className="ncb" data-lp="adjTime('bed',-15)" style={{width:'38px',height:'38px',fontSize:'20px',fontWeight:'600'}} onClick={() => window.adjTime && window.adjTime('bed',-15)}>−</button>
-                <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
-                  <div className="tval" id="bed-val" onClick={() => window.editTime && window.editTime('bed')}>23:00</div>
-                  <span className="val-hint">タップで選択</span>
-                </div>
-                <button className="ncb" data-lp="adjTime('bed',15)" style={{width:'38px',height:'38px',fontSize:'20px',fontWeight:'600'}} onClick={() => window.adjTime && window.adjTime('bed',15)}>+</button>
+            <div className="sec-ttl" data-i18n="sec_bodyweight"></div>
+            <div className="wdisp">
+              <button className="ncb" data-lp="adjBodyW(-0.1)" style={{width:'48px',height:'48px',fontSize:'22px',fontWeight:'700',borderRadius:'12px'}} onClick={() => window.adjBodyW && window.adjBodyW(-0.1)}>−</button>
+              <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
+                <div className="wval" id="bw-val" onClick={() => window.editBodyW && window.editBodyW()}>70.0</div>
+                <span className="wunit" style={{marginLeft:'0'}}>kg</span>
               </div>
-              <div className="tpreset" id="bed-presets"></div>
+              <button className="ncb" data-lp="adjBodyW(0.1)" style={{width:'48px',height:'48px',fontSize:'22px',fontWeight:'700',borderRadius:'12px'}} onClick={() => window.adjBodyW && window.adjBodyW(0.1)}>+</button>
             </div>
           </div>
 
           <div className="sec">
-            <div className="sec-ttl" data-i18n="sec_wakeup"></div>
-            <div className="tbox">
-              <div className="tdisp">
-                <button className="ncb" data-lp="adjTime('wake',-15)" style={{width:'38px',height:'38px',fontSize:'20px',fontWeight:'600'}} onClick={() => window.adjTime && window.adjTime('wake',-15)}>−</button>
-                <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
-                  <div className="tval" id="wake-val" onClick={() => window.editTime && window.editTime('wake')}>07:00</div>
-                  <span className="val-hint">タップで選択</span>
-                </div>
-                <button className="ncb" data-lp="adjTime('wake',15)" style={{width:'38px',height:'38px',fontSize:'20px',fontWeight:'600'}} onClick={() => window.adjTime && window.adjTime('wake',15)}>+</button>
+            <div className="sec-ttl" data-i18n="sec_targetweight"></div>
+            <div className="wdisp">
+              <button className="ncb" data-lp="adjTargetW(-0.1)" style={{width:'48px',height:'48px',fontSize:'22px',fontWeight:'700',borderRadius:'12px'}} onClick={() => window.adjTargetW && window.adjTargetW(-0.1)}>−</button>
+              <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
+                <div className="wval" id="tw-val" onClick={() => window.editTargetW && window.editTargetW()}>65.0</div>
+                <span className="wunit" style={{marginLeft:'0'}}>kg</span>
               </div>
-              <div className="tpreset" id="wake-presets"></div>
+              <button className="ncb" data-lp="adjTargetW(0.1)" style={{width:'48px',height:'48px',fontSize:'22px',fontWeight:'700',borderRadius:'12px'}} onClick={() => window.adjTargetW && window.adjTargetW(0.1)}>+</button>
             </div>
           </div>
 
           <div className="sec">
-            <div className="dur-box">
-              <div className="dur-v" id="dur-val">8:00</div>
-              <div className="dur-l" data-i18n="sec_duration"></div>
-            </div>
-          </div>
-
-          <div className="sec">
-            <div className="sec-ttl" data-i18n="sec_quality"></div>
-            <div className="ql-row">
-              <button className="qlb" onClick={() => window.setQuality && window.setQuality(1)}><span className="ql-em">😫</span><span className="ql-num">1</span></button>
-              <button className="qlb" onClick={() => window.setQuality && window.setQuality(2)}><span className="ql-em">😞</span><span className="ql-num">2</span></button>
-              <button className="qlb" onClick={() => window.setQuality && window.setQuality(3)}><span className="ql-em">😐</span><span className="ql-num">3</span></button>
-              <button className="qlb" onClick={() => window.setQuality && window.setQuality(4)}><span className="ql-em">😊</span><span className="ql-num">4</span></button>
-              <button className="qlb" onClick={() => window.setQuality && window.setQuality(5)}><span className="ql-em">😁</span><span className="ql-num">5</span></button>
-            </div>
-          </div>
-
-          <div className="sec">
-            <div className="sec-ttl" data-i18n="sec_memo"></div>
-            <input type="text" id="sl-memo" className="inp" autoComplete="off" />
+            <div id="wt-progress"></div>
           </div>
 
           <div className="sec" style={{borderBottom:'none'}}>
-            <button className="btn btn-sleep" onClick={() => window.saveSleep && window.saveSleep()} data-i18n="btn_sleep_save"></button>
+            <button className="btn btn-weight" onClick={() => window.saveBodyWeight && window.saveBodyWeight()} data-i18n="btn_weight_save"></button>
           </div>
         </div>
       </div>
@@ -200,7 +175,7 @@ export default function App() {
           <div className="htype-row">
             <button className="htb on" id="htb-all" onClick={() => window.setHistType && window.setHistType('all')} data-i18n="hf_all"></button>
             <button className="htb" id="htb-workout" onClick={() => window.setHistType && window.setHistType('workout')} data-i18n="hf_workout"></button>
-            <button className="htb sl" id="htb-sleep" onClick={() => window.setHistType && window.setHistType('sleep')} data-i18n="hf_sleep"></button>
+            <button className="htb sl" id="htb-weight" onClick={() => window.setHistType && window.setHistType('weight')} data-i18n="hf_weight"></button>
           </div>
           <div id="grp-chips-wrap" style={{display:'none',marginTop:'8px'}}>
             <select id="hist-grp-select" onChange={(e) => window.setHistGroup && window.setHistGroup(e.target.value)}></select>
@@ -220,7 +195,7 @@ export default function App() {
         <div className="sec">
           <div className="prog-tabs">
             <button className="ptb on" id="ptb-workout" onClick={() => window.switchProg && window.switchProg('workout')} data-i18n="hf_workout"></button>
-            <button className="ptb sl" id="ptb-sleep" onClick={() => window.switchProg && window.switchProg('sleep')} data-i18n="hf_sleep"></button>
+            <button className="ptb sl" id="ptb-weight" onClick={() => window.switchProg && window.switchProg('weight')} data-i18n="hf_weight"></button>
           </div>
           <div id="prog-workout">
             <select className="fsel" id="pex" onChange={() => window.renderChart && window.renderChart()}>
@@ -233,16 +208,16 @@ export default function App() {
               <button className="mb" id="mb-group" onClick={() => window.setMetric && window.setMetric('group')} data-i18n="m_group"></button>
             </div>
           </div>
-          <div id="prog-sleep" style={{display:'none'}}></div>
+          <div id="prog-weight" style={{display:'none'}}></div>
         </div>
         <div className="sec" style={{borderBottom:'none'}}>
           <div id="chart-workout-wrap">
             <div className="chart-yl" id="cyl"></div>
             <div className="chart-wrap"><canvas id="pchart"></canvas></div>
           </div>
-          <div id="chart-sleep-wrap" style={{display:'none'}}>
-            <div className="chart-yl">HOURS</div>
-            <div className="chart-wrap"><canvas id="schart"></canvas></div>
+          <div id="chart-weight-wrap" style={{display:'none'}}>
+            <div className="chart-yl">kg</div>
+            <div className="chart-wrap"><canvas id="wchart"></canvas></div>
           </div>
         </div>
       </div>
