@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#080808"/>
+  <text x="256" y="300" text-anchor="middle" font-family="Arial Black, sans-serif"
+        font-weight="900" font-size="220" fill="#ffffff" letter-spacing="-8">LM</text>
+  <rect x="80" y="340" width="352" height="6" rx="3" fill="#ffffff" opacity="0.3"/>
+</svg>
