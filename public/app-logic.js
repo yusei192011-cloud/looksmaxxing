@@ -1415,17 +1415,19 @@ function initLongPress(){
 (function init(){
   initPresets();
   renderGrpBtns();
-  curTargetW = loadTargetW();
-  const recs = loadWeightRecs();
-  if(recs.length > 0) curBodyW = recs[recs.length-1].w;
-  const bwEl = document.getElementById('bw-val');
-  const twEl = document.getElementById('tw-val');
-  if(bwEl) bwEl.textContent = curBodyW.toFixed(1);
-  if(twEl) twEl.textContent = curTargetW.toFixed(1);
-  renderWeightProgress();
   applyLang();
   updateStats();
   initLongPress();
+  try {
+    curTargetW = loadTargetW();
+    const recs = loadWeightRecs();
+    if(recs.length > 0) curBodyW = recs[recs.length-1].weight;
+    const bwEl = document.getElementById('bw-val');
+    const twEl = document.getElementById('tw-val');
+    if(bwEl) bwEl.textContent = curBodyW.toFixed(1);
+    if(twEl) twEl.textContent = curTargetW.toFixed(1);
+    renderWeightProgress();
+  } catch(e) { console.error('weight init', e); }
 
   document.addEventListener('visibilitychange', function(){
     if(document.hidden || !WS || WS.phase !== 'rest' || WS.paused) return;
