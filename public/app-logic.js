@@ -3,7 +3,7 @@
 // ── I18N ──────────────────────────────────────────────────
 const LANGS = {
   ja:{
-    tab_record:'記録',tab_history:'履歴',tab_progress:'進捗',tab_status:'ランク',
+    tab_record:'トレーニング',tab_history:'記録',tab_progress:'進捗',tab_status:'ランク',
     grp_placeholder:'部位を選択',sec_group:'部位',sec_exercise:'種目',sec_weight:'重量',sec_rest:'休憩時間',
     ph_ex:'例: ベンチプレス',
     lbl_reps:'回数',lbl_sets:'セット数',u_reps:'回',u_sets:'セット',
@@ -23,7 +23,7 @@ const LANGS = {
     hf_all:'全て',hf_workout:'ワークアウト',hf_weight:'体重',m_group:'部位別',
   },
   en:{
-    tab_record:'REC',tab_history:'LOG',tab_progress:'STATS',tab_status:'RANK',
+    tab_record:'TRAIN',tab_history:'LOG',tab_progress:'STATS',tab_status:'RANK',
     grp_placeholder:'SELECT GROUP',sec_group:'MUSCLE GROUP',sec_exercise:'EXERCISE',sec_weight:'WEIGHT',sec_rest:'REST TIME',
     ph_ex:'e.g. Bench Press',
     lbl_reps:'REPS',lbl_sets:'SETS',u_reps:'reps',u_sets:'sets',
@@ -43,7 +43,7 @@ const LANGS = {
     hf_all:'ALL',hf_workout:'WORKOUT',hf_weight:'WEIGHT',m_group:'By Group',
   },
   ko:{
-    tab_record:'기록',tab_history:'기록부',tab_progress:'진행',tab_status:'랭크',
+    tab_record:'트레이닝',tab_history:'기록',tab_progress:'진행',tab_status:'랭크',
     stat_total:'총 기록',stat_week:'이번 주',stat_streak:'연속',
     grp_placeholder:'부위 선택',sec_exercise:'운동',sec_weight:'중량',sec_rest:'휴식 시간',
     ph_ex:'예: 벤치프레스',
@@ -64,7 +64,7 @@ const LANGS = {
     hf_all:'전체',hf_workout:'운동',hf_weight:'체중',m_group:'부위별',
   },
   zh:{
-    tab_record:'训练',tab_history:'历史',tab_progress:'进度',tab_status:'排名',
+    tab_record:'训练',tab_history:'记录',tab_progress:'进度',tab_status:'排名',
     stat_total:'总计',stat_week:'本周',stat_streak:'连续',
     grp_placeholder:'选择部位',sec_exercise:'动作',sec_weight:'重量',sec_rest:'休息时间',
     ph_ex:'例如: 卧推',
@@ -85,7 +85,7 @@ const LANGS = {
     hf_all:'全部',hf_workout:'训练',hf_weight:'体重',m_group:'部位',
   },
   es:{
-    tab_record:'REC',tab_history:'LOG',tab_progress:'PROGRESO',tab_status:'RANGO',
+    tab_record:'TRAIN',tab_history:'LOG',tab_progress:'PROGRESO',tab_status:'RANGO',
     stat_total:'TOTAL',stat_week:'ESTA SEMANA',stat_streak:'RACHA',
     grp_placeholder:'SELECCIONAR',sec_exercise:'EJERCICIO',sec_weight:'PESO',sec_rest:'DESCANSO',
     ph_ex:'Ej: Press de banca',
