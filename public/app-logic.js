@@ -1045,7 +1045,7 @@ function renderStatus(){
   let heroHtml;
   if(rank.level===0){
     heroHtml=`<div class="status-hero">
-      <div class="status-no-rank-ic">🏋️</div>
+      <div class="status-no-rank-ic"><img src="muscle_body.png" alt="" style="width:80px;height:80px;object-fit:contain;opacity:0.6"></div>
       <div class="status-no-rank-msg">${isJa?'トレーニングを始めよう！':'Start Training!'}</div>
     </div>`;
   } else {
@@ -1141,7 +1141,9 @@ function renderHistory(){
   const filtered = all.filter(r => !cut || new Date(r.date).getTime() >= cut);
   const list = document.getElementById('hist-list');
   if(!filtered.length){
-    const ic = histType==='weight' ? '⚖️' : '🏋️';
+    const ic = histType==='weight'
+      ? `<img src="muscle_body.png" alt="" style="width:60px;height:60px;object-fit:contain;opacity:0.5">`
+      : `<img src="muscle_body.png" alt="" style="width:60px;height:60px;object-fit:contain;opacity:0.5">`;
     list.innerHTML = `<div class="empty"><div class="empty-ic">${ic}</div>${esc(t('empty'))}</div>`;
     return;
   }
@@ -1284,7 +1286,7 @@ function renderWeightChart(){
   if(weightChart){ weightChart.destroy(); weightChart=null; }
   const wrap = document.getElementById('chart-weight-wrap');
   if(!recs.length){
-    wrap.innerHTML = `<div class="empty"><div class="empty-ic">⚖️</div>${esc(t('empty'))}</div>`;
+    wrap.innerHTML = `<div class="empty"><div class="empty-ic"><img src="muscle_body.png" alt="" style="width:60px;height:60px;object-fit:contain;opacity:0.5"></div>${esc(t('empty'))}</div>`;
     return;
   }
   if(!document.getElementById('wchart')){
