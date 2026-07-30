@@ -1,19 +1,125 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { supabase } from './lib/supabase'
 
 export default function App() {
+  const [user, setUser] = useState(null)
+  const [authLoading, setAuthLoading] = useState(true)
+  const [step, setStep] = useState('email') // 'email' | 'otp'
+  const [email, setEmail] = useState('')
+  const [otp, setOtp] = useState('')
+  const [sending, setSending] = useState(false)
+  const [verifying, setVerifying] = useState(false)
+  const [message, setMessage] = useState('')
+
   useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null)
+      setAuthLoading(false)
+    })
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+    return () => subscription.unsubscribe()
+  }, [])
+
+  useEffect(() => {
+    if (!user) return
     const s = document.createElement('script')
     s.src = import.meta.env.BASE_URL + 'app-logic.js'
     s.async = false
     document.body.appendChild(s)
     return () => { document.body.removeChild(s) }
-  }, [])
+  }, [user])
+
+  // メールアドレスにOTPを送信
+  const handleSendOtp = async () => {
+    if (!email) return
+    setSending(true)
+    setMessage('')
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: { shouldCreateUser: true },
+    })
+    if (error) {
+      setMessage('送信に失敗しました。もう一度お試しください。')
+    } else {
+      setStep('otp')
+      setMessage('6桁のコードをメールに送りました！')
+    }
+    setSending(false)
+  }
+
+  // 6桁コードで認証
+  const handleVerifyOtp = async () => {
+    if (!otp) return
+    setVerifying(true)
+    setMessage('')
+    const { error } = await supabase.auth.verifyOtp({
+      email,
+      token: otp,
+      type: 'email',
+    })
+    if (error) {
+      setMessage('コードが間違っています。もう一度確認してください。')
+    }
+    setVerifying(false)
+  }
+
+  if (authLoading) return (
+    <div style={s.center}>
+      <div style={{color:'#666',fontFamily:'sans-serif',letterSpacing:'2px'}}>LOADING...</div>
+    </div>
+  )
+
+  if (!user) return (
+    <div style={s.center}>
+      <div style={s.card}>
+        <div style={s.title}>LOOKSMAXXING</div>
+        <div style={s.sub}>筋トレ記録アプリ</div>
+
+        {step === 'email' ? (
+          <>
+            <input
+              style={s.input}
+              type="email"
+              placeholder="メールアドレス"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleSendOtp()}
+            />
+            <button style={s.btn} onClick={handleSendOtp} disabled={sending}>
+              {sending ? '送信中...' : 'コードを送る'}
+            </button>
+          </>
+        ) : (
+          <>
+            <div style={s.emailLabel}>{email}</div>
+            <input
+              style={{...s.input, textAlign:'center', fontSize:'24px', letterSpacing:'8px'}}
+              type="number"
+              placeholder="000000"
+              value={otp}
+              onChange={e => setOtp(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleVerifyOtp()}
+              maxLength={6}
+            />
+            <button style={s.btn} onClick={handleVerifyOtp} disabled={verifying}>
+              {verifying ? '確認中...' : 'ログイン'}
+            </button>
+            <button style={s.backBtn} onClick={() => { setStep('email'); setOtp(''); setMessage(''); }}>
+              ← メールアドレスを変更
+            </button>
+          </>
+        )}
+
+        {message && <div style={s.msg}>{message}</div>}
+      </div>
+    </div>
+  )
 
   return (
     <>
       <div id="flash"></div>
-
-      {/* HEADER */}
       <div id="hdr">
         <div id="hdr-title">
           <div id="wo-dot"></div>
@@ -29,40 +135,27 @@ export default function App() {
         <div className="lang-opt" data-l="zh" onClick={() => window.setLang && window.setLang('zh')}>中文</div>
         <div className="lang-opt" data-l="es" onClick={() => window.setLang && window.setLang('es')}>Español</div>
       </div>
-
-      {/* TABS */}
       <div id="tabs">
         <button className="tb on" id="tb-record" onClick={() => window.switchTab && window.switchTab('record')} data-i18n="tab_record"></button>
         <button className="tb" id="tb-history" onClick={() => window.switchTab && window.switchTab('history')} data-i18n="tab_history"></button>
         <button className="tb" id="tb-progress" onClick={() => window.switchTab && window.switchTab('progress')} data-i18n="tab_progress"></button>
         <button className="tb" id="tb-status" onClick={() => window.switchTab && window.switchTab('status')} data-i18n="tab_status"></button>
       </div>
-
-      {/* RECORD PANE */}
       <div id="pane-record" className="pane on">
         <div className="subtabs">
           <button className="stb on" id="stb-workout" onClick={() => window.switchSub && window.switchSub('workout')} data-i18n="tab_record"></button>
           <button className="stb sl" id="stb-weight" onClick={() => window.switchSub && window.switchSub('weight')} data-i18n="tab_weight"></button>
         </div>
-
-        {/* WORKOUT sub-pane */}
         <div id="sub-workout" className="subpane on">
           <div className="sec">
             <select id="grp-select" onChange={(e) => window.setGroup && window.setGroup(e.target.value)}></select>
             <div className="sec-ttl" data-i18n="sec_exercise" style={{marginTop:'10px'}}></div>
             <div className="ac-wrap">
-              <input type="text" id="ex-inp" className="inp" autoComplete="off"
-                style={{paddingRight:'38px'}}
-                onInput={() => window.acInput && window.acInput()}
-                onFocus={() => window.acFocus && window.acFocus()}
-                onBlur={() => window.acBlur && window.acBlur()} />
-              <button className="ex-clear" id="ex-clear"
-                onMouseDown={(e) => e.preventDefault()}
-                onClick={() => window.clearExInp && window.clearExInp()}>✕</button>
+              <input type="text" id="ex-inp" className="inp" autoComplete="off" style={{paddingRight:'38px'}} onInput={() => window.acInput && window.acInput()} onFocus={() => window.acFocus && window.acFocus()} onBlur={() => window.acBlur && window.acBlur()} />
+              <button className="ex-clear" id="ex-clear" onMouseDown={(e) => e.preventDefault()} onClick={() => window.clearExInp && window.clearExInp()}>✕</button>
               <div id="ac-list" className="ac-list"></div>
             </div>
           </div>
-
           <div className="sec">
             <div className="sec-ttl" data-i18n="sec_weight"></div>
             <div id="wbox">
@@ -93,7 +186,6 @@ export default function App() {
               </div>
             </div>
           </div>
-
           <div className="sec">
             <div className="rs-row">
               <div className="nc">
@@ -114,7 +206,6 @@ export default function App() {
               </div>
             </div>
           </div>
-
           <div className="sec" style={{padding:'8px 16px'}}>
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
               <span style={{fontSize:'11px',letterSpacing:'2px',color:'#999',fontWeight:'600',whiteSpace:'nowrap',flexShrink:'0'}} data-i18n="sec_rest"></span>
@@ -124,16 +215,11 @@ export default function App() {
               </div>
             </div>
           </div>
-
           <div className="sec" style={{paddingTop:'10px',paddingBottom:'6px',borderBottom:'none'}}>
-            <button className="btn btn-start" onClick={() => window.startWorkout && window.startWorkout()}>
-              <span data-i18n="btn_start"></span>
-            </button>
+            <button className="btn btn-start" onClick={() => window.startWorkout && window.startWorkout()}><span data-i18n="btn_start"></span></button>
             <button className="btn btn-log" onClick={() => window.quickLog && window.quickLog()} data-i18n="btn_log"></button>
           </div>
         </div>
-
-        {/* WEIGHT sub-pane */}
         <div id="sub-weight" className="subpane">
           <div className="sec">
             <div className="sec-ttl" data-i18n="sec_bodyweight"></div>
@@ -146,7 +232,6 @@ export default function App() {
               <button className="ncb" data-lp="adjBodyW(0.1)" style={{width:'48px',height:'48px',fontSize:'22px',fontWeight:'700',borderRadius:'12px'}} onClick={() => window.adjBodyW && window.adjBodyW(0.1)}>+</button>
             </div>
           </div>
-
           <div className="sec">
             <div className="sec-ttl" data-i18n="sec_targetweight"></div>
             <div className="wdisp">
@@ -158,18 +243,12 @@ export default function App() {
               <button className="ncb" data-lp="adjTargetW(0.1)" style={{width:'48px',height:'48px',fontSize:'22px',fontWeight:'700',borderRadius:'12px'}} onClick={() => window.adjTargetW && window.adjTargetW(0.1)}>+</button>
             </div>
           </div>
-
-          <div className="sec">
-            <div id="wt-progress"></div>
-          </div>
-
+          <div className="sec"><div id="wt-progress"></div></div>
           <div className="sec" style={{borderBottom:'none'}}>
             <button className="btn btn-weight" onClick={() => window.saveBodyWeight && window.saveBodyWeight()} data-i18n="btn_weight_save"></button>
           </div>
         </div>
       </div>
-
-      {/* HISTORY PANE */}
       <div id="pane-history" className="pane">
         <div className="sec">
           <div className="htype-row">
@@ -189,8 +268,6 @@ export default function App() {
         </div>
         <div className="sec" style={{borderBottom:'none',paddingTop:'8px'}} id="hist-list"></div>
       </div>
-
-      {/* PROGRESS PANE */}
       <div id="pane-progress" className="pane">
         <div className="sec">
           <div className="prog-tabs">
@@ -221,13 +298,9 @@ export default function App() {
           </div>
         </div>
       </div>
-
-      {/* STATUS PANE */}
       <div id="pane-status" className="pane">
         <div id="status-content"></div>
       </div>
-
-      {/* WORKOUT OVERLAY */}
       <div id="wo">
         <div className="woh">
           <div className="woh-ttl" data-i18n="wo_ttl"></div>
@@ -236,14 +309,12 @@ export default function App() {
             <button className="woc" id="reset-btn" onClick={() => window.showResetDlg && window.showResetDlg()}>↺</button>
           </div>
         </div>
-
         <div className="wo-setinfo">
           <div className="wo-setlbl-sm" id="wo-setlbl-sm">SET 1 / 3</div>
           <div className="wo-dots" id="wo-dots"></div>
           <div className="wo-exname" id="wo-exname"></div>
           <div className="wo-winfo" id="wo-winfo"></div>
         </div>
-
         <div id="wo-main">
           <div id="wo-body-bg">
             <div className="muscle-container">
@@ -273,16 +344,12 @@ export default function App() {
             <div className="co-det" id="co-det"></div>
           </div>
         </div>
-
         <div id="wo-action">
           <button className="btn btn-done" id="btn-done" onClick={() => window.onDone && window.onDone()} data-i18n="btn_done"></button>
           <button className="btn btn-next" id="btn-next" onClick={() => window.onNext && window.onNext()} style={{display:'none'}} data-i18n="btn_next"></button>
-          <button className="btn btn-sec" id="btn-close" onClick={() => window.closeWo && window.closeWo()}
-            style={{display:'none',fontFamily:"'Bebas Neue',sans-serif",letterSpacing:'2px',fontSize:'18px'}}>CLOSE</button>
+          <button className="btn btn-sec" id="btn-close" onClick={() => window.closeWo && window.closeWo()} style={{display:'none',fontFamily:"'Bebas Neue',sans-serif",letterSpacing:'2px',fontSize:'18px'}}>CLOSE</button>
         </div>
       </div>
-
-      {/* RESET DIALOG */}
       <div className="dlg-ov" id="reset-dlg">
         <div className="dlg">
           <div className="dlg-ttl" data-i18n="dlg_ttl"></div>
@@ -294,10 +361,7 @@ export default function App() {
           </div>
         </div>
       </div>
-
       <div id="toast"></div>
-
-      {/* RANK MODAL */}
       <div id="rank-ov">
         <div id="rank-sh">
           <button className="rank-close-btn" onClick={() => window.closeRankModal && window.closeRankModal()}>✕</button>
@@ -306,17 +370,13 @@ export default function App() {
             <div className="rank-name-lg" id="rank-name-lg"></div>
             <div className="rank-days-lg" id="rank-days-lg"></div>
           </div>
-          <div className="rank-mid">
-            <div id="rank-progress"></div>
-          </div>
+          <div className="rank-mid"><div id="rank-progress"></div></div>
           <div className="rank-bottom">
             <div className="rank-section-ttl" id="rank-list-ttl">ALL RANKS</div>
             <div id="rank-list"></div>
           </div>
         </div>
       </div>
-
-      {/* RANK UP OVERLAY */}
       <div id="rankup-ov" onClick={() => window.hideRankUp && window.hideRankUp()}>
         <div id="rankup-particles"></div>
         <div className="rankup-label" id="rankup-label">RANK UP!</div>
@@ -327,8 +387,6 @@ export default function App() {
         </div>
         <div className="rankup-hint">TAP TO CLOSE</div>
       </div>
-
-      {/* DRUM PICKER OVERLAY */}
       <div id="picker-ov">
         <div id="picker-sh">
           <div id="picker-hdr">
@@ -347,4 +405,16 @@ export default function App() {
       </div>
     </>
   )
+}
+
+const s = {
+  center: { display:'flex', justifyContent:'center', alignItems:'center', minHeight:'100vh', background:'#000' },
+  card: { background:'#111', borderRadius:'16px', padding:'48px 28px', display:'flex', flexDirection:'column', alignItems:'center', gap:'16px', width:'300px' },
+  title: { color:'#fff', fontFamily:"'Bebas Neue',sans-serif", fontSize:'28px', letterSpacing:'4px' },
+  sub: { color:'#555', fontSize:'12px', letterSpacing:'2px', marginBottom:'8px' },
+  input: { background:'#1a1a1a', border:'1px solid #2a2a2a', borderRadius:'8px', color:'#fff', padding:'14px', fontSize:'16px', width:'100%', boxSizing:'border-box' },
+  btn: { background:'linear-gradient(135deg,#667eea,#764ba2)', color:'#fff', border:'none', borderRadius:'8px', padding:'14px', fontSize:'15px', fontWeight:'700', cursor:'pointer', width:'100%', letterSpacing:'2px' },
+  backBtn: { background:'transparent', color:'#555', border:'none', fontSize:'13px', cursor:'pointer', marginTop:'-4px' },
+  emailLabel: { color:'#888', fontSize:'13px', marginBottom:'4px' },
+  msg: { color:'#4ade80', fontSize:'13px', textAlign:'center', marginTop:'4px' },
 }

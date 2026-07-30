@@ -132,15 +132,114 @@ document.addEventListener('click', e => {
     document.getElementById('lang-dd').classList.remove('open');
 });
 
-// ── STORAGE ───────────────────────────────────────────────
-const KEY = 'workout_records_v2';
-function loadRecs(){ try{ return JSON.parse(localStorage.getItem(KEY)||'[]'); } catch{ return []; } }
-function saveRecs(r){ localStorage.setItem(KEY, JSON.stringify(r)); }
+// ── STORAGE (Supabase) ───────────────────────────────────────
+// workoutRecordsCache / weightRecordsCache hold the last data fetched from
+// Supabase. Reads elsewhere in this file are synchronous (charts, rank,
+// autocomplete, etc.), so loadRecs()/loadWeightRecs() just return the
+// cache; fetchWorkoutRecords()/fetchWeightRecords() are the async calls
+// that actually hit Supabase and refresh it.
+let workoutRecordsCache = [];
+let weightRecordsCache = [];
 
-const WEIGHT_KEY = 'weight_records_v1';
-const TARGET_W_KEY = 'target_weight_v1';
-function loadWeightRecs(){ try{ return JSON.parse(localStorage.getItem(WEIGHT_KEY)||'[]'); } catch{ return []; } }
-function saveWeightRecs(r){ localStorage.setItem(WEIGHT_KEY, JSON.stringify(r)); }
+function loadRecs(){ return workoutRecordsCache; }
+function loadWeightRecs(){ return weightRecordsCache; }
+
+async function fetchWorkoutRecords(){
+  const { data, error } = await window.supabase
+    .from('workout_records')
+    .select('*')
+    .order('created_at', { ascending: false });
+  if(error){
+    console.error('fetchWorkoutRecords', error);
+    showToast('保存に失敗しました');
+    return workoutRecordsCache;
+  }
+  workoutRecordsCache = (data||[]).map(r => ({
+    id: r.id, date: r.created_at,
+    exercise: r.exercise, weight: r.weight, reps: r.reps, sets: r.sets,
+    group: r.group,
+    volume: r.weight * r.reps * r.sets,
+    est1rm: Math.round(r.weight * (1 + r.reps / 30)),
+  }));
+  return workoutRecordsCache;
+}
+
+async function insertWorkoutRecord(rec){
+  const { data: userData } = await window.supabase.auth.getUser();
+  const { error } = await window.supabase.from('workout_records').insert({
+    user_id: userData.user.id,
+    exercise: rec.exercise,
+    group: rec.group,
+    weight: rec.weight,
+    reps: rec.reps,
+    sets: rec.sets,
+  });
+  if(error){
+    console.error('insertWorkoutRecord', error);
+    showToast('保存に失敗しました');
+    return false;
+  }
+  await fetchWorkoutRecords();
+  return true;
+}
+
+window.deleteWorkoutRecord = async function(recordId){
+  const { error } = await window.supabase.from('workout_records').delete().eq('id', recordId);
+  if(error){
+    console.error('deleteWorkoutRecord', error);
+    showToast('保存に失敗しました');
+    return false;
+  }
+  await fetchWorkoutRecords();
+  updateStats(); renderHistory();
+  return true;
+};
+
+// body_weight_records replaces the former sleep-tracking table; the UI
+// only ever tracked body weight, never bedtime/wakeup/quality/memo.
+async function fetchWeightRecords(){
+  const { data, error } = await window.supabase
+    .from('body_weight_records')
+    .select('*')
+    .order('created_at', { ascending: true }); // oldest→newest: renderWeightProgress() reads recs[recs.length-1] as "latest"
+  if(error){
+    console.error('fetchWeightRecords', error);
+    showToast('保存に失敗しました');
+    return weightRecordsCache;
+  }
+  weightRecordsCache = (data||[]).map(r => ({ id: r.id, date: r.created_at, type:'weight', weight: r.weight }));
+  return weightRecordsCache;
+}
+
+async function insertWeightRecord(weight){
+  const { data: userData } = await window.supabase.auth.getUser();
+  const { error } = await window.supabase.from('body_weight_records').insert({
+    user_id: userData.user.id,
+    weight: weight,
+  });
+  if(error){
+    console.error('insertWeightRecord', error);
+    showToast('保存に失敗しました');
+    return false;
+  }
+  await fetchWeightRecords();
+  return true;
+}
+
+window.deleteBodyWeightRecord = async function(recordId){
+  const { error } = await window.supabase.from('body_weight_records').delete().eq('id', recordId);
+  if(error){
+    console.error('deleteBodyWeightRecord', error);
+    showToast('保存に失敗しました');
+    return false;
+  }
+  await fetchWeightRecords();
+  renderHistory(); renderWeightProgress();
+  if(document.getElementById('pane-progress').classList.contains('on')) renderWeightChart();
+  return true;
+};
+
+const TARGET_W_KEY = 'target_weight_v1'; // single user preference, not a "record" — left in localStorage
 function loadTargetW(){ const v=parseFloat(localStorage.getItem(TARGET_W_KEY)); return isNaN(v)?65.0:v; }
 
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -441,9 +540,9 @@ function renderWeightProgress(){
     </div>`;
 }
 
-window.saveBodyWeight = function(){
-  const rec = { id:Date.now(), date:new Date().toISOString(), type:'weight', weight:curBodyW };
-  const recs = loadWeightRecs(); recs.push(rec); saveWeightRecs(recs);
+window.saveBodyWeight = async function(){
+  const ok = await insertWeightRecord(curBodyW);
+  if(!ok) return;
   const btn = document.querySelector('.btn-weight');
   const orig = t('btn_weight_save');
   btn.textContent = t('weightSaved');
@@ -451,6 +550,7 @@ window.saveBodyWeight = function(){
   setTimeout(()=>{ btn.textContent=orig; btn.style.background=''; btn.style.color=''; }, 1500);
   showToast(t('weightSaved'));
   renderWeightProgress();
+  renderHistory();
 };
 
 // ── REST ──────────────────────────────────────────────────
@@ -699,18 +799,13 @@ window.hideRankUp = function(){
 };
 
 // ── QUICK LOG ─────────────────────────────────────────────
-window.quickLog = function(){
+window.quickLog = async function(){
   const ex = document.getElementById('ex-inp').value.trim();
   if(!ex){ document.getElementById('ex-inp').focus(); return; }
-  const recs = loadRecs();
-  recs.push({
-    id:Date.now(), date:new Date().toISOString(),
-    exercise:ex, weight:curW, reps:curR, sets:curS,
-    volume:curW*curR*curS, est1rm:Math.round(curW*(1+curR/30)),
-    group:curGroup||'other'
-  });
-  const prevLevel=getRank(loadRecs()).level;
-  saveRecs(recs); updateStats(); renderHistory();
+  const prevLevel = getRank(loadRecs()).level;
+  const ok = await insertWorkoutRecord({ exercise:ex, weight:curW, reps:curR, sets:curS, group:curGroup||'other' });
+  if(!ok) return;
+  updateStats(); renderHistory();
   const newRank=getRank(loadRecs());
   if(newRank.level>prevLevel) setTimeout(()=>showRankUp(newRank),500);
   const b = document.querySelector('.btn-log');
@@ -829,13 +924,13 @@ function refreshWoUI(){
   }
 }
 
-window.onDone = function(){
+window.onDone = async function(){
   if(!WS || WS.phase !== 'active') return;
   const _ctx = getAudioCtx(); if(_ctx.state === 'suspended') _ctx.resume();
   WS.completedSets.push({ set:WS.curSet, weight:WS.weight, reps:WS.reps });
   if(WS.curSet >= WS.sets){
     clearTimer();
-    saveWoRecord();
+    await saveWoRecord();
     WS.phase = 'complete';
     refreshWoUI();
     showToast(lang==='ja' ? trainMsg() : '✓ Saved!');
@@ -1010,29 +1105,25 @@ window.showResetDlg = function(){
   document.getElementById('reset-dlg').classList.add('open');
 };
 function hideResetDlg(){ document.getElementById('reset-dlg').classList.remove('open'); }
-window.resetAct = function(act){
+window.resetAct = async function(act){
   hideResetDlg();
   if(act === 'cancel') return;
   clearTimer();
-  if(act === 'save' && WS && WS.completedSets.length > 0) saveWoRecord(true);
+  if(act === 'save' && WS && WS.completedSets.length > 0) await saveWoRecord(true);
   window.closeWo();
 };
 
 // ── SAVE RECORD ───────────────────────────────────────────
-function saveWoRecord(partial = false){
+async function saveWoRecord(partial = false){
   if(!WS) return;
   const setsN = partial ? WS.completedSets.length : WS.sets;
   if(setsN === 0) return;
   const prevLevel=getRank(loadRecs()).level;
-  const recs = loadRecs();
-  recs.push({
-    id: Date.now(), date: new Date().toISOString(),
+  const ok = await insertWorkoutRecord({
     exercise: WS.exercise, weight: WS.weight, reps: WS.reps, sets: setsN,
-    volume: WS.weight * WS.reps * setsN,
-    est1rm: Math.round(WS.weight * (1 + WS.reps / 30)),
     group: WS.group || 'other'
   });
-  saveRecs(recs);
+  if(!ok) return;
   const newRank=getRank(loadRecs());
   if(newRank.level>prevLevel) setTimeout(()=>showRankUp(newRank),600);
 }
@@ -1158,6 +1249,7 @@ function renderHistory(){
       <div>
         <div class="rdate">${esc(fmtDate(r.date))}</div>
       </div>
+      <button class="rc-del" onclick="deleteBodyWeightRecord('${esc(String(r.id))}')" aria-label="delete">✕</button>
     </div>`;
     }
     const grp = r.group||'other';
@@ -1175,6 +1267,7 @@ function renderHistory(){
         <div class="rmt">${esc(String(r.weight))}kg</div>
         <div class="rdate">${esc(fmtDate(r.date))}</div>
       </div>
+      <button class="rc-del" onclick="deleteWorkoutRecord('${esc(String(r.id))}')" aria-label="delete">✕</button>
     </div>`;
   }).join('');
 }
@@ -1414,12 +1507,15 @@ function initLongPress(){
 }
 
 // ── INIT ──────────────────────────────────────────────────
-(function init(){
+(async function init(){
   initPresets();
   renderGrpBtns();
   applyLang();
   updateStats();
   initLongPress();
+
+  await Promise.all([fetchWorkoutRecords(), fetchWeightRecords()]);
+
   try {
     curTargetW = loadTargetW();
     const recs = loadWeightRecs();
@@ -1430,6 +1526,9 @@ function initLongPress(){
     if(twEl) twEl.textContent = curTargetW.toFixed(1);
     renderWeightProgress();
   } catch(e) { console.error('weight init', e); }
+
+  updateStats();
+  renderHistory();
 
   document.addEventListener('visibilitychange', function(){
     if(document.hidden || !WS || WS.phase !== 'rest' || WS.paused) return;
