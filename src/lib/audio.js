@@ -18,6 +18,16 @@ function beep(freq, dur, vol, type = 'sine') {
   } catch { /* audio not available (autoplay policy, unsupported browser) */ }
 }
 
+// Browsers require a user gesture to unlock audio playback; call this from
+// a click handler right before a later, non-gesture-triggered sound (the
+// rest-timer alarm) needs to play.
+export function unlockAudio() {
+  try {
+    const c = getAudioCtx()
+    if (c.state === 'suspended') c.resume()
+  } catch { /* audio not available */ }
+}
+
 // Drum-picker scroll-snap tick.
 export function playTick() {
   try {
