@@ -1,9 +1,7 @@
-const CACHE = 'looksmaxxing-v25';
+const CACHE = 'looksmaxxing-__CACHE_VERSION__';
 const ASSETS = [
   './',
   './index.html',
-  'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap',
-  'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js',
 ];
 
 self.addEventListener('install', e => {
@@ -21,9 +19,6 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  // Anthropic API はキャッシュしない
-  if (e.request.url.includes('anthropic.com')) return;
-
   // ネットワーク優先: 成功したらキャッシュ更新、失敗時はキャッシュから返す
   e.respondWith(
     fetch(e.request).then(res => {

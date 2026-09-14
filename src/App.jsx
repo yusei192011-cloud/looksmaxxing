@@ -408,13 +408,13 @@ export default function App() {
 }
 
 const s = {
-  center: { display:'flex', justifyContent:'center', alignItems:'center', minHeight:'100vh', background:'#000' },
-  card: { background:'#111', borderRadius:'16px', padding:'48px 28px', display:'flex', flexDirection:'column', alignItems:'center', gap:'16px', width:'300px' },
-  title: { color:'#fff', fontFamily:"'Bebas Neue',sans-serif", fontSize:'28px', letterSpacing:'4px' },
-  sub: { color:'#555', fontSize:'12px', letterSpacing:'2px', marginBottom:'8px' },
-  input: { background:'#1a1a1a', border:'1px solid #2a2a2a', borderRadius:'8px', color:'#fff', padding:'14px', fontSize:'16px', width:'100%', boxSizing:'border-box' },
-  btn: { background:'linear-gradient(135deg,#667eea,#764ba2)', color:'#fff', border:'none', borderRadius:'8px', padding:'14px', fontSize:'15px', fontWeight:'700', cursor:'pointer', width:'100%', letterSpacing:'2px' },
-  backBtn: { background:'transparent', color:'#555', border:'none', fontSize:'13px', cursor:'pointer', marginTop:'-4px' },
-  emailLabel: { color:'#888', fontSize:'13px', marginBottom:'4px' },
-  msg: { color:'#4ade80', fontSize:'13px', textAlign:'center', marginTop:'4px' },
+  center: { display:'flex', justifyContent:'center', alignItems:'center', minHeight:'100vh', background:'var(--bg)' },
+  card: { background:'var(--s1)', border:'1px solid var(--b1)', borderRadius:'16px', padding:'48px 28px', display:'flex', flexDirection:'column', alignItems:'center', gap:'16px', width:'300px' },
+  title: { color:'var(--ac2)', fontFamily:"'Bebas Neue',sans-serif", fontSize:'28px', letterSpacing:'4px' },
+  sub: { color:'var(--t4)', fontSize:'12px', letterSpacing:'2px', marginBottom:'8px' },
+  input: { background:'var(--s2)', border:'1px solid var(--b2)', borderRadius:'8px', color:'var(--t1)', padding:'14px', fontSize:'16px', width:'100%', boxSizing:'border-box' },
+  btn: { background:'var(--grad)', color:'#fff', border:'none', borderRadius:'8px', padding:'14px', fontSize:'15px', fontWeight:'700', cursor:'pointer', width:'100%', letterSpacing:'2px' },
+  backBtn: { background:'transparent', color:'var(--t4)', border:'none', fontSize:'13px', cursor:'pointer', marginTop:'-4px' },
+  emailLabel: { color:'var(--t2)', fontSize:'13px', marginBottom:'4px' },
+  msg: { color:'var(--green)', fontSize:'13px', textAlign:'center', marginTop:'4px' },
 }
