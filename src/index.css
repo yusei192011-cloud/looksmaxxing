@@ -206,6 +206,8 @@ body::after{
 .btn-log:hover{border-color:var(--t2);color:var(--t1)}
 .btn-sec{background:var(--s2);border:1px solid var(--b2);color:var(--t1)}
 .btn-sec:hover{background:var(--b2)}
+.btn-weight{background:var(--s2);border:1px solid var(--b2);color:var(--t1);transition:background .15s,color .15s;}
+.btn-weight:hover{background:var(--b2)}
 
 .f-row{display:flex;gap:8px}
 .fsel{flex:1;background:var(--s1);border:1px solid var(--b2);border-radius:var(--r);color:var(--t1);font-family:'Space Grotesk',sans-serif;font-size:13px;padding:10px 12px;outline:none;-webkit-appearance:none;cursor:pointer;margin-top:10px;}
