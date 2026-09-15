@@ -90,9 +90,6 @@ body::after{
 .status-prog-meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--t4)}
 .status-max-rank{text-align:center;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;padding:4px 0}
 .status-list-ttl{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:var(--t4);margin-bottom:10px}
-.status-rank-list{display:flex;flex-direction:column;gap:8px}
-.status-rank-row{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:12px;background:var(--s1);border:1px solid transparent}
-.status-rank-row.cur{background:rgba(0,0,0,.5)}
 .tb.on{color:var(--ac2);border-bottom:none;background:rgba(var(--ac-rgb),.06)}
 .tb.on::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ac),var(--ac-2))}
 .tb:not(.on):hover{color:var(--t2)}
