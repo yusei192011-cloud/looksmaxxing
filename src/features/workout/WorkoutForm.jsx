@@ -102,6 +102,7 @@ export default function WorkoutForm({ onStartWorkout }) {
   return (
     <div id="sub-workout" className="subpane on">
       <div className="sec">
+        <label htmlFor="grp-select" className="sr-only">{t('grp_placeholder')}</label>
         <select
           id="grp-select"
           value={form.group}
@@ -111,7 +112,7 @@ export default function WorkoutForm({ onStartWorkout }) {
           <option value="">{t('grp_placeholder')}</option>
           {GROUPS.map(g => <option key={g.id} value={g.id}>{groupName(g.id, lang)}</option>)}
         </select>
-        <div className="sec-ttl" style={{ marginTop: '10px' }}>{t('sec_exercise')}</div>
+        <div className="sec-ttl" id="sec-exercise-label" style={{ marginTop: '10px' }}>{t('sec_exercise')}</div>
         <div className="ac-wrap">
           <input
             ref={exInputRef}
@@ -119,6 +120,7 @@ export default function WorkoutForm({ onStartWorkout }) {
             id="ex-inp"
             className="inp"
             autoComplete="off"
+            aria-labelledby="sec-exercise-label"
             style={{ paddingRight: '38px', borderColor: exerciseError ? 'var(--danger)' : undefined }}
             placeholder={t('ph_ex')}
             value={form.exercise}

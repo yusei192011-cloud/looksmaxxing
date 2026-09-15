@@ -83,6 +83,7 @@ export default function App() {
               style={s.input}
               type="email"
               placeholder="メールアドレス"
+              aria-label="メールアドレス"
               value={email}
               onChange={e => setEmail(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSendOtp()}
@@ -98,6 +99,7 @@ export default function App() {
               style={{...s.input, textAlign:'center', fontSize:'24px', letterSpacing:'8px'}}
               type="number"
               placeholder="000000"
+              aria-label="認証コード"
               value={otp}
               onChange={e => setOtp(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleVerifyOtp()}

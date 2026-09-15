@@ -50,6 +50,8 @@ body::after{
 :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 :focus:not(:focus-visible){outline:none}
 
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
 #hdr{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--b2);box-shadow:0 1px 20px rgba(var(--ac-rgb),0.1);padding:0 12px;height:44px;display:flex;align-items:center;justify-content:space-between;}
 #hdr-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:flex;align-items:center;gap:10px;line-height:1;}
 #wo-dot{display:none;width:8px;height:8px;border-radius:50%;background:var(--danger);box-shadow:0 0 6px var(--danger);animation:blink 1.2s ease-in-out infinite;}
