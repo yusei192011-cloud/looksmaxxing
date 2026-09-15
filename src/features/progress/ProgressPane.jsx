@@ -8,7 +8,7 @@ export default function ProgressPane() {
   const [section, setSection] = useState('workout')
 
   return (
-    <div id="pane-progress" className="pane on">
+    <div id="pane-progress" className="pane on" role="tabpanel">
       <div className="prog-tabs" style={{ margin: '12px 16px 0' }}>
         <button className={`ptb${section === 'workout' ? ' on' : ''}`} onClick={() => setSection('workout')}>{t('hf_workout')}</button>
         <button className={`ptb sl${section === 'weight' ? ' on' : ''}`} onClick={() => setSection('weight')}>{t('hf_weight')}</button>

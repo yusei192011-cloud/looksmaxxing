@@ -9,6 +9,7 @@ import RankBadge from '../features/rank/RankBadge'
 import RankModal from '../features/rank/RankModal'
 import { useGuidedSession } from '../features/workout/GuidedSession/useGuidedSession'
 import GuidedSessionOverlay from '../features/workout/GuidedSession/GuidedSessionOverlay'
+import { useOneTimeGestureSetup } from './useOneTimeGestureSetup'
 
 // Chart.js is a large dependency only needed once the user actually opens
 // the Progress tab — code-split it out of the main bundle.
@@ -23,6 +24,7 @@ export default function AppShell() {
   const [rankModalOpen, setRankModalOpen] = useState(false)
   const guidedSession = useGuidedSession()
   const sessionActive = !!guidedSession.session
+  useOneTimeGestureSetup()
 
   return (
     <>
@@ -36,11 +38,14 @@ export default function AppShell() {
         <LangSwitcher />
       </div>
 
-      <div id="tabs">
+      <div id="tabs" role="tablist">
         {TOP_TABS.map(id => (
           <button
             key={id}
             id={`tb-${id}`}
+            role="tab"
+            aria-selected={tab === id}
+            aria-controls={`pane-${id}`}
             className={`tb${tab === id ? ' on' : ''}`}
             disabled={sessionActive}
             onClick={() => setTab(id)}
@@ -50,10 +55,10 @@ export default function AppShell() {
         ))}
       </div>
 
-      <div id="pane-record" className={`pane${tab === 'record' ? ' on' : ''}`}>
-        <div className="subtabs">
-          <button className={`stb${sub === 'workout' ? ' on' : ''}`} onClick={() => setSub('workout')}>{t('tab_record')}</button>
-          <button className={`stb sl${sub === 'weight' ? ' on' : ''}`} onClick={() => setSub('weight')}>{t('tab_weight')}</button>
+      <div id="pane-record" className={`pane${tab === 'record' ? ' on' : ''}`} role="tabpanel">
+        <div className="subtabs" role="tablist">
+          <button role="tab" aria-selected={sub === 'workout'} className={`stb${sub === 'workout' ? ' on' : ''}`} onClick={() => setSub('workout')}>{t('tab_record')}</button>
+          <button role="tab" aria-selected={sub === 'weight'} className={`stb sl${sub === 'weight' ? ' on' : ''}`} onClick={() => setSub('weight')}>{t('tab_weight')}</button>
         </div>
         <div style={{ display: sub === 'workout' ? 'block' : 'none' }}>
           <WorkoutForm onStartWorkout={guidedSession.start} />

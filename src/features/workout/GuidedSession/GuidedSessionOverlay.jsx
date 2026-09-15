@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLang } from '../../../i18n/LangContext'
 import CountdownRing from './CountdownRing'
 import ResetDialog from './ResetDialog'
@@ -35,8 +35,21 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
   const { t } = useLang()
   const { session, timer, done, next, togglePause, close, resetSave, resetDiscard } = guidedSession
   const [resetOpen, setResetOpen] = useState(false)
+  const rootRef = useRef(null)
 
   useBodyLock(!!session, onSessionActiveChange)
+
+  // Belt-and-suspenders alongside the body lock above — some mobile
+  // browsers still let a touchmove inside this overlay bubble up and
+  // rubber-band-scroll the page behind it.
+  useEffect(() => {
+    if (!session) return
+    const el = rootRef.current
+    if (!el) return
+    const stop = (e) => e.stopPropagation()
+    el.addEventListener('touchmove', stop, { passive: false })
+    return () => el.removeEventListener('touchmove', stop)
+  }, [session])
 
   if (!session) return null
 
@@ -46,7 +59,7 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
   const handleResetDiscard = () => { setResetOpen(false); resetDiscard() }
 
   return (
-    <div id="wo" className="on">
+    <div id="wo" className="on" ref={rootRef} role="dialog" aria-modal="true" aria-label={t('wo_ttl')}>
       <div className="woh">
         <div className="woh-ttl">{t('wo_ttl')}</div>
         <div className="woh-ctrls">

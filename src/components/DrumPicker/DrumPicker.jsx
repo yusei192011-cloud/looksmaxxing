@@ -41,8 +41,9 @@ function Drum({ items, current, onIndexChange }) {
 
 export default function DrumPicker({ cfg, onClose }) {
   const { t } = useLang()
-  const drumRefs = useRef([])
   const indicesRef = useRef([])
+  const overlayRef = useRef(null)
+  const stageRef = useRef(null)
 
   useEffect(() => {
     if (!cfg) return
@@ -62,6 +63,59 @@ export default function DrumPicker({ cfg, onClose }) {
     }
   }, [cfg])
 
+  // Keeps the background page from rubber-band scrolling behind the sheet
+  // on iOS even with the body lock above, and lets a drag start anywhere
+  // over a (possibly narrow) drum column scroll that column — not just a
+  // touch that starts exactly on it.
+  useEffect(() => {
+    if (!cfg) return
+    const overlay = overlayRef.current
+    const stage = stageRef.current
+    if (!overlay || !stage) return
+
+    const onOverlayTouchMove = (e) => {
+      if (!e.target.closest('.picker-drum')) e.preventDefault()
+    }
+
+    let activeDrum = null
+    let lastY = 0
+    const onStageTouchStart = (e) => {
+      if (e.target.closest('.picker-drum')) return
+      const drums = Array.from(stage.querySelectorAll('.picker-drum'))
+      if (!drums.length) return
+      if (drums.length === 1) {
+        activeDrum = drums[0]
+      } else {
+        const tx = e.touches[0].clientX
+        activeDrum = drums.reduce((best, d) => {
+          const r = d.getBoundingClientRect(), br = best.getBoundingClientRect()
+          return Math.abs(tx - (r.left + r.width / 2)) < Math.abs(tx - (br.left + br.width / 2)) ? d : best
+        })
+      }
+      lastY = e.touches[0].clientY
+      e.preventDefault()
+    }
+    const onStageTouchMove = (e) => {
+      if (!activeDrum) return
+      const dy = lastY - e.touches[0].clientY
+      activeDrum.scrollTop += dy
+      lastY = e.touches[0].clientY
+      e.preventDefault()
+    }
+    const onStageTouchEnd = () => { activeDrum = null }
+
+    overlay.addEventListener('touchmove', onOverlayTouchMove, { passive: false })
+    stage.addEventListener('touchstart', onStageTouchStart, { passive: false })
+    stage.addEventListener('touchmove', onStageTouchMove, { passive: false })
+    stage.addEventListener('touchend', onStageTouchEnd, { passive: true })
+    return () => {
+      overlay.removeEventListener('touchmove', onOverlayTouchMove)
+      stage.removeEventListener('touchstart', onStageTouchStart)
+      stage.removeEventListener('touchmove', onStageTouchMove)
+      stage.removeEventListener('touchend', onStageTouchEnd)
+    }
+  }, [cfg])
+
   if (!cfg) return null
 
   const hasLabels = cfg.drums.some(d => d.label)
@@ -76,7 +130,7 @@ export default function DrumPicker({ cfg, onClose }) {
   }
 
   return (
-    <div id="picker-ov" style={{ display: 'flex' }} role="dialog" aria-modal="true" aria-label={cfg.title}>
+    <div id="picker-ov" ref={overlayRef} style={{ display: 'flex' }} role="dialog" aria-modal="true" aria-label={cfg.title}>
       <div id="picker-sh">
         <div id="picker-hdr">
           <span id="picker-ttl">{cfg.title}</span>
@@ -89,7 +143,7 @@ export default function DrumPicker({ cfg, onClose }) {
             ))}
           </div>
         )}
-        <div id="picker-stage">
+        <div id="picker-stage" ref={stageRef}>
           <div id="picker-drums">
             {cfg.drums.map((drum, di) => (
               <div key={di} style={{ display: 'flex', alignItems: 'center', height: '100%' }}>

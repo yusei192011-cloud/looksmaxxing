@@ -21,9 +21,10 @@ export default function BodyWeightForm() {
   const { t } = useLang()
   const { openPicker } = useDrumPicker()
   const { showToast } = useToast()
-  const { data: records } = useBodyWeightRecords()
+  const { data: records, isSuccess } = useBodyWeightRecords()
   const insertMutation = useInsertBodyWeightRecord()
-  const form = useBodyWeightForm()
+  const latestRecordedWeight = isSuccess && records.length ? records[records.length - 1].weight : undefined
+  const form = useBodyWeightForm(latestRecordedWeight)
   const [savedFlash, setSavedFlash] = useState(false)
 
   const editBodyWeight = () => {

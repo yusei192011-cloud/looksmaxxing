@@ -34,7 +34,7 @@ export default function RankModal({ open, onClose }) {
   const isJa = lang === 'ja' || lang === 'ko' || lang === 'zh'
 
   return (
-    <div id="rank-ov" className="open" style={{ display: 'flex' }}>
+    <div id="rank-ov" className="open" style={{ display: 'flex' }} role="dialog" aria-modal="true">
       <div id="rank-sh">
         <button className="rank-close-btn" onClick={onClose} aria-label="Close">✕</button>
         <div className="rank-hero">

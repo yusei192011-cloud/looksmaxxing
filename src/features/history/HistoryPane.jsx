@@ -37,7 +37,7 @@ export default function HistoryPane() {
   }
 
   return (
-    <div id="pane-history" className="pane on">
+    <div id="pane-history" className="pane on" role="tabpanel">
       <HistoryFilters
         histType={histType} setHistType={setHistType}
         histGroup={histGroup} setHistGroup={setHistGroup}

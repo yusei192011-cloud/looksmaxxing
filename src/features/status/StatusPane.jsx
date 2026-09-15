@@ -10,7 +10,7 @@ export default function StatusPane() {
   const isJa = lang === 'ja' || lang === 'ko' || lang === 'zh'
 
   return (
-    <div id="pane-status" className="pane on">
+    <div id="pane-status" className="pane on" role="tabpanel">
       <div className="status-inner">
         {rank.level === 0 ? (
           <div className="status-hero">
