@@ -5,4 +5,5 @@ export const queryClient = new QueryClient()
 export const queryKeys = {
   workoutRecords: ['workoutRecords'],
   bodyWeightRecords: ['bodyWeightRecords'],
+  userProfile: ['userProfile'],
 }

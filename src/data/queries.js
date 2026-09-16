@@ -68,3 +68,33 @@ export async function deleteBodyWeightRecord(supabase, id) {
   const { error } = await supabase.from('body_weight_records').delete().eq('id', id)
   if (error) throw error
 }
+
+// Returns null (not an error) when the signed-in user hasn't completed the
+// onboarding wizard yet — that's the signal App.jsx branches on.
+export async function fetchUserProfile(supabase) {
+  const { data: userData, error: userError } = await supabase.auth.getUser()
+  if (userError) throw userError
+  const { data, error } = await supabase
+    .from('user_profiles')
+    .select('*')
+    .eq('id', userData.user.id)
+    .maybeSingle()
+  if (error) throw error
+  return data
+}
+
+export async function upsertUserProfile(supabase, profile) {
+  const { data: userData, error: userError } = await supabase.auth.getUser()
+  if (userError) throw userError
+  const { error } = await supabase.from('user_profiles').upsert({
+    id: userData.user.id,
+    nickname: profile.nickname,
+    experience: profile.experience,
+    body_type: profile.bodyType,
+    goal: profile.goal,
+    frequency: profile.frequency,
+    height_cm: profile.heightCm,
+    weight_kg: profile.weightKg ?? null,
+  })
+  if (error) throw error
+}
