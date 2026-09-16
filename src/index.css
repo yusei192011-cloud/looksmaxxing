@@ -34,8 +34,7 @@ body::after{
   --ac-plus:#4f6ef5;--ac-plus-rgb:79,110,245;
   --grad:linear-gradient(135deg,var(--ac),var(--ac-2));
   --grad-hover:linear-gradient(135deg,#7a8ef5,#8a5db5);
-  --sl-2:#6366f1;--sl-rgb:139,92,246;
-  --grad2:linear-gradient(135deg,var(--sl-2),var(--sl));
+  --sl-rgb:139,92,246;
   --danger:#ef4444;--warn:#f59e0b;--green:#4ade80;--sl:#8b5cf6;
   --r:8px;--rl:14px;
   --shadow-card:0 2px 8px rgba(0,0,0,.5);
@@ -228,11 +227,6 @@ body::after{
 .chart-wrap{position:relative;height:220px;margin-bottom:4px}
 
 
-.subtabs{display:flex;gap:8px;padding:7px 16px;border-bottom:1px solid var(--b1);background:var(--bg)}
-.stb{flex:1;padding:6px 12px;border-radius:12px;border:1px solid var(--b2);background:none;color:var(--t2);font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:1.5px;cursor:pointer;transition:all .2s;min-height:38px;}
-.stb.on{background:var(--grad);border-color:transparent;color:#fff}
-.stb.sl.on{background:var(--grad2);border-color:transparent;color:#fff}
-.stb:not(.on):hover{color:var(--t1)}
 .subpane{display:none}.subpane.on{display:block}
 
 .htype-row{display:flex;gap:6px;margin-bottom:10px}
