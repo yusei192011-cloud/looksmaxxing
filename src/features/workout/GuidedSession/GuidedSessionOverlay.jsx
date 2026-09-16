@@ -53,7 +53,8 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
 
   if (!session) return null
 
-  const { exercise, weight, reps, sets, curSet, phase, group } = session
+  const { exercise, weight, reps, sets, curSet, phase, group, queue, queueIndex, completedExercises } = session
+  const isMultiExercise = queue.length > 1
 
   const handleResetSave = () => { setResetOpen(false); resetSave() }
   const handleResetDiscard = () => { setResetOpen(false); resetDiscard() }
@@ -68,6 +69,7 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
         </div>
       </div>
       <div className="wo-setinfo">
+        {isMultiExercise && <div className="wo-exidx">EXERCISE {queueIndex + 1} / {queue.length}</div>}
         <div className="wo-setlbl-sm">SET {curSet} / {sets}</div>
         <div className="wo-dots">
           {Array.from({ length: sets }, (_, i) => (
@@ -78,7 +80,7 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
         <div className="wo-winfo">{weight}kg × {reps}reps</div>
       </div>
       <div id="wo-main">
-        <div id="wo-body-bg">
+        <div id="wo-body-bg" key={queueIndex}>
           <div className="muscle-container">
             <img src={muscleImageFor(group, exercise)} className="muscle-img" alt="" draggable="false" />
           </div>
@@ -94,7 +96,11 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
         <div className={`wo-phase${phase === 'complete' ? ' on' : ''}`} style={{ textAlign: 'center', gap: '0' }}>
           <div className="co-ic" />
           <div className="co-ttl">{t('wo_complete')}</div>
-          <div className="co-det">{exercise}  {weight}kg × {reps}reps × {sets}sets</div>
+          <div className="co-det">
+            {completedExercises.map(ex => (
+              <div key={ex.exercise}>{ex.exercise}  {ex.weight}kg × {ex.reps}reps × {ex.completedSets.length}sets</div>
+            ))}
+          </div>
         </div>
       </div>
       <div id="wo-action">

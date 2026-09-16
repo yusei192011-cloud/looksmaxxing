@@ -32,11 +32,7 @@ export default function HomePane({ onStartWorkout }) {
   }
 
   const handleStart = () => {
-    // Interim shim: starts a single-exercise session with the menu's first
-    // exercise. Replaced once the guided session supports a real queue of
-    // exercises (tracked as its own follow-up change).
-    const first = menu.exercises[0]
-    if (first) onStartWorkout(first)
+    if (menu.exercises.length) onStartWorkout({ queue: menu.exercises })
   }
 
   return (
