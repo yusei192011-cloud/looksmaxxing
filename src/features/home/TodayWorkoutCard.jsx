@@ -3,7 +3,21 @@ import { groupName } from '../workout/groups'
 
 export default function TodayWorkoutCard({ menu, onStart, onChangeMenu, onManual }) {
   const { t, lang } = useLang()
-  const { targetGroup, dayLabel, exercises } = menu
+  const { targetGroup, dayLabel, exercises, restDay, adjustedForCondition } = menu
+
+  if (restDay) {
+    return (
+      <div className="sec">
+        <div className="home-menu-card">
+          <div className="home-menu-label">{t('todays_workout')}</div>
+          <div className="home-rest-msg">{t('checkin_rest_day')}</div>
+        </div>
+        <div className="home-sub-actions">
+          <button className="btn btn-sec" onClick={onManual}>{t('manual_mode')}</button>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="sec">
@@ -15,6 +29,7 @@ export default function TodayWorkoutCard({ menu, onStart, onChangeMenu, onManual
           </div>
           <div className="home-day-badge">Day {dayLabel.day} / {dayLabel.of}</div>
         </div>
+        {adjustedForCondition && <div className="home-condition-note">{t('checkin_adjusted_note')}</div>}
         <div className="home-menu-list">
           {exercises.map((ex, i) => (
             <div className="home-menu-row" key={ex.exercise}>

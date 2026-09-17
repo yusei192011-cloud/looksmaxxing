@@ -30,6 +30,16 @@ export default {
   recovery_status:'부위별 회복 상태',recovered:'회복됨',almost_recovered:'거의 회복',recovering:'회복 중',
   consecutive_days:'일 연속',day_label:'Day',add_weight_record:'+ 체중 기록',
 
+  // Condition check-in / calendar
+  cond_good:'좋음',cond_normal:'보통',cond_sore:'근육통이 있음',cond_pain:'통증・위화감이 있음',
+  checkin_question:'오늘 컨디션은 어떠세요?',
+  checkin_pain_notice:'통증이 있다면 무리하지 말고 필요하면 병원에 상담하세요. 오늘은 이 부위를 피한 메뉴로 바꿀게요.',
+  checkin_pain_ack:'확인하고 기록하기',
+  checkin_adjusted_note:'컨디션에 맞춰 메뉴를 조정했어요',
+  checkin_rest_day:'오늘은 몸을 쉬게 해주세요. 무리하지 말고 컨디션이 좋아지면 다시 시작하세요.',
+  hist_view_list:'목록',hist_view_calendar:'캘린더',
+  cal_mon:'월',cal_tue:'화',cal_wed:'수',cal_thu:'목',cal_fri:'금',cal_sat:'토',cal_sun:'일',
+
   // Auth (welcome/email/otp)
   welcome_subtitle:'AI 퍼스널 트레이너',
   welcome_feat1_ttl:'AI가 메뉴를 짜줘요',welcome_feat1_desc:'나만을 위한 트레이닝 제안',

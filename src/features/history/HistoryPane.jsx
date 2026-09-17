@@ -2,11 +2,14 @@ import { useMemo, useState } from 'react'
 import { useLang } from '../../i18n/LangContext'
 import { useWorkoutRecords, useDeleteWorkoutRecord } from '../../data/useWorkoutRecords'
 import { useBodyWeightRecords, useDeleteBodyWeightRecord } from '../../data/useBodyWeightRecords'
+import { useConditionCheckins } from '../../data/useConditionCheckins'
 import HistoryFilters from './HistoryFilters'
 import RecordCard from './RecordCard'
+import CalendarView from './CalendarView'
 
 export default function HistoryPane() {
   const { t } = useLang()
+  const [mode, setMode] = useState('list')
   const [histType, setHistTypeState] = useState('all')
   const [histGroup, setHistGroup] = useState('')
   const [period, setPeriod] = useState('7')
@@ -15,6 +18,7 @@ export default function HistoryPane() {
 
   const { data: workoutRecords } = useWorkoutRecords()
   const { data: weightRecords } = useBodyWeightRecords()
+  const { data: checkins } = useConditionCheckins()
   const deleteWorkout = useDeleteWorkoutRecord()
   const deleteWeight = useDeleteBodyWeightRecord()
 
@@ -38,23 +42,37 @@ export default function HistoryPane() {
 
   return (
     <div id="pane-history" className="pane on" role="tabpanel">
-      <HistoryFilters
-        histType={histType} setHistType={setHistType}
-        histGroup={histGroup} setHistGroup={setHistGroup}
-        period={period} setPeriod={setPeriod}
-      />
-      <div className="sec" style={{ borderBottom: 'none', paddingTop: '8px' }}>
-        {filtered.length === 0 ? (
-          <div className="empty">
-            <div className="empty-ic"><img src="muscle_body.png" alt="" style={{ width: 60, height: 60, objectFit: 'contain', opacity: 0.5 }} /></div>
-            {t('empty')}
-          </div>
-        ) : (
-          filtered.map(r => (
-            <RecordCard key={`${r._type}-${r.id}`} record={r} onDelete={() => handleDelete(r)} />
-          ))
-        )}
+      <div className="sec" style={{ paddingBottom: 0 }}>
+        <div className="htype-row">
+          <button className={`htb${mode === 'list' ? ' on' : ''}`} onClick={() => setMode('list')}>{t('hist_view_list')}</button>
+          <button className={`htb${mode === 'calendar' ? ' on' : ''}`} onClick={() => setMode('calendar')}>{t('hist_view_calendar')}</button>
+        </div>
       </div>
+      {mode === 'calendar' ? (
+        <div className="sec" style={{ borderBottom: 'none' }}>
+          <CalendarView records={workoutRecords} checkins={checkins} />
+        </div>
+      ) : (
+        <>
+          <HistoryFilters
+            histType={histType} setHistType={setHistType}
+            histGroup={histGroup} setHistGroup={setHistGroup}
+            period={period} setPeriod={setPeriod}
+          />
+          <div className="sec" style={{ borderBottom: 'none', paddingTop: '8px' }}>
+            {filtered.length === 0 ? (
+              <div className="empty">
+                <div className="empty-ic"><img src="muscle_body.png" alt="" style={{ width: 60, height: 60, objectFit: 'contain', opacity: 0.5 }} /></div>
+                {t('empty')}
+              </div>
+            ) : (
+              filtered.map(r => (
+                <RecordCard key={`${r._type}-${r.id}`} record={r} onDelete={() => handleDelete(r)} />
+              ))
+            )}
+          </div>
+        </>
+      )}
     </div>
   )
 }

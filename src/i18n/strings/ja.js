@@ -29,6 +29,16 @@ export default {
   recovery_status:'部位の回復状態',recovered:'回復済み',almost_recovered:'もうすぐ',recovering:'回復中',
   consecutive_days:'日連続',day_label:'Day',add_weight_record:'＋体重を記録',
 
+  // Condition check-in / calendar
+  cond_good:'良好',cond_normal:'普通',cond_sore:'筋肉痛がある',cond_pain:'痛み・違和感がある',
+  checkin_question:'今日の調子はどうですか？',
+  checkin_pain_notice:'痛みがある場合は無理せず、必要であれば医療機関にご相談ください。今日はこの部位を避けたメニューにします。',
+  checkin_pain_ack:'了解して記録する',
+  checkin_adjusted_note:'体調に合わせてメニューを調整しました',
+  checkin_rest_day:'今日は体を休めましょう。無理せず、また調子が良くなってからにしましょう。',
+  hist_view_list:'リスト',hist_view_calendar:'カレンダー',
+  cal_mon:'月',cal_tue:'火',cal_wed:'水',cal_thu:'木',cal_fri:'金',cal_sat:'土',cal_sun:'日',
+
   // Auth (welcome/email/otp)
   welcome_subtitle:'AIパーソナルトレーナー',
   welcome_feat1_ttl:'AIがメニューを組んでくれる',welcome_feat1_desc:'あなた専用のトレーニングを提案',

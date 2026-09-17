@@ -98,3 +98,22 @@ export async function upsertUserProfile(supabase, profile) {
   })
   if (error) throw error
 }
+
+export async function fetchConditionCheckins(supabase) {
+  const { data, error } = await supabase
+    .from('condition_checkins')
+    .select('*')
+    .order('checkin_date', { ascending: false })
+  if (error) throw error
+  return (data || []).map(r => ({ id: r.id, group: r.group, status: r.status, date: r.checkin_date }))
+}
+
+export async function upsertConditionCheckin(supabase, { group, status, date }) {
+  const { data: userData, error: userError } = await supabase.auth.getUser()
+  if (userError) throw userError
+  const { error } = await supabase.from('condition_checkins').upsert(
+    { user_id: userData.user.id, group, status, checkin_date: date },
+    { onConflict: 'user_id,group,checkin_date' }
+  )
+  if (error) throw error
+}

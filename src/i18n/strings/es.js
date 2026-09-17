@@ -30,6 +30,16 @@ export default {
   recovery_status:'Estado de recuperación',recovered:'Recuperado',almost_recovered:'Casi',recovering:'Recuperando',
   consecutive_days:'días seguidos',day_label:'Día',add_weight_record:'+ Registrar peso',
 
+  // Condition check-in / calendar
+  cond_good:'Bien',cond_normal:'Normal',cond_sore:'Con agujetas',cond_pain:'Dolor / molestia',
+  checkin_question:'¿Cómo te sientes hoy?',
+  checkin_pain_notice:'Si sientes dolor, no fuerces — consulta a un médico si es necesario. Hoy evitaremos este grupo muscular en el menú.',
+  checkin_pain_ack:'Entendido, registrar',
+  checkin_adjusted_note:'Ajustamos el menú de hoy según cómo te sientes',
+  checkin_rest_day:'Tómate hoy para descansar. No fuerces — vuelve cuando te sientas mejor.',
+  hist_view_list:'Lista',hist_view_calendar:'Calendario',
+  cal_mon:'L',cal_tue:'M',cal_wed:'X',cal_thu:'J',cal_fri:'V',cal_sat:'S',cal_sun:'D',
+
   // Auth (welcome/email/otp)
   welcome_subtitle:'Entrenador Personal IA',
   welcome_feat1_ttl:'La IA arma tu menú',welcome_feat1_desc:'Un entrenamiento hecho para ti',

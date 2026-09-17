@@ -27,3 +27,22 @@ export function listGroupRecovery(records) {
     })
     .sort((a, b) => (b.hours === a.hours ? 0 : b.hours - a.hours))
 }
+
+// Lets a same-day condition check-in override the purely time-based estimate:
+// 'good' means fully recovered regardless of elapsed hours, 'sore'/'pain'
+// means treat it as just-trained (needs max recovery) so it naturally sorts
+// to the back of the ranking. 'normal' or no check-in leaves the automatic
+// value untouched.
+export function applyConditionOverrides(ranked, checkinsToday) {
+  const statusByGroup = Object.fromEntries(checkinsToday.map(c => [c.group, c.status]))
+  return ranked
+    .map(entry => {
+      const status = statusByGroup[entry.group]
+      const hours =
+        status === 'good' ? Infinity
+        : status === 'sore' || status === 'pain' ? 0
+        : entry.hours
+      return { ...entry, hours, bucket: recoveryBucket(hours), conditionStatus: status ?? null }
+    })
+    .sort((a, b) => (b.hours === a.hours ? 0 : b.hours - a.hours))
+}

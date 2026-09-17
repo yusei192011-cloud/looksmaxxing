@@ -6,4 +6,5 @@ export const queryKeys = {
   workoutRecords: ['workoutRecords'],
   bodyWeightRecords: ['bodyWeightRecords'],
   userProfile: ['userProfile'],
+  conditionCheckins: ['conditionCheckins'],
 }

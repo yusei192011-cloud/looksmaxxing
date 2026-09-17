@@ -1,5 +1,5 @@
 import { GROUP_EX } from '../workout/groups'
-import { listGroupRecovery } from './recovery'
+import { applyConditionOverrides, listGroupRecovery } from './recovery'
 import { sessionsThisWeek } from './weeklyStats'
 
 const EXERCISES_PER_MENU = 5
@@ -21,9 +21,25 @@ function exerciseNamesForGroup(group, records, lang) {
 
 // Pure and swappable: a future AI-backed generator can return the exact
 // same shape and nothing else in the app needs to change.
-export function generateDailyMenu({ records, frequency, lang, rotation = 0 }) {
-  const ranked = listGroupRecovery(records)
-  const targetGroup = ranked[rotation % ranked.length].group
+export function generateDailyMenu({ records, frequency, lang, rotation = 0, checkinsToday = [] }) {
+  const ranked = applyConditionOverrides(listGroupRecovery(records), checkinsToday)
+  // sore/pain both mean "skip this group today" — pain is filtered explicitly
+  // (not just deprioritized via hours=0) so it can never be picked even if
+  // every other group also just got trained.
+  const candidates = ranked.filter(r => r.conditionStatus !== 'sore' && r.conditionStatus !== 'pain')
+  const adjustedForCondition = checkinsToday.some(c => c.status === 'sore' || c.status === 'pain')
+
+  if (candidates.length === 0) {
+    return {
+      targetGroup: null,
+      dayLabel: { day: Math.min(sessionsThisWeek(records) + 1, frequency || 1), of: frequency || 1 },
+      exercises: [],
+      restDay: true,
+      adjustedForCondition,
+    }
+  }
+
+  const targetGroup = candidates[rotation % candidates.length].group
 
   const names = exerciseNamesForGroup(targetGroup, records, lang)
   const offset = names.length ? rotation % names.length : 0
@@ -46,5 +62,7 @@ export function generateDailyMenu({ records, frequency, lang, rotation = 0 }) {
     targetGroup,
     dayLabel: { day: Math.min(sessionsThisWeek(records) + 1, frequency || 1), of: frequency || 1 },
     exercises,
+    restDay: false,
+    adjustedForCondition,
   }
 }

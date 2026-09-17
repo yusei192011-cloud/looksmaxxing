@@ -29,6 +29,16 @@ export default {
   recovery_status:'Recovery status',recovered:'Recovered',almost_recovered:'Almost',recovering:'Recovering',
   consecutive_days:'day streak',day_label:'Day',add_weight_record:'+ Record weight',
 
+  // Condition check-in / calendar
+  cond_good:'Feeling good',cond_normal:'Normal',cond_sore:'Sore',cond_pain:'Pain / discomfort',
+  checkin_question:'How are you feeling today?',
+  checkin_pain_notice:"If you're in pain, don't push through it — see a doctor if needed. We'll skip this muscle group for today's menu.",
+  checkin_pain_ack:'Got it, log it',
+  checkin_adjusted_note:"We adjusted today's menu based on how you're feeling",
+  checkin_rest_day:"Take today to rest. No need to push it — come back once you're feeling better.",
+  hist_view_list:'List',hist_view_calendar:'Calendar',
+  cal_mon:'M',cal_tue:'T',cal_wed:'W',cal_thu:'T',cal_fri:'F',cal_sat:'S',cal_sun:'S',
+
   // Auth (welcome/email/otp)
   welcome_subtitle:'AI Personal Trainer',
   welcome_feat1_ttl:'AI builds your menu',welcome_feat1_desc:'A workout tailored just for you',

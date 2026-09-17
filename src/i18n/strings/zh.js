@@ -30,6 +30,16 @@ export default {
   recovery_status:'部位恢复状态',recovered:'已恢复',almost_recovered:'快恢复了',recovering:'恢复中',
   consecutive_days:'天连续',day_label:'Day',add_weight_record:'+ 记录体重',
 
+  // Condition check-in / calendar
+  cond_good:'状态良好',cond_normal:'一般',cond_sore:'肌肉酸痛',cond_pain:'疼痛・不适',
+  checkin_question:'今天状态怎么样？',
+  checkin_pain_notice:'如果感到疼痛，请不要勉强，必要时请就医。今天的菜单会避开这个部位。',
+  checkin_pain_ack:'知道了，记录一下',
+  checkin_adjusted_note:'已根据你的状态调整了今天的菜单',
+  checkin_rest_day:'今天好好休息吧。不要勉强，等状态变好后再继续。',
+  hist_view_list:'列表',hist_view_calendar:'日历',
+  cal_mon:'一',cal_tue:'二',cal_wed:'三',cal_thu:'四',cal_fri:'五',cal_sat:'六',cal_sun:'日',
+
   // Auth (welcome/email/otp)
   welcome_subtitle:'AI私人教练',
   welcome_feat1_ttl:'AI为你制定菜单',welcome_feat1_desc:'专属于你的训练方案',
