@@ -1,14 +1,14 @@
 export default {
   tab_record:'트레이닝',tab_history:'기록',tab_progress:'진행',tab_status:'랭크',
   stat_total:'총 기록',stat_week:'이번 주',stat_streak:'연속',
-  grp_placeholder:'부위 선택',sec_exercise:'운동',sec_weight:'중량',sec_rest:'휴식 시간',
+  grp_placeholder:'부위 선택',sec_exercise:'운동',sec_weight:'중량',
   ph_ex:'예: 벤치프레스',
   lbl_reps:'횟수',lbl_sets:'세트',u_reps:'회',u_sets:'세트',
   btn_start:'LET\'S GO',btn_log:'빠른 저장',
   f7d:'7일',f30d:'30일',f90d:'90일',fall:'전체',
   fall_ex:'전체 운동',sel_ex:'운동 선택',
   m_weight:'최대 중량',m_volume:'볼륨',
-  wo_ttl:'워크아웃',wo_set_lbl:'세트',wo_rest_lbl:'휴식',
+  wo_ttl:'워크아웃',wo_set_lbl:'세트',
   wo_rest_done:"LET'S START TRAINING!!",btn_done:'완료 ✓',btn_next:'다음 세트 →',
   wo_complete:'완료!',
   dlg_ttl:'운동 초기화',dlg_body:'어떻게 하시겠습니까?',
@@ -32,12 +32,18 @@ export default {
 
   // Condition check-in / calendar
   cond_good:'좋음',cond_normal:'보통',cond_sore:'근육통이 있음',cond_pain:'통증・위화감이 있음',
-  checkin_question:'오늘 컨디션은 어떠세요?',
-  checkin_pain_notice:'통증이 있다면 무리하지 말고 필요하면 병원에 상담하세요. 오늘은 이 부위를 피한 메뉴로 바꿀게요.',
-  checkin_pain_ack:'확인하고 기록하기',
+  cond_good_desc:'평소처럼 움직일 수 있음',cond_normal_desc:'그저 그럼',
+  cond_sore_desc:'뻐근하지만 움직일 수 있음',cond_pain_desc:'평소와 다른 통증이 있음',
+  checkin_question:'오늘 컨디션은 어때?',checkin_subtitle:'무리하지 않고 계속하기 위해 알려주세요',
+  checkin_pain_notice:'무리하지 말고, 평소와 다른 통증이 계속되면 쉬면서 병원에 상담하세요.',
+  checkin_cta_start:'시작하기',checkin_cta_easy:'오늘은 가볍게 시작하기',
   checkin_adjusted_note:'컨디션에 맞춰 메뉴를 조정했어요',
   checkin_rest_day:'오늘은 몸을 쉬게 해주세요. 무리하지 말고 컨디션이 좋아지면 다시 시작하세요.',
   hist_view_list:'목록',hist_view_calendar:'캘린더',
+  cal_summary_prefix:'이번 달 ',cal_summary_suffix:'일 트레이닝',
+  cal_delta_up_prefix:'지난달보다 +',cal_delta_up_suffix:'일, 좋은 페이스!',
+  cal_delta_flat:'지난달과 같은 페이스',
+  cal_delta_down_prefix:'지난달보다 ',cal_delta_down_suffix:'일 적음. 무리하지 말고 이어가요',
   cal_mon:'월',cal_tue:'화',cal_wed:'수',cal_thu:'목',cal_fri:'금',cal_sat:'토',cal_sun:'일',
 
   // Auth (welcome/email/otp)

@@ -1,14 +1,14 @@
 export default {
   tab_record:'TRAIN',tab_history:'LOG',tab_progress:'PROGRESO',tab_status:'RANGO',
   stat_total:'TOTAL',stat_week:'ESTA SEMANA',stat_streak:'RACHA',
-  grp_placeholder:'SELECCIONAR',sec_exercise:'EJERCICIO',sec_weight:'PESO',sec_rest:'DESCANSO',
+  grp_placeholder:'SELECCIONAR',sec_exercise:'EJERCICIO',sec_weight:'PESO',
   ph_ex:'Ej: Press de banca',
   lbl_reps:'REPS',lbl_sets:'SERIES',u_reps:'reps',u_sets:'series',
   btn_start:'LET\'S GO',btn_log:'Guardar rápido',
   f7d:'7 días',f30d:'30 días',f90d:'90 días',fall:'Todo',
   fall_ex:'Todos',sel_ex:'Seleccionar ejercicio',
   m_weight:'Peso máx.',m_volume:'Volumen',
-  wo_ttl:'ENTRENAMIENTO',wo_set_lbl:'SERIE',wo_rest_lbl:'DESCANSO',
+  wo_ttl:'ENTRENAMIENTO',wo_set_lbl:'SERIE',
   wo_rest_done:"LET'S START TRAINING!!",btn_done:'HECHO ✓',btn_next:'SIGUIENTE →',
   wo_complete:'¡COMPLETADO!',
   dlg_ttl:'Reiniciar',dlg_body:'¿Qué deseas hacer?',
@@ -32,12 +32,18 @@ export default {
 
   // Condition check-in / calendar
   cond_good:'Bien',cond_normal:'Normal',cond_sore:'Con agujetas',cond_pain:'Dolor / molestia',
-  checkin_question:'¿Cómo te sientes hoy?',
-  checkin_pain_notice:'Si sientes dolor, no fuerces — consulta a un médico si es necesario. Hoy evitaremos este grupo muscular en el menú.',
-  checkin_pain_ack:'Entendido, registrar',
+  cond_good_desc:'Me muevo como siempre',cond_normal_desc:'Ni bien ni mal',
+  cond_sore_desc:'Cargado pero puedo moverme',cond_pain_desc:'Siento algo distinto a lo normal',
+  checkin_question:'¿Cómo te sientes hoy?',checkin_subtitle:'Para poder mantener esto sin forzar',
+  checkin_pain_notice:'No fuerces — si el dolor distinto a lo normal continúa, descansa y consulta a un médico.',
+  checkin_cta_start:'Empezar',checkin_cta_easy:'Ir con calma hoy',
   checkin_adjusted_note:'Ajustamos el menú de hoy según cómo te sientes',
   checkin_rest_day:'Tómate hoy para descansar. No fuerces — vuelve cuando te sientas mejor.',
   hist_view_list:'Lista',hist_view_calendar:'Calendario',
+  cal_summary_prefix:'Este mes: ',cal_summary_suffix:' días de entreno',
+  cal_delta_up_prefix:'+',cal_delta_up_suffix:' respecto al mes pasado — ¡bien hecho!',
+  cal_delta_flat:'Mismo ritmo que el mes pasado',
+  cal_delta_down_prefix:'',cal_delta_down_suffix:' menos que el mes pasado — sin prisa, sigue así',
   cal_mon:'L',cal_tue:'M',cal_wed:'X',cal_thu:'J',cal_fri:'V',cal_sat:'S',cal_sun:'D',
 
   // Auth (welcome/email/otp)

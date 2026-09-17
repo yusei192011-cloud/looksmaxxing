@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLang } from '../../../i18n/LangContext'
-import CountdownRing from './CountdownRing'
 import ResetDialog from './ResetDialog'
-import { muscleImageFor } from './muscleImage'
 
 // Locks page scroll while the full-screen session overlay is open, the same
 // position:fixed trick used by DrumPicker, plus the extra
@@ -33,7 +31,7 @@ function useBodyLock(active, onActiveChange) {
 
 export default function GuidedSessionOverlay({ guidedSession, onSessionActiveChange }) {
   const { t } = useLang()
-  const { session, timer, done, next, togglePause, close, resetSave, resetDiscard } = guidedSession
+  const { session, done, next, close, resetSave, resetDiscard } = guidedSession
   const [resetOpen, setResetOpen] = useState(false)
   const rootRef = useRef(null)
 
@@ -53,7 +51,7 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
 
   if (!session) return null
 
-  const { exercise, weight, reps, sets, curSet, phase, group, queue, queueIndex, completedExercises } = session
+  const { exercise, weight, reps, sets, curSet, phase, queue, queueIndex, completedExercises } = session
   const isMultiExercise = queue.length > 1
 
   const handleResetSave = () => { setResetOpen(false); resetSave() }
@@ -64,7 +62,6 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
       <div className="woh">
         <div className="woh-ttl">{t('wo_ttl')}</div>
         <div className="woh-ctrls">
-          <button className="woc" onClick={togglePause} disabled={phase !== 'rest'}>{session.paused ? '▶' : '⏸'}</button>
           <button className="woc" onClick={() => setResetOpen(true)} style={{ display: phase === 'complete' ? 'none' : '' }}>↺</button>
         </div>
       </div>
@@ -80,15 +77,7 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
         <div className="wo-winfo">{weight}kg × {reps}reps</div>
       </div>
       <div id="wo-main">
-        <div id="wo-body-bg" key={queueIndex}>
-          <div className="muscle-container">
-            <img src={muscleImageFor(group, exercise)} className="muscle-img" alt="" draggable="false" />
-          </div>
-        </div>
         <div className={`wo-phase${phase === 'active' ? ' on' : ''}`} />
-        <div className={`wo-phase${phase === 'rest' ? ' on' : ''}`}>
-          <CountdownRing remaining={timer.remaining} fraction={timer.fraction} status={timer.status} />
-        </div>
         <div className={`wo-phase${phase === 'wait' ? ' on' : ''}`} style={{ gap: '12px' }}>
           <span className="wo-fire" />
           <div className="wo-done-txt">{t('wo_rest_done')}</div>
@@ -111,7 +100,7 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
           onClick={close}
           style={{
             display: phase === 'complete' ? '' : 'none',
-            fontFamily: "'Bebas Neue',sans-serif", letterSpacing: '2px', fontSize: '18px',
+            fontFamily: "'Fredoka',sans-serif", letterSpacing: '2px', fontSize: '18px',
           }}
         >CLOSE</button>
       </div>

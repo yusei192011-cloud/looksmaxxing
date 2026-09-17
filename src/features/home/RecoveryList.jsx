@@ -38,7 +38,6 @@ export default function RecoveryList({ records }) {
       </div>
       <PreWorkoutCheckinModal
         open={editGroup !== null}
-        group={editGroup}
         onSelect={handleSelect}
         onClose={() => setEditGroup(null)}
       />

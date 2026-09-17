@@ -1,14 +1,14 @@
 export default {
   tab_record:'训练',tab_history:'记录',tab_progress:'进度',tab_status:'排名',
   stat_total:'总计',stat_week:'本周',stat_streak:'连续',
-  grp_placeholder:'选择部位',sec_exercise:'动作',sec_weight:'重量',sec_rest:'休息时间',
+  grp_placeholder:'选择部位',sec_exercise:'动作',sec_weight:'重量',
   ph_ex:'例如: 卧推',
   lbl_reps:'次数',lbl_sets:'组数',u_reps:'次',u_sets:'组',
   btn_start:'LET\'S GO',btn_log:'快速记录',
   f7d:'7天',f30d:'30天',f90d:'90天',fall:'全部',
   fall_ex:'所有动作',sel_ex:'选择动作',
   m_weight:'最大重量',m_volume:'训练量',
-  wo_ttl:'训练',wo_set_lbl:'组',wo_rest_lbl:'休息',
+  wo_ttl:'训练',wo_set_lbl:'组',
   wo_rest_done:"LET'S START TRAINING!!",btn_done:'完成 ✓',btn_next:'下一组 →',
   wo_complete:'完成!',
   dlg_ttl:'重置训练',dlg_body:'请选择操作',
@@ -32,12 +32,18 @@ export default {
 
   // Condition check-in / calendar
   cond_good:'状态良好',cond_normal:'一般',cond_sore:'肌肉酸痛',cond_pain:'疼痛・不适',
-  checkin_question:'今天状态怎么样？',
-  checkin_pain_notice:'如果感到疼痛，请不要勉强，必要时请就医。今天的菜单会避开这个部位。',
-  checkin_pain_ack:'知道了，记录一下',
+  cond_good_desc:'和平时一样能动',cond_normal_desc:'不好也不坏',
+  cond_sore_desc:'有点酸但还能动',cond_pain_desc:'感觉到和平时不一样的疼痛',
+  checkin_question:'今天状态怎么样?',checkin_subtitle:'为了能不勉强地坚持下去，告诉我们吧',
+  checkin_pain_notice:'不要勉强，如果和平时不一样的疼痛持续，请休息并就医。',
+  checkin_cta_start:'开始',checkin_cta_easy:'今天轻松一点，开始',
   checkin_adjusted_note:'已根据你的状态调整了今天的菜单',
   checkin_rest_day:'今天好好休息吧。不要勉强，等状态变好后再继续。',
   hist_view_list:'列表',hist_view_calendar:'日历',
+  cal_summary_prefix:'本月 ',cal_summary_suffix:' 天训练',
+  cal_delta_up_prefix:'比上月多 ',cal_delta_up_suffix:' 天，状态不错！',
+  cal_delta_flat:'和上月节奏一样',
+  cal_delta_down_prefix:'比上月少 ',cal_delta_down_suffix:' 天，别勉强，继续加油',
   cal_mon:'一',cal_tue:'二',cal_wed:'三',cal_thu:'四',cal_fri:'五',cal_sat:'六',cal_sun:'日',
 
   // Auth (welcome/email/otp)

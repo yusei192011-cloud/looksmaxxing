@@ -1,13 +1,13 @@
 export default {
   tab_record:'TRAIN',tab_history:'LOG',tab_progress:'STATS',tab_status:'RANK',
-  grp_placeholder:'SELECT GROUP',sec_group:'MUSCLE GROUP',sec_exercise:'EXERCISE',sec_weight:'WEIGHT',sec_rest:'REST TIME',
+  grp_placeholder:'SELECT GROUP',sec_group:'MUSCLE GROUP',sec_exercise:'EXERCISE',sec_weight:'WEIGHT',
   ph_ex:'e.g. Bench Press',
   lbl_reps:'REPS',lbl_sets:'SETS',u_reps:'reps',u_sets:'sets',
   btn_start:'LET\'S GO',btn_log:'Quick Log',wpl_preset:'PRESET & ADJUST',
   f7d:'7 days',f30d:'30 days',f90d:'90 days',fall:'All time',
   fall_ex:'All exercises',sel_ex:'Select exercise',
   m_weight:'Max Weight',m_volume:'Volume',
-  wo_ttl:'WORKOUT',wo_set_lbl:'SET',wo_rest_lbl:'REST',
+  wo_ttl:'WORKOUT',wo_set_lbl:'SET',
   wo_rest_done:"LET'S START TRAINING!!",btn_done:'DONE ✓',btn_next:'NEXT SET →',
   wo_complete:'COMPLETE!',
   dlg_ttl:'Reset Workout',dlg_body:'What would you like to do?',
@@ -31,12 +31,18 @@ export default {
 
   // Condition check-in / calendar
   cond_good:'Feeling good',cond_normal:'Normal',cond_sore:'Sore',cond_pain:'Pain / discomfort',
-  checkin_question:'How are you feeling today?',
-  checkin_pain_notice:"If you're in pain, don't push through it — see a doctor if needed. We'll skip this muscle group for today's menu.",
-  checkin_pain_ack:'Got it, log it',
+  cond_good_desc:'Moving like normal',cond_normal_desc:'Not great, not bad',
+  cond_sore_desc:"Tight, but I can move",cond_pain_desc:'Something feels off',
+  checkin_question:'How are you feeling today?',checkin_subtitle:"So we can keep this sustainable",
+  checkin_pain_notice:"Don't push through it — if unusual pain continues, take a rest day and see a doctor.",
+  checkin_cta_start:'Start',checkin_cta_easy:'Take it easy today',
   checkin_adjusted_note:"We adjusted today's menu based on how you're feeling",
   checkin_rest_day:"Take today to rest. No need to push it — come back once you're feeling better.",
   hist_view_list:'List',hist_view_calendar:'Calendar',
+  cal_summary_prefix:'This month: ',cal_summary_suffix:' training days',
+  cal_delta_up_prefix:'+',cal_delta_up_suffix:' vs last month — nice work!',
+  cal_delta_flat:'Same pace as last month',
+  cal_delta_down_prefix:'',cal_delta_down_suffix:' fewer than last month — no worries, keep going',
   cal_mon:'M',cal_tue:'T',cal_wed:'W',cal_thu:'T',cal_fri:'F',cal_sat:'S',cal_sun:'S',
 
   // Auth (welcome/email/otp)

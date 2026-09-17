@@ -1,6 +1,5 @@
 import { useEffect, useReducer, useRef } from 'react'
 import { sessionReducer } from './sessionReducer'
-import { useSessionTimer } from './useSessionTimer'
 import { useLogWorkoutRecord } from '../useLogWorkoutRecord'
 import { useToast } from '../../../components/Toast'
 import { useLang } from '../../../i18n/LangContext'
@@ -16,17 +15,6 @@ export function useGuidedSession() {
   const { lang } = useLang()
   const savedRef = useRef(false)
   const autoCloseTimerRef = useRef(null)
-
-  const timer = useSessionTimer({ onDone: () => dispatch({ type: 'REST_DONE' }) })
-
-  // Enter rest phase -> (re)start the countdown. The boolean dependency
-  // flips false->true exactly once per rest period (active/wait/complete
-  // all read as false), so this only fires on the actual transition.
-  const isResting = session?.phase === 'rest'
-  useEffect(() => {
-    if (isResting) timer.start(session.restSecs)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isResting])
 
   // Save once the whole queue finishes: one workout_records row per
   // exercise, sequentially awaited (not Promise.all) — logWorkout's
@@ -56,19 +44,6 @@ export function useGuidedSession() {
     return () => window.removeEventListener('beforeunload', onUnload)
   }, [session])
 
-  // rAF is throttled/suspended in backgrounded tabs on many platforms;
-  // reconcile immediately on return instead of waiting for it to resume.
-  useEffect(() => {
-    if (!isResting || session?.paused) return
-    const onVisibility = () => {
-      if (document.hidden) return
-      timer.reconcileVisibility()
-    }
-    document.addEventListener('visibilitychange', onVisibility)
-    return () => document.removeEventListener('visibilitychange', onVisibility)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isResting, session?.paused])
-
   const start = (payload) => {
     savedRef.current = false
     dispatch({ type: 'START', payload })
@@ -78,15 +53,7 @@ export function useGuidedSession() {
 
   const next = () => { unlockAudio(); dispatch({ type: 'NEXT' }) }
 
-  const togglePause = () => {
-    if (!session) return
-    if (session.paused) timer.resume()
-    else timer.pause()
-    dispatch({ type: 'TOGGLE_PAUSE' })
-  }
-
   const close = () => {
-    timer.clear()
     clearTimeout(autoCloseTimerRef.current)
     dispatch({ type: 'RESET' })
   }
@@ -112,5 +79,5 @@ export function useGuidedSession() {
 
   const resetDiscard = () => close()
 
-  return { session, timer, start, done, next, togglePause, close, resetSave, resetDiscard }
+  return { session, start, done, next, close, resetSave, resetDiscard }
 }

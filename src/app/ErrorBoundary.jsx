@@ -30,7 +30,7 @@ export default class ErrorBoundary extends Component {
 
 const styles = {
   wrap: { display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'12px', minHeight:'100vh', padding:'24px', textAlign:'center', background:'var(--bg)' },
-  title: { fontFamily:"'Bebas Neue',sans-serif", fontSize:'22px', letterSpacing:'2px', color:'var(--t1)' },
+  title: { fontFamily:"'Fredoka',sans-serif", fontSize:'22px', letterSpacing:'2px', color:'var(--t1)' },
   body: { fontSize:'14px', color:'var(--t2)' },
   btn: { background:'var(--grad)', color:'#fff', border:'none', borderRadius:'8px', padding:'12px 24px', fontSize:'14px', fontWeight:'700', cursor:'pointer' },
 }

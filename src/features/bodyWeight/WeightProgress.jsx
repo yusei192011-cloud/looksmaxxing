@@ -8,7 +8,7 @@ export default function WeightProgress({ bodyWeight, targetWeight, records }) {
 
   if (Math.abs(diff) < 0.05) {
     return (
-      <div style={{ color: 'var(--green)', fontFamily: "'Bebas Neue',sans-serif", fontSize: '18px', letterSpacing: '2px', textAlign: 'center' }}>
+      <div style={{ color: 'var(--green)', fontFamily: "'Fredoka',sans-serif", fontSize: '18px', letterSpacing: '2px', textAlign: 'center' }}>
         🎯 TARGET REACHED!
       </div>
     )

@@ -8,9 +8,9 @@ import {
 Chart.register(BarElement, CategoryScale, Filler, LinearScale, LineElement, PointElement, Tooltip)
 
 const axisCommon = {
-  ticks: { color: '#555', font: { size: 11 } },
-  grid: { color: 'rgba(255,255,255,.04)' },
-  border: { color: '#242424' },
+  ticks: { color: '#8A7A68', font: { size: 11 } },
+  grid: { color: 'rgba(60,40,20,.06)' },
+  border: { color: '#E8D6B8' },
 }
 
 export const lineChartOptions = {
@@ -33,9 +33,9 @@ export const barChartOptions = {
 export function lineDataset(data) {
   return {
     data,
-    borderColor: '#667eea',
-    backgroundColor: 'rgba(102,126,234,.08)',
-    pointBackgroundColor: '#fff',
+    borderColor: '#E8703D',
+    backgroundColor: 'rgba(232,112,61,.1)',
+    pointBackgroundColor: '#E8703D',
     pointRadius: 4,
     pointHoverRadius: 6,
     borderWidth: 2,
@@ -47,8 +47,8 @@ export function lineDataset(data) {
 export function barDataset(data) {
   return {
     data,
-    backgroundColor: 'rgba(102,126,234,.15)',
-    borderColor: '#667eea',
+    backgroundColor: 'rgba(232,112,61,.18)',
+    borderColor: '#E8703D',
     borderWidth: 1,
     borderRadius: 4,
   }

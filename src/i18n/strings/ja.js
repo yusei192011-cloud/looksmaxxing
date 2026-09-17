@@ -1,13 +1,13 @@
 export default {
   tab_record:'トレーニング',tab_history:'記録',tab_progress:'進捗',tab_status:'ランク',
-  grp_placeholder:'部位を選択',sec_group:'部位',sec_exercise:'種目',sec_weight:'重量',sec_rest:'休憩時間',
+  grp_placeholder:'部位を選択',sec_group:'部位',sec_exercise:'種目',sec_weight:'重量',
   ph_ex:'例: ベンチプレス',
   lbl_reps:'回数',lbl_sets:'セット数',u_reps:'回',u_sets:'セット',
   btn_start:'LET\'S GO',btn_log:'ログだけ保存',wpl_preset:'プリセット & 調整',
   f7d:'7日間',f30d:'30日間',f90d:'90日間',fall:'全期間',
   fall_ex:'全種目',sel_ex:'種目を選択',
   m_weight:'最大重量',m_volume:'ボリューム',
-  wo_ttl:'ワークアウト',wo_set_lbl:'SET',wo_rest_lbl:'REST',
+  wo_ttl:'ワークアウト',wo_set_lbl:'SET',
   wo_rest_done:"LET'S START TRAINING!!",btn_done:'DONE ✓',btn_next:'NEXT SET →',
   wo_complete:'COMPLETE!',
   dlg_ttl:'ワークアウトをリセット',dlg_body:'どうしますか？',
@@ -31,12 +31,18 @@ export default {
 
   // Condition check-in / calendar
   cond_good:'良好',cond_normal:'普通',cond_sore:'筋肉痛がある',cond_pain:'痛み・違和感がある',
-  checkin_question:'今日の調子はどうですか？',
-  checkin_pain_notice:'痛みがある場合は無理せず、必要であれば医療機関にご相談ください。今日はこの部位を避けたメニューにします。',
-  checkin_pain_ack:'了解して記録する',
+  cond_good_desc:'いつも通り動ける',cond_normal_desc:'まあまあ、可もなく不可もなく',
+  cond_sore_desc:'張りはあるけど動かせる',cond_pain_desc:'いつもと違う痛みを感じる',
+  checkin_question:'今日の調子はどう?',checkin_subtitle:'無理なく続けるために教えてね',
+  checkin_pain_notice:'無理せず、いつもと違う痛みが続くときは、お休みして医療機関に相談してくださいね。',
+  checkin_cta_start:'はじめる',checkin_cta_easy:'今日はゆるく、はじめる',
   checkin_adjusted_note:'体調に合わせてメニューを調整しました',
   checkin_rest_day:'今日は体を休めましょう。無理せず、また調子が良くなってからにしましょう。',
   hist_view_list:'リスト',hist_view_calendar:'カレンダー',
+  cal_summary_prefix:'今月',cal_summary_suffix:'日 トレーニング',
+  cal_delta_up_prefix:'先月より+',cal_delta_up_suffix:'日、いい調子！',
+  cal_delta_flat:'先月と同じペース',
+  cal_delta_down_prefix:'先月より',cal_delta_down_suffix:'日少なめ。無理せずいこう',
   cal_mon:'月',cal_tue:'火',cal_wed:'水',cal_thu:'木',cal_fri:'金',cal_sat:'土',cal_sun:'日',
 
   // Auth (welcome/email/otp)

@@ -81,7 +81,6 @@ export default function HomePane({ onStartWorkout }) {
       <RecoveryList records={records} />
       <PreWorkoutCheckinModal
         open={checkinOpen}
-        group={menu.targetGroup}
         onSelect={handleCheckinSelect}
         onClose={() => setCheckinOpen(false)}
       />

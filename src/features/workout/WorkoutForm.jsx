@@ -62,25 +62,6 @@ export default function WorkoutForm({ onStartWorkout }) {
     })
   }
 
-  const openRestPicker = () => {
-    const left5 = Array.from({ length: 13 }, (_, i) => ({ label: String(i * 5), value: i * 5 }))
-    const min1 = Array.from({ length: 10 }, (_, i) => ({ label: String(i), value: i }))
-    const sec5 = [0,5,10,15,20,25,30,35,40,45,50,55].map(v => ({ label: String(v).padStart(2,'0'), value: v }))
-    const roundedSec = Math.min(55, Math.round((form.restSecs % 60) / 5) * 5)
-    const remainMins = Math.floor((form.restSecs - roundedSec) / 60)
-    const leftMins = Math.min(60, Math.floor(remainMins / 5) * 5)
-    const midMins = Math.min(9, remainMins - leftMins)
-    openPicker({
-      title: t('sec_rest'),
-      drums: [
-        { items: left5, current: leftMins / 5, label: '×5分' },
-        { items: min1, current: midMins, label: '分' },
-        { items: sec5, current: roundedSec / 5, label: '秒' },
-      ],
-      onConfirm: ([lv, mv, rv]) => form.setRestSecs(lv * 60 + mv * 60 + rv),
-    })
-  }
-
   const handleQuickLog = async () => {
     const exercise = form.exercise.trim()
     if (!exercise) { flashExerciseError(); return }
@@ -95,7 +76,7 @@ export default function WorkoutForm({ onStartWorkout }) {
     if (!exercise) { flashExerciseError(); return }
     onStartWorkout({
       exercise, weight: form.weight, reps: form.reps, sets: form.sets,
-      restSecs: form.restSecs, group: form.group || 'other',
+      group: form.group || 'other',
     })
   }
 
@@ -206,16 +187,6 @@ export default function WorkoutForm({ onStartWorkout }) {
               </div>
               <LongPressButton className="ncb" onPress={() => form.adjSets(1)}>+</LongPressButton>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="sec" style={{ padding: '8px 16px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: '11px', letterSpacing: '2px', color: 'var(--t2)', fontWeight: '600', whiteSpace: 'nowrap', flexShrink: '0' }}>{t('sec_rest')}</span>
-          <div style={{ textAlign: 'right' }}>
-            <div className="rest-val" onClick={openRestPicker}>{form.restLabel}</div>
-            <span className="val-hint">タップで選択</span>
           </div>
         </div>
       </div>

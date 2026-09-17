@@ -3,7 +3,6 @@ import { applyConditionOverrides, listGroupRecovery } from './recovery'
 import { sessionsThisWeek } from './weeklyStats'
 
 const EXERCISES_PER_MENU = 5
-const DEFAULT_REST_SECS = 90
 const DEFAULT_REPS = 10
 const DEFAULT_SETS = 3
 
@@ -54,7 +53,6 @@ export function generateDailyMenu({ records, frequency, lang, rotation = 0, chec
       weight: last?.weight ?? GROUP_DEFAULT_WEIGHT[targetGroup] ?? 10,
       reps: last?.reps ?? DEFAULT_REPS,
       sets: last?.sets ?? DEFAULT_SETS,
-      restSecs: DEFAULT_REST_SECS,
     }
   })
 
