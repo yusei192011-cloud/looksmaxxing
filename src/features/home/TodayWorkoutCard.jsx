@@ -1,5 +1,6 @@
 import { useLang } from '../../i18n/LangContext'
 import { groupName } from '../workout/groups'
+import ExerciseIcon from '../workout/exerciseIcons'
 
 export default function TodayWorkoutCard({ menu, onStart, onChangeMenu, onManual }) {
   const { t, lang } = useLang()
@@ -34,6 +35,7 @@ export default function TodayWorkoutCard({ menu, onStart, onChangeMenu, onManual
           {exercises.map((ex, i) => (
             <div className="home-menu-row" key={ex.exercise}>
               <span className="home-menu-num">{i + 1}</span>
+              <ExerciseIcon name={ex.exercise} className="ex-ic" />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div className="home-menu-ex-name">{ex.exercise}</div>
                 <div className="home-menu-ex-detail">{ex.weight}kg × {ex.reps}{t('u_reps')} × {ex.sets}{t('u_sets')}</div>

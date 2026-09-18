@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLang } from '../../../i18n/LangContext'
+import ExerciseIcon from '../exerciseIcons'
 import ResetDialog from './ResetDialog'
 
 // Locks page scroll while the full-screen session overlay is open, the same
@@ -73,6 +74,7 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
             <div key={i} className={`wo-dot${i + 1 <= curSet ? ' done' : ''}`} />
           ))}
         </div>
+        <ExerciseIcon name={exercise} className="ex-ic-lg" />
         <div className="wo-exname">{exercise}</div>
         <div className="wo-winfo">{weight}kg × {reps}reps</div>
       </div>

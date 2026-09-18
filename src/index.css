@@ -327,6 +327,11 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .cond-ttl{font-size:14px;font-weight:700;color:var(--t1);}
 .cond-sub{font-size:12px;color:var(--t3);margin-top:1px;}
 .cond-check{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;}
+
+.ex-ic,.ex-ic-lg{border-radius:50%;background:rgba(var(--ac-rgb),.1);color:var(--ac);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ex-ic{width:32px;height:32px;}
+.ex-ic svg,.ex-ic-lg svg{width:70%;height:70%;}
+.ex-ic-lg{width:72px;height:72px;margin-top:6px;}
 .cond-check-good{background:var(--green);}
 .cond-check-normal{background:var(--yellow);}
 .cond-check-sore{background:var(--warn);}
