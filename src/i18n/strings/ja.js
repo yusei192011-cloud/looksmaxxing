@@ -82,4 +82,7 @@ export default {
   confirm_q:'準備完了！',confirm_desc:'あなた専用のプログラムを作成するよ',
   confirm_create:'プログラムを作成する',confirm_creating:'作成中...',
   onboarding_save_error:'保存に失敗しました。もう一度試してください',
+
+  // Credits
+  credit_exercise_icons:'種目イラスト: Everkinetic / Workout Guide (CC BY-SA 4.0)',
 }

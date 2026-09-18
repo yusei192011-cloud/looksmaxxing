@@ -83,4 +83,7 @@ export default {
   confirm_q:'준비 완료!',confirm_desc:'나만의 프로그램을 만들어드려요',
   confirm_create:'프로그램 만들기',confirm_creating:'생성 중...',
   onboarding_save_error:'저장에 실패했습니다. 다시 시도해주세요',
+
+  // Credits
+  credit_exercise_icons:'운동 일러스트: Everkinetic / Workout Guide (CC BY-SA 4.0)',
 }

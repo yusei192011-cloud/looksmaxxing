@@ -83,4 +83,7 @@ export default {
   confirm_q:'¡Todo listo!',confirm_desc:'Vamos a crear tu programa personal',
   confirm_create:'Crear mi programa',confirm_creating:'Creando...',
   onboarding_save_error:'Error al guardar. Inténtalo de nuevo',
+
+  // Credits
+  credit_exercise_icons:'Ilustraciones de ejercicios: Everkinetic / Workout Guide (CC BY-SA 4.0)',
 }

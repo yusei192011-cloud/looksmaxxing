@@ -82,4 +82,7 @@ export default {
   confirm_q:"You're all set!",confirm_desc:"Let's build your personal program",
   confirm_create:'Create my program',confirm_creating:'Creating...',
   onboarding_save_error:'Failed to save. Please try again',
+
+  // Credits
+  credit_exercise_icons:'Exercise illustrations: Everkinetic / Workout Guide (CC BY-SA 4.0)',
 }

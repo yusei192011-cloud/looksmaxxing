@@ -83,4 +83,7 @@ export default {
   confirm_q:'准备完成！',confirm_desc:'为你打造专属训练方案',
   confirm_create:'创建我的方案',confirm_creating:'创建中...',
   onboarding_save_error:'保存失败，请重试',
+
+  // Credits
+  credit_exercise_icons:'动作插图: Everkinetic / Workout Guide (CC BY-SA 4.0)',
 }

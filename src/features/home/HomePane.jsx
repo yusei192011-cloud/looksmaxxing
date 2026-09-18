@@ -84,6 +84,9 @@ export default function HomePane({ onStartWorkout }) {
         onSelect={handleCheckinSelect}
         onClose={() => setCheckinOpen(false)}
       />
+      <div className="home-credit">
+        <a href="https://bryllim.github.io/workout-guide/" target="_blank" rel="noopener noreferrer">{t('credit_exercise_icons')}</a>
+      </div>
     </div>
   )
 }
