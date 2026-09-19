@@ -1,6 +1,9 @@
 import BodyWeightForm from '../bodyWeight/BodyWeightForm'
+import { useBodyScrollLock } from '../../lib/useBodyScrollLock'
 
 export default function BodyWeightEntryModal({ open, onClose }) {
+  useBodyScrollLock(open)
+
   if (!open) return null
 
   return (

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useLang } from '../../i18n/LangContext'
 import { slugForExercise } from './exerciseIcons'
 import { FORM_TIPS } from './formTips'
+import { useBodyScrollLock } from '../../lib/useBodyScrollLock'
 
 // start -> mid -> end -> mid, looped, so the motion reads without controls.
 const FRAME_SEQUENCE = [1, 2, 3, 2]
@@ -10,6 +11,8 @@ export default function ExerciseFormCard({ exercise, onClose }) {
   const { t, lang } = useLang()
   const [step, setStep] = useState(0)
   const slug = exercise ? slugForExercise(exercise) : null
+
+  useBodyScrollLock(!!slug)
 
   useEffect(() => {
     if (!slug) return

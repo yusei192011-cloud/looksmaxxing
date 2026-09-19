@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLang } from '../../i18n/LangContext'
+import { useBodyScrollLock } from '../../lib/useBodyScrollLock'
 import ConditionPicker from './ConditionPicker'
 
 // Shared by two call sites: the pre-workout gate on HomePane, and the manual
@@ -14,6 +15,8 @@ export default function PreWorkoutCheckinModal({ open, onSelect, onClose }) {
   useEffect(() => {
     if (!open) setSelected(null)
   }, [open])
+
+  useBodyScrollLock(open)
 
   if (!open) return null
 

@@ -2,34 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useLang } from '../../../i18n/LangContext'
 import ExerciseIcon, { slugForExercise } from '../exerciseIcons'
 import ExerciseFormCard from '../ExerciseFormCard'
+import { useBodyScrollLock } from '../../../lib/useBodyScrollLock'
 import ResetDialog from './ResetDialog'
-
-// Locks page scroll while the full-screen session overlay is open, the same
-// position:fixed trick used by DrumPicker, plus the extra
-// documentElement-level lock and tab-disable the original openWo() did.
-function useBodyLock(active, onActiveChange) {
-  useEffect(() => {
-    if (!active) return
-    const scrollY = window.scrollY
-    document.body.style.top = `-${scrollY}px`
-    document.body.style.overflow = 'hidden'
-    document.body.style.position = 'fixed'
-    document.body.style.width = '100%'
-    document.documentElement.style.overflow = 'hidden'
-    onActiveChange?.(true)
-    return () => {
-      const y = document.body.style.top
-      document.body.style.overflow = ''
-      document.body.style.position = ''
-      document.body.style.width = ''
-      document.body.style.top = ''
-      document.documentElement.style.overflow = ''
-      window.scrollTo(0, parseInt(y || '0', 10) * -1)
-      onActiveChange?.(false)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active])
-}
 
 export default function GuidedSessionOverlay({ guidedSession, onSessionActiveChange }) {
   const { t } = useLang()
@@ -38,7 +12,13 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
   const [formOpen, setFormOpen] = useState(false)
   const rootRef = useRef(null)
 
-  useBodyLock(!!session, onSessionActiveChange)
+  useBodyScrollLock(!!session)
+  useEffect(() => {
+    if (!session) return
+    onSessionActiveChange?.(true)
+    return () => onSessionActiveChange?.(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [!!session])
 
   // Belt-and-suspenders alongside the body lock above — some mobile
   // browsers still let a touchmove inside this overlay bubble up and
