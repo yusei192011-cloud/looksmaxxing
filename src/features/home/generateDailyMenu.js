@@ -1,7 +1,7 @@
 import { GROUP_EX } from '../workout/groups'
 import { applyConditionOverrides, listGroupRecovery } from './recovery'
 import { sessionsThisWeek } from './weeklyStats'
-import { getPlan, nextTarget, orderForExperience } from './menuPlan'
+import { getPlan, nextTarget, orderForExperience, repRange } from './menuPlan'
 
 function exerciseNamesForGroup(group, records, lang) {
   const key = (lang === 'ja' || lang === 'ko' || lang === 'zh') ? 'ja' : 'en'
@@ -38,11 +38,10 @@ export function generateDailyMenu({ records, frequency, lang, rotation = 0, chec
   const rotated = [...names.slice(offset), ...names.slice(0, offset)]
   const chosen = rotated.slice(0, plan.exercises)
 
-  const exercises = chosen.map(exercise => ({
-    exercise,
-    group: targetGroup,
-    ...nextTarget({ exercise, group: targetGroup, records, plan }),
-  }))
+  const exercises = chosen.map(exercise => {
+    const target = nextTarget({ exercise, group: targetGroup, records, plan })
+    return { exercise, group: targetGroup, ...target, ...repRange(target, plan) }
+  })
 
   return {
     targetGroup,

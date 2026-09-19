@@ -84,7 +84,8 @@ export default {
   onboarding_save_error:'保存に失敗しました。もう一度試してください',
 
   // Menu personalization
-  menu_reason_up:'前回より重量アップ',menu_reason_hold:'同じ重さで、あと1回に挑戦',menu_reason_more:'前回より1回多く挑戦',menu_reason_return:'久しぶりなので軽めから',
+  menu_reason_up:'前回より重量アップ',menu_reason_hold:'同じ重さで、あと1回に挑戦',menu_reason_more:'前回より1回多く挑戦',menu_reason_lighter:'無理せず、少し軽めに調整したよ',menu_reason_return:'久しぶりなので軽めから',
+  wo_complete_msg:'今日もお疲れさま！続けたことがいちばんの成果だよ',rep_range_hint:'目安',
   menu_adapted_note:'あなたの目標と記録に合わせて自動調整しました',bodyweight_label:'自重',
 
   // Offline

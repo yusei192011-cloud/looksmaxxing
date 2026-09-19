@@ -85,7 +85,8 @@ export default {
   onboarding_save_error:'保存失败，请重试',
 
   // Menu personalization
-  menu_reason_up:'比上次加重',menu_reason_hold:'同样重量，多做一次',menu_reason_more:'比上次多做一次',menu_reason_return:'好久没练，从轻量开始',
+  menu_reason_up:'比上次加重',menu_reason_hold:'同样重量，多做一次',menu_reason_more:'比上次多做一次',menu_reason_lighter:'不用勉强，已稍微调轻了重量',menu_reason_return:'好久没练，从轻量开始',
+  wo_complete_msg:'今天辛苦了！坚持本身就是最大的成果',rep_range_hint:'目标',
   menu_adapted_note:'已根据目标和记录自动调整',bodyweight_label:'自重',
 
   // Offline

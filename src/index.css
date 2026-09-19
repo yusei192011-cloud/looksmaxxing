@@ -276,6 +276,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .wo-adj-btn{width:36px;height:36px;border-radius:50%;border:none;background:var(--s2);color:var(--t1);font-size:20px;font-weight:700;cursor:pointer;}
 .wo-adj-btn:active{background:rgba(var(--ac-rgb),.2);}
 .wo-adj-val{min-width:68px;text-align:center;font-weight:800;font-size:16px;color:var(--t1);}
+.co-msg{font-size:14px;line-height:1.6;color:var(--t2);margin:6px 0 12px;padding:0 24px;}
 .wo-exname{font-family:'Fredoka','Zen Maru Gothic',sans-serif;font-size:26px;letter-spacing:2px;color:var(--ac);margin-top:4px}
 .wo-winfo{font-size:17px;color:var(--t2);font-weight:600}
 .wo-setlbl-sm{font-size:12px;color:var(--t3);letter-spacing:1px;font-family:'Nunito','Zen Maru Gothic',sans-serif}
@@ -347,6 +348,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .home-menu-reason{font-size:11px;font-weight:700;margin-top:3px;}
 .reason-up{color:var(--green);}
 .reason-hold,.reason-more{color:var(--ac);}
+.reason-lighter{color:var(--warn);}
 .reason-return{color:var(--warn);}
 .reason-first{color:var(--t3);}
 

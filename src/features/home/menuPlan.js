@@ -48,15 +48,21 @@ const DAY_MS = 86400000
 export function getPlan(profile) {
   const exp = EXPERIENCE[profile?.experience] || EXPERIENCE.beginner
   const goal = GOAL[profile?.goal] || GOAL.bulk
+  const beginner = profile?.experience === 'complete_beginner' || profile?.experience === 'beginner'
+  const sets = profile?.goal === 'health' ? Math.min(exp.sets, 3) : exp.sets
   const bodyScale = profile?.weight_kg ? Math.min(1.3, Math.max(0.75, profile.weight_kg / 70)) : 1
   return {
     exercises: exp.exercises,
-    sets: profile?.goal === 'health' ? Math.min(exp.sets, 3) : exp.sets,
+    sets,
     repLow: goal.repLow,
     repHigh: goal.repHigh,
     weightFactor: exp.weightFactor * goal.weightFactor * bodyScale,
     bwReps: exp.bwReps,
-    beginner: profile?.experience === 'complete_beginner' || profile?.experience === 'beginner',
+    // Beginners progress a little sooner and in smaller steps so the target
+    // never feels out of reach.
+    upReps: beginner ? goal.repHigh - 1 : goal.repHigh,
+    minSets: beginner ? Math.max(2, sets - 1) : sets,
+    beginner,
   }
 }
 
@@ -74,8 +80,8 @@ function roundWeight(w) {
   return Math.round(w / 2.5) * 2.5
 }
 
-function increment(slug, weight) {
-  if (DUMBBELL.has(slug)) return weight < 12 ? 1 : 2
+function increment(slug, weight, beginner = false) {
+  if (DUMBBELL.has(slug)) return beginner || weight < 12 ? 1 : 2
   if (slug) return 2.5
   return weight >= 20 ? 2.5 : 1
 }
@@ -130,8 +136,19 @@ export function nextTarget({ exercise, group, records, plan, now = Date.now() })
     return { weight: 0, reps: Math.min(30, best.reps + 1), sets: plan.sets, reason: 'more' }
   }
 
-  if (best.reps >= plan.repHigh && totalSets >= plan.sets) {
-    return { weight: roundWeight(best.weight + increment(slug, best.weight)), reps: plan.repLow, sets: plan.sets, reason: 'up' }
+  // Far below the rep range means the weight was too heavy: back off a step
+  // rather than asking for more of the same.
+  if (best.reps <= plan.repLow - 2) {
+    return {
+      weight: Math.max(1, roundWeight(best.weight - increment(slug, best.weight, plan.beginner))),
+      reps: plan.repLow,
+      sets: plan.sets,
+      reason: 'lighter',
+    }
+  }
+
+  if (best.reps >= plan.upReps && totalSets >= plan.minSets) {
+    return { weight: roundWeight(best.weight + increment(slug, best.weight, plan.beginner)), reps: plan.repLow, sets: plan.sets, reason: 'up' }
   }
   return {
     weight: best.weight,
@@ -139,4 +156,11 @@ export function nextTarget({ exercise, group, records, plan, now = Date.now() })
     sets: plan.sets,
     reason: 'hold',
   }
+}
+
+// Shown instead of a single number so anything inside the range reads as a
+// success. Bodyweight moves have no fixed range, so use a band around the target.
+export function repRange(target, plan) {
+  if (target.weight === 0) return { repLow: Math.max(1, target.reps - 2), repHigh: target.reps + 2 }
+  return { repLow: Math.min(plan.repLow, target.reps), repHigh: Math.max(plan.repHigh, target.reps) }
 }

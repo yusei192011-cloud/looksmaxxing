@@ -84,7 +84,8 @@ export default {
   onboarding_save_error:'Failed to save. Please try again',
 
   // Menu personalization
-  menu_reason_up:'Weight up from last time',menu_reason_hold:'Same weight — go for one more rep',menu_reason_more:'One more rep than last time',menu_reason_return:'Lighter, since it has been a while',
+  menu_reason_up:'Weight up from last time',menu_reason_hold:'Same weight — go for one more rep',menu_reason_more:'One more rep than last time',menu_reason_lighter:'Eased the weight a little — no need to push',menu_reason_return:'Lighter, since it has been a while',
+  wo_complete_msg:'Great work today! Showing up is what counts most.',rep_range_hint:'Target',
   menu_adapted_note:'Adjusted to your goal and past records',bodyweight_label:'Bodyweight',
 
   // Offline

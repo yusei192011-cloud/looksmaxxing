@@ -85,7 +85,8 @@ export default {
   onboarding_save_error:'저장에 실패했습니다. 다시 시도해주세요',
 
   // Menu personalization
-  menu_reason_up:'지난번보다 무게 증가',menu_reason_hold:'같은 무게로 한 번 더',menu_reason_more:'지난번보다 한 번 더',menu_reason_return:'오랜만이라 가볍게',
+  menu_reason_up:'지난번보다 무게 증가',menu_reason_hold:'같은 무게로 한 번 더',menu_reason_more:'지난번보다 한 번 더',menu_reason_lighter:'무리하지 않게 조금 가볍게 조정했어요',menu_reason_return:'오랜만이라 가볍게',
+  wo_complete_msg:'오늘도 수고했어요! 꾸준히 하는 게 가장 큰 성과예요',rep_range_hint:'목표',
   menu_adapted_note:'목표와 기록에 맞춰 자동 조정했어요',bodyweight_label:'맨몸',
 
   // Offline

@@ -85,7 +85,8 @@ export default {
   onboarding_save_error:'Error al guardar. Inténtalo de nuevo',
 
   // Menu personalization
-  menu_reason_up:'Más peso que la última vez',menu_reason_hold:'Mismo peso, una repetición más',menu_reason_more:'Una repetición más que la última vez',menu_reason_return:'Más ligero: ha pasado tiempo',
+  menu_reason_up:'Más peso que la última vez',menu_reason_hold:'Mismo peso, una repetición más',menu_reason_more:'Una repetición más que la última vez',menu_reason_lighter:'Bajamos un poco el peso, sin forzar',menu_reason_return:'Más ligero: ha pasado tiempo',
+  wo_complete_msg:'¡Buen trabajo hoy! Lo importante es seguir viniendo.',rep_range_hint:'Objetivo',
   menu_adapted_note:'Ajustado a tu objetivo y tus registros',bodyweight_label:'Peso corporal',
 
   // Offline

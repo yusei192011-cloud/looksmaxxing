@@ -35,7 +35,7 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
 
   if (!session) return null
 
-  const { exercise, weight, reps, sets, curSet, phase, queue, queueIndex, completedExercises } = session
+  const { exercise, weight, reps, sets, repLow, repHigh, curSet, phase, queue, queueIndex, completedExercises } = session
   const isMultiExercise = queue.length > 1
   const weightStep = weight >= 20 ? 2.5 : 1
 
@@ -77,6 +77,7 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
         ) : (
           <div className="wo-winfo">{weight > 0 ? `${weight}kg` : t('bodyweight_label')} × {reps}reps</div>
         )}
+        {phase === 'active' && repHigh > repLow && <div className="ex-tap-hint">{t('rep_range_hint')} {repLow}–{repHigh}{t('u_reps')}</div>}
       </div>
       <div id="wo-main">
         <div className={`wo-phase${phase === 'active' ? ' on' : ''}`} />
@@ -87,6 +88,7 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
         <div className={`wo-phase${phase === 'complete' ? ' on' : ''}`} style={{ textAlign: 'center', gap: '0' }}>
           <div className="co-ic" />
           <div className="co-ttl">{t('wo_complete')}</div>
+          <div className="co-msg">{t('wo_complete_msg')}</div>
           <div className="co-det">
             {completedExercises.flatMap(ex => setsToRecords(ex.exercise, ex.group, ex.completedSets)).map((r, i) => (
               <div key={i}>{r.exercise}  {r.weight > 0 ? `${r.weight}kg` : t('bodyweight_label')} × {r.reps}reps × {r.sets}sets</div>
