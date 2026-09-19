@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLang } from '../../../i18n/LangContext'
-import ExerciseIcon from '../exerciseIcons'
+import ExerciseIcon, { slugForExercise } from '../exerciseIcons'
+import ExerciseFormCard from '../ExerciseFormCard'
 import ResetDialog from './ResetDialog'
 
 // Locks page scroll while the full-screen session overlay is open, the same
@@ -34,6 +35,7 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
   const { t } = useLang()
   const { session, done, next, close, resetSave, resetDiscard } = guidedSession
   const [resetOpen, setResetOpen] = useState(false)
+  const [formOpen, setFormOpen] = useState(false)
   const rootRef = useRef(null)
 
   useBodyLock(!!session, onSessionActiveChange)
@@ -74,7 +76,8 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
             <div key={i} className={`wo-dot${i + 1 <= curSet ? ' done' : ''}`} />
           ))}
         </div>
-        <ExerciseIcon name={exercise} className="ex-ic-lg" />
+        <ExerciseIcon name={exercise} className="ex-ic-lg" onClick={() => setFormOpen(true)} />
+        {slugForExercise(exercise) && <div className="ex-tap-hint">{t('form_tap_hint')}</div>}
         <div className="wo-exname">{exercise}</div>
         <div className="wo-winfo">{weight}kg × {reps}reps</div>
       </div>
@@ -106,6 +109,7 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
           }}
         >CLOSE</button>
       </div>
+      <ExerciseFormCard exercise={formOpen ? exercise : null} onClose={() => setFormOpen(false)} />
       <ResetDialog open={resetOpen} onSave={handleResetSave} onDiscard={handleResetDiscard} onCancel={() => setResetOpen(false)} />
     </div>
   )

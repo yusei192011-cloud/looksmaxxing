@@ -1,9 +1,12 @@
 import { useLang } from '../../i18n/LangContext'
 import { groupName } from '../workout/groups'
-import ExerciseIcon from '../workout/exerciseIcons'
+import { useState } from 'react'
+import ExerciseIcon, { slugForExercise } from '../workout/exerciseIcons'
+import ExerciseFormCard from '../workout/ExerciseFormCard'
 
 export default function TodayWorkoutCard({ menu, onStart, onChangeMenu, onManual }) {
   const { t, lang } = useLang()
+  const [formEx, setFormEx] = useState(null)
   const { targetGroup, dayLabel, exercises, restDay, adjustedForCondition } = menu
 
   if (restDay) {
@@ -33,18 +36,24 @@ export default function TodayWorkoutCard({ menu, onStart, onChangeMenu, onManual
         {adjustedForCondition && <div className="home-condition-note">{t('checkin_adjusted_note')}</div>}
         <div className="home-menu-list">
           {exercises.map((ex, i) => (
-            <div className="home-menu-row" key={ex.exercise}>
+            <div
+              className={`home-menu-row${slugForExercise(ex.exercise) ? ' tappable' : ''}`}
+              key={ex.exercise}
+              onClick={slugForExercise(ex.exercise) ? () => setFormEx(ex.exercise) : undefined}
+            >
               <span className="home-menu-num">{i + 1}</span>
               <ExerciseIcon name={ex.exercise} className="ex-ic" />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div className="home-menu-ex-name">{ex.exercise}</div>
                 <div className="home-menu-ex-detail">{ex.weight}kg × {ex.reps}{t('u_reps')} × {ex.sets}{t('u_sets')}</div>
               </div>
+              {slugForExercise(ex.exercise) && <span className="home-menu-chev">›</span>}
             </div>
           ))}
         </div>
         <button className="btn btn-start" onClick={onStart}>{t('start_workout')}</button>
       </div>
+      <ExerciseFormCard exercise={formEx} onClose={() => setFormEx(null)} />
       <div className="home-sub-actions">
         <button className="btn btn-sec" onClick={onChangeMenu}>{t('change_menu')}</button>
         <button className="btn btn-sec" onClick={onManual}>{t('manual_mode')}</button>

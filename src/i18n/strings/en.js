@@ -83,6 +83,9 @@ export default {
   confirm_create:'Create my program',confirm_creating:'Creating...',
   onboarding_save_error:'Failed to save. Please try again',
 
+  // Form card
+  form_target_ttl:'Target',form_points_ttl:'FORM POINTS',form_close:'Close',form_tap_hint:'Tap to see the form',
+
   // Credits
   credit_exercise_icons:'Exercise illustrations: Everkinetic / Workout Guide (CC BY-SA 4.0)',
 }

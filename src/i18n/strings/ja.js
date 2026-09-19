@@ -83,6 +83,9 @@ export default {
   confirm_create:'プログラムを作成する',confirm_creating:'作成中...',
   onboarding_save_error:'保存に失敗しました。もう一度試してください',
 
+  // Form card
+  form_target_ttl:'効く部位',form_points_ttl:'フォームのポイント',form_close:'閉じる',form_tap_hint:'タップでフォームを見る',
+
   // Credits
   credit_exercise_icons:'種目イラスト: Everkinetic / Workout Guide (CC BY-SA 4.0)',
 }

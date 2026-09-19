@@ -2,8 +2,8 @@
 // Everkinetic exercise pose library via the "Workout Guide" project
 // (https://bryllim.github.io/workout-guide/), licensed CC BY-SA 4.0 — see
 // the credit in HomePane.jsx. Files live in public/exercise-icons/, one per
-// slug, recolored to the app's accent color (originals are white-on-
-// transparent). Both the ja list (also shown to ko/zh users, see groups.js)
+// slug, 3 frames per exercise, cropped and recolored (white on the app's
+// accent color; originals are white-on-transparent). Both the ja list (also shown to ko/zh users, see groups.js)
 // and the en list map to the same slug.
 const NAME_TO_SLUG = {
   'ベンチプレス': 'bench-press', 'Bench Press': 'bench-press',
@@ -51,12 +51,15 @@ const NAME_TO_SLUG = {
   'サイドベンド': 'dumbbell-side-bend', 'Side Bend': 'dumbbell-side-bend',
 }
 
-export function hasExerciseIcon(name) {
-  return !!NAME_TO_SLUG[name]
+export function slugForExercise(name) {
+  return NAME_TO_SLUG[name] || null
 }
 
-export default function ExerciseIcon({ name, className }) {
+export default function ExerciseIcon({ name, className, onClick }) {
   const slug = NAME_TO_SLUG[name]
   if (!slug) return null
-  return <img src={`exercise-icons/${slug}.svg`} alt="" className={className} />
+  const img = <img src={`exercise-icons/${slug}-1.svg`} alt="" />
+  return onClick
+    ? <button type="button" className={className} onClick={onClick}>{img}</button>
+    : <span className={className}>{img}</span>
 }

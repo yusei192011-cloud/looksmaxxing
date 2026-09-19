@@ -84,6 +84,9 @@ export default {
   confirm_create:'Crear mi programa',confirm_creating:'Creando...',
   onboarding_save_error:'Error al guardar. Inténtalo de nuevo',
 
+  // Form card
+  form_target_ttl:'Zona',form_points_ttl:'PUNTOS CLAVE',form_close:'Cerrar',form_tap_hint:'Toca para ver la técnica',
+
   // Credits
   credit_exercise_icons:'Ilustraciones de ejercicios: Everkinetic / Workout Guide (CC BY-SA 4.0)',
 }

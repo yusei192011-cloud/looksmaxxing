@@ -84,6 +84,9 @@ export default {
   confirm_create:'创建我的方案',confirm_creating:'创建中...',
   onboarding_save_error:'保存失败，请重试',
 
+  // Form card
+  form_target_ttl:'锻炼部位',form_points_ttl:'动作要点',form_close:'关闭',form_tap_hint:'点击查看动作',
+
   // Credits
   credit_exercise_icons:'动作插图: Everkinetic / Workout Guide (CC BY-SA 4.0)',
 }

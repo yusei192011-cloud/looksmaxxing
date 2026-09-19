@@ -84,6 +84,9 @@ export default {
   confirm_create:'프로그램 만들기',confirm_creating:'생성 중...',
   onboarding_save_error:'저장에 실패했습니다. 다시 시도해주세요',
 
+  // Form card
+  form_target_ttl:'자극 부위',form_points_ttl:'자세 포인트',form_close:'닫기',form_tap_hint:'탭하여 자세 보기',
+
   // Credits
   credit_exercise_icons:'운동 일러스트: Everkinetic / Workout Guide (CC BY-SA 4.0)',
 }
