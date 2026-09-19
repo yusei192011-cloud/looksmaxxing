@@ -68,7 +68,7 @@ export default function RankModal({ open, onClose }) {
               )
             })()
           ) : (
-            <div style={{ textAlign: 'center', fontFamily: "'Fredoka',sans-serif", fontSize: '20px', letterSpacing: '3px', color: rank.color, padding: '10px 0' }}>
+            <div style={{ textAlign: 'center', fontFamily: "'Fredoka','Zen Maru Gothic',sans-serif", fontSize: '20px', letterSpacing: '3px', color: rank.color, padding: '10px 0' }}>
               MAX RANK ACHIEVED 🏆
             </div>
           )}

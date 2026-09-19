@@ -105,7 +105,7 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
           onClick={close}
           style={{
             display: phase === 'complete' ? '' : 'none',
-            fontFamily: "'Fredoka',sans-serif", letterSpacing: '2px', fontSize: '18px',
+            fontFamily: "'Fredoka','Zen Maru Gothic',sans-serif", letterSpacing: '2px', fontSize: '18px',
           }}
         >CLOSE</button>
       </div>
