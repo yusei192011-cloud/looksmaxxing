@@ -47,8 +47,8 @@ export default {
   cal_mon:'一',cal_tue:'二',cal_wed:'三',cal_thu:'四',cal_fri:'五',cal_sat:'六',cal_sun:'日',
 
   // Auth (welcome/email/otp)
-  welcome_subtitle:'AI私人教练',
-  welcome_feat1_ttl:'AI为你制定菜单',welcome_feat1_desc:'专属于你的训练方案',
+  welcome_subtitle:'专属于你的训练伙伴',
+  welcome_feat1_ttl:'根据记录自动调整',welcome_feat1_desc:'根据上次的重量和次数决定今天的菜单',
   welcome_feat2_ttl:'看得见的成长',welcome_feat2_desc:'用记录和图表清晰展示',
   welcome_feat3_ttl:'健身房里快速使用',welcome_feat3_desc:'操作简单，没有压力',
   welcome_start:'开始使用',welcome_have_account:'已有账号',
@@ -67,7 +67,7 @@ export default {
   exp_beginner_ttl:'初学者',exp_beginner_desc:'大约1~6个月',
   exp_intermediate_ttl:'中级',exp_intermediate_desc:'半年~2年',
   exp_advanced_ttl:'高级',exp_advanced_desc:'2年以上',
-  bodytype_q:'现在的体型？',bodytype_desc:'AI会为你推荐合适的菜单',
+  bodytype_q:'现在的体型？',bodytype_desc:'为你制定合适的菜单',
   bt_skinny_ttl:'偏瘦体型',bt_skinny_desc:'不容易长肉也不容易长肌肉',
   bt_average_ttl:'普通体型',bt_average_desc:'不胖也不瘦',
   bt_chubby_ttl:'微胖・壮实',bt_chubby_desc:'体重偏多，有一些肌肉',
@@ -83,6 +83,13 @@ export default {
   confirm_q:'准备完成！',confirm_desc:'为你打造专属训练方案',
   confirm_create:'创建我的方案',confirm_creating:'创建中...',
   onboarding_save_error:'保存失败，请重试',
+
+  // Menu personalization
+  menu_reason_up:'比上次加重',menu_reason_hold:'同样重量，多做一次',menu_reason_more:'比上次多做一次',menu_reason_return:'好久没练，从轻量开始',
+  menu_adapted_note:'已根据目标和记录自动调整',bodyweight_label:'自重',
+
+  // Offline
+  saved_offline:'当前离线，已暂存，联网后自动同步',synced_offline:'已同步离线记录',
 
   // Form card
   form_target_ttl:'锻炼部位',form_points_ttl:'动作要点',form_close:'关闭',form_tap_hint:'点击查看动作',

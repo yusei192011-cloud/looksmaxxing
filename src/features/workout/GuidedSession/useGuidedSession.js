@@ -1,5 +1,6 @@
 import { useEffect, useReducer, useRef } from 'react'
 import { sessionReducer } from './sessionReducer'
+import { setsToRecords } from './sessionRecords'
 import { useLogWorkoutRecord } from '../useLogWorkoutRecord'
 import { useToast } from '../../../components/Toast'
 import { useLang } from '../../../i18n/LangContext'
@@ -7,14 +8,34 @@ import { trainMsg } from '../trainMessages'
 import { unlockAudio } from '../../../lib/audio'
 
 const AUTO_CLOSE_MS = 3500
+const STORAGE_KEY = 'lm_active_session_v1'
+const MAX_AGE_MS = 8 * 3600 * 1000
+
+// iOS reloads a backgrounded PWA, which used to wipe an in-progress workout.
+// The session lives in the reducer, so mirror it to localStorage and restore
+// it on launch (a finished-but-unsaved session is re-saved by the effect below).
+function loadSession() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null')
+    if (saved && saved.session && Date.now() - saved.savedAt < MAX_AGE_MS) return saved.session
+  } catch { /* corrupt or unavailable: start clean */ }
+  return null
+}
 
 export function useGuidedSession() {
-  const [session, dispatch] = useReducer(sessionReducer, null)
+  const [session, dispatch] = useReducer(sessionReducer, null, loadSession)
   const { logWorkout } = useLogWorkoutRecord()
   const { showToast } = useToast()
-  const { lang } = useLang()
+  const { lang, t } = useLang()
   const savedRef = useRef(false)
   const autoCloseTimerRef = useRef(null)
+
+  useEffect(() => {
+    try {
+      if (session) localStorage.setItem(STORAGE_KEY, JSON.stringify({ session, savedAt: Date.now() }))
+      else localStorage.removeItem(STORAGE_KEY)
+    } catch { /* storage unavailable: session just won't survive a reload */ }
+  }, [session])
 
   // Save once the whole queue finishes: one workout_records row per
   // exercise, sequentially awaited (not Promise.all) — logWorkout's
@@ -26,10 +47,14 @@ export function useGuidedSession() {
     if (session?.phase !== 'complete' || savedRef.current) return
     savedRef.current = true
     ;(async () => {
+      let queued = false
       for (const ex of session.completedExercises) {
-        await logWorkout({ exercise: ex.exercise, weight: ex.weight, reps: ex.reps, sets: ex.completedSets.length, group: ex.group })
+        for (const rec of setsToRecords(ex.exercise, ex.group, ex.completedSets)) {
+          const res = await logWorkout(rec)
+          if (res?.queued) queued = true
+        }
       }
-      showToast(lang === 'ja' ? trainMsg() : '✓ Saved!')
+      showToast(queued ? t('saved_offline') : (lang === 'ja' ? trainMsg() : '✓ Saved!'))
     })()
     autoCloseTimerRef.current = setTimeout(() => dispatch({ type: 'RESET' }), AUTO_CLOSE_MS)
     return () => clearTimeout(autoCloseTimerRef.current)
@@ -53,6 +78,8 @@ export function useGuidedSession() {
 
   const next = () => { unlockAudio(); dispatch({ type: 'NEXT' }) }
 
+  const adjust = (field, delta) => dispatch({ type: 'ADJUST', field, delta })
+
   const close = () => {
     clearTimeout(autoCloseTimerRef.current)
     dispatch({ type: 'RESET' })
@@ -65,19 +92,14 @@ export function useGuidedSession() {
   const resetSave = async () => {
     if (session) {
       for (const ex of session.completedExercises) {
-        await logWorkout({ exercise: ex.exercise, weight: ex.weight, reps: ex.reps, sets: ex.completedSets.length, group: ex.group })
+        for (const rec of setsToRecords(ex.exercise, ex.group, ex.completedSets)) await logWorkout(rec)
       }
-      if (session.completedSets.length > 0) {
-        await logWorkout({
-          exercise: session.exercise, weight: session.weight, reps: session.reps,
-          sets: session.completedSets.length, group: session.group,
-        })
-      }
+      for (const rec of setsToRecords(session.exercise, session.group, session.completedSets)) await logWorkout(rec)
     }
     close()
   }
 
   const resetDiscard = () => close()
 
-  return { session, start, done, next, close, resetSave, resetDiscard }
+  return { session, start, done, next, adjust, close, resetSave, resetDiscard }
 }

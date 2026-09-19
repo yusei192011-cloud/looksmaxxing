@@ -24,15 +24,23 @@ export async function fetchWorkoutRecords(supabase) {
 }
 
 export async function insertWorkoutRecord(supabase, rec) {
-  const { data: userData, error: userError } = await supabase.auth.getUser()
-  if (userError) throw userError
+  // getSession reads the locally stored session, so a queued record can still
+  // resolve the user id offline; getUser() would need the network.
+  const { data: sessionData } = await supabase.auth.getSession()
+  let userId = sessionData?.session?.user?.id
+  if (!userId) {
+    const { data: userData, error: userError } = await supabase.auth.getUser()
+    if (userError) throw userError
+    userId = userData.user.id
+  }
   const { error } = await supabase.from('workout_records').insert({
-    user_id: userData.user.id,
+    user_id: userId,
     exercise: rec.exercise,
     group: rec.group,
     weight: rec.weight,
     reps: rec.reps,
     sets: rec.sets,
+    ...(rec.created_at ? { created_at: rec.created_at } : {}),
   })
   if (error) throw error
 }

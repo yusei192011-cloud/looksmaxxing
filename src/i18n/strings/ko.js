@@ -47,8 +47,8 @@ export default {
   cal_mon:'월',cal_tue:'화',cal_wed:'수',cal_thu:'목',cal_fri:'금',cal_sat:'토',cal_sun:'일',
 
   // Auth (welcome/email/otp)
-  welcome_subtitle:'AI 퍼스널 트레이너',
-  welcome_feat1_ttl:'AI가 메뉴를 짜줘요',welcome_feat1_desc:'나만을 위한 트레이닝 제안',
+  welcome_subtitle:'나만의 트레이닝 파트너',
+  welcome_feat1_ttl:'기록에 맞춰 자동 조정',welcome_feat1_desc:'지난 중량과 횟수로 오늘의 메뉴를 정해요',
   welcome_feat2_ttl:'성장이 보여요',welcome_feat2_desc:'기록과 그래프로 확인',
   welcome_feat3_ttl:'헬스장에서 바로 사용',welcome_feat3_desc:'간단한 조작으로 스트레스 없이',
   welcome_start:'시작하기',welcome_have_account:'이미 계정이 있어요',
@@ -67,7 +67,7 @@ export default {
   exp_beginner_ttl:'초보자',exp_beginner_desc:'1~6개월 정도',
   exp_intermediate_ttl:'중급자',exp_intermediate_desc:'6개월~2년',
   exp_advanced_ttl:'상급자',exp_advanced_desc:'2년 이상',
-  bodytype_q:'현재 체형은?',bodytype_desc:'AI가 맞춤 메뉴를 제안해드려요',
+  bodytype_q:'현재 체형은?',bodytype_desc:'나에게 맞는 메뉴를 짜드려요',
   bt_skinny_ttl:'마른 체형',bt_skinny_desc:'살도 근육도 잘 붙지 않아요',
   bt_average_ttl:'보통 체형',bt_average_desc:'너무 마르지도 뚱뚱하지도 않아요',
   bt_chubby_ttl:'통통・단단한 체형',bt_chubby_desc:'체중은 있지만 근육도 조금 있어요',
@@ -83,6 +83,13 @@ export default {
   confirm_q:'준비 완료!',confirm_desc:'나만의 프로그램을 만들어드려요',
   confirm_create:'프로그램 만들기',confirm_creating:'생성 중...',
   onboarding_save_error:'저장에 실패했습니다. 다시 시도해주세요',
+
+  // Menu personalization
+  menu_reason_up:'지난번보다 무게 증가',menu_reason_hold:'같은 무게로 한 번 더',menu_reason_more:'지난번보다 한 번 더',menu_reason_return:'오랜만이라 가볍게',
+  menu_adapted_note:'목표와 기록에 맞춰 자동 조정했어요',bodyweight_label:'맨몸',
+
+  // Offline
+  saved_offline:'오프라인이라 저장 대기 중. 연결되면 자동으로 동기화돼요',synced_offline:'오프라인 기록을 동기화했어요',
 
   // Form card
   form_target_ttl:'자극 부위',form_points_ttl:'자세 포인트',form_close:'닫기',form_tap_hint:'탭하여 자세 보기',

@@ -34,6 +34,7 @@ export default function TodayWorkoutCard({ menu, onStart, onChangeMenu, onManual
           <div className="home-day-badge">Day {dayLabel.day} / {dayLabel.of}</div>
         </div>
         {adjustedForCondition && <div className="home-condition-note">{t('checkin_adjusted_note')}</div>}
+        {exercises.length > 0 && <div className="home-adapted-note">{t('menu_adapted_note')}</div>}
         <div className="home-menu-list">
           {exercises.map((ex, i) => (
             <div
@@ -45,7 +46,8 @@ export default function TodayWorkoutCard({ menu, onStart, onChangeMenu, onManual
               <ExerciseIcon name={ex.exercise} className="ex-ic" />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div className="home-menu-ex-name">{ex.exercise}</div>
-                <div className="home-menu-ex-detail">{ex.weight}kg × {ex.reps}{t('u_reps')} × {ex.sets}{t('u_sets')}</div>
+                <div className="home-menu-ex-detail">{ex.weight > 0 ? `${ex.weight}kg` : t('bodyweight_label')} × {ex.reps}{t('u_reps')} × {ex.sets}{t('u_sets')}</div>
+                {ex.reason && ex.reason !== 'first' && <div className={`home-menu-reason reason-${ex.reason}`}>{t(`menu_reason_${ex.reason}`)}</div>}
               </div>
               {slugForExercise(ex.exercise) && <span className="home-menu-chev">›</span>}
             </div>

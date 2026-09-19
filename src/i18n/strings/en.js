@@ -46,8 +46,8 @@ export default {
   cal_mon:'M',cal_tue:'T',cal_wed:'W',cal_thu:'T',cal_fri:'F',cal_sat:'S',cal_sun:'S',
 
   // Auth (welcome/email/otp)
-  welcome_subtitle:'AI Personal Trainer',
-  welcome_feat1_ttl:'AI builds your menu',welcome_feat1_desc:'A workout tailored just for you',
+  welcome_subtitle:'Your personal training partner',
+  welcome_feat1_ttl:'Adjusts to your records',welcome_feat1_desc:'Today\x27s menu is based on your last weights and reps',
   welcome_feat2_ttl:'See your progress',welcome_feat2_desc:'Records and charts that show growth',
   welcome_feat3_ttl:'Quick to use at the gym',welcome_feat3_desc:'Simple, stress-free controls',
   welcome_start:'Get started',welcome_have_account:"I already have an account",
@@ -66,7 +66,7 @@ export default {
   exp_beginner_ttl:'Beginner',exp_beginner_desc:'About 1-6 months',
   exp_intermediate_ttl:'Intermediate',exp_intermediate_desc:'6 months - 2 years',
   exp_advanced_ttl:'Advanced',exp_advanced_desc:'2+ years',
-  bodytype_q:"What's your current body type?",bodytype_desc:"So AI can suggest a menu that fits you",
+  bodytype_q:"What's your current body type?",bodytype_desc:'So we can build a menu that fits you',
   bt_skinny_ttl:'Skinny',bt_skinny_desc:'Hard to gain fat or muscle',
   bt_average_ttl:'Average',bt_average_desc:'Not too heavy, not too thin',
   bt_chubby_ttl:'Chubby / stocky',bt_chubby_desc:'A bit heavier, some muscle already',
@@ -82,6 +82,13 @@ export default {
   confirm_q:"You're all set!",confirm_desc:"Let's build your personal program",
   confirm_create:'Create my program',confirm_creating:'Creating...',
   onboarding_save_error:'Failed to save. Please try again',
+
+  // Menu personalization
+  menu_reason_up:'Weight up from last time',menu_reason_hold:'Same weight — go for one more rep',menu_reason_more:'One more rep than last time',menu_reason_return:'Lighter, since it has been a while',
+  menu_adapted_note:'Adjusted to your goal and past records',bodyweight_label:'Bodyweight',
+
+  // Offline
+  saved_offline:'Saved offline — it will sync when you\x27re back online',synced_offline:'Synced your offline records',
 
   // Form card
   form_target_ttl:'Target',form_points_ttl:'FORM POINTS',form_close:'Close',form_tap_hint:'Tap to see the form',

@@ -39,6 +39,14 @@ export function sessionReducer(state, action) {
       return { ...state, completedSets, completedExercises, phase: isLastExercise ? 'complete' : 'wait' }
     }
 
+    case 'ADJUST': {
+      if (!state || state.phase !== 'active') return state
+      const { field, delta } = action
+      if (field === 'weight') return { ...state, weight: Math.max(0, Math.round((state.weight + delta) * 2) / 2) }
+      if (field === 'reps') return { ...state, reps: Math.min(100, Math.max(1, state.reps + delta)) }
+      return state
+    }
+
     case 'NEXT': {
       if (!state || state.phase !== 'wait') return state
       const exerciseFinished = state.completedSets.length >= state.sets

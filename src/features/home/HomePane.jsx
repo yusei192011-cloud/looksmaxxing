@@ -24,7 +24,7 @@ export default function HomePane({ onStartWorkout }) {
   const { data: checkins } = useConditionCheckins()
   const upsertCheckin = useUpsertConditionCheckin()
   const frequency = profile?.frequency ?? 3
-  const { menu, regenerate } = useHomeMenu({ records, frequency, lang })
+  const { menu, regenerate } = useHomeMenu({ records, frequency, lang, profile })
   const today = todayLocalDate()
 
   if (view === 'manual') {

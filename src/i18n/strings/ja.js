@@ -46,8 +46,8 @@ export default {
   cal_mon:'月',cal_tue:'火',cal_wed:'水',cal_thu:'木',cal_fri:'金',cal_sat:'土',cal_sun:'日',
 
   // Auth (welcome/email/otp)
-  welcome_subtitle:'AIパーソナルトレーナー',
-  welcome_feat1_ttl:'AIがメニューを組んでくれる',welcome_feat1_desc:'あなた専用のトレーニングを提案',
+  welcome_subtitle:'あなた専用のトレーニングパートナー',
+  welcome_feat1_ttl:'記録に合わせて自動調整',welcome_feat1_desc:'前回の重量・回数から今日のメニューを決めるよ',
   welcome_feat2_ttl:'成長が見える',welcome_feat2_desc:'記録とグラフでしっかり可視化',
   welcome_feat3_ttl:'ジムでサッと使える',welcome_feat3_desc:'シンプル操作でストレスフリー',
   welcome_start:'始める',welcome_have_account:'アカウントを持ってる方はこちら',
@@ -66,7 +66,7 @@ export default {
   exp_beginner_ttl:'初心者',exp_beginner_desc:'1〜6ヶ月くらい',
   exp_intermediate_ttl:'中級者',exp_intermediate_desc:'半年〜2年',
   exp_advanced_ttl:'上級者',exp_advanced_desc:'2年以上',
-  bodytype_q:'今の体型は？',bodytype_desc:'AIがあなたに合ったメニューを提案するよ',
+  bodytype_q:'今の体型は？',bodytype_desc:'あなたに合ったメニューを組むよ',
   bt_skinny_ttl:'痩せ型・ガリガリ',bt_skinny_desc:'太りにくい、筋肉もつきにくい',
   bt_average_ttl:'普通体型',bt_average_desc:'太りすぎでも痩せすぎでもない',
   bt_chubby_ttl:'ぽっちゃり・がっちり',bt_chubby_desc:'体重多め、筋肉は少しある',
@@ -82,6 +82,13 @@ export default {
   confirm_q:'準備完了！',confirm_desc:'あなた専用のプログラムを作成するよ',
   confirm_create:'プログラムを作成する',confirm_creating:'作成中...',
   onboarding_save_error:'保存に失敗しました。もう一度試してください',
+
+  // Menu personalization
+  menu_reason_up:'前回より重量アップ',menu_reason_hold:'同じ重さで、あと1回に挑戦',menu_reason_more:'前回より1回多く挑戦',menu_reason_return:'久しぶりなので軽めから',
+  menu_adapted_note:'あなたの目標と記録に合わせて自動調整しました',bodyweight_label:'自重',
+
+  // Offline
+  saved_offline:'オフラインのため保存待ち。つながったら自動で同期するよ',synced_offline:'オフラインで記録した分を同期しました',
 
   // Form card
   form_target_ttl:'効く部位',form_points_ttl:'フォームのポイント',form_close:'閉じる',form_tap_hint:'タップでフォームを見る',

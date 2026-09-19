@@ -3,11 +3,12 @@ import { useLang } from '../../../i18n/LangContext'
 import ExerciseIcon, { slugForExercise } from '../exerciseIcons'
 import ExerciseFormCard from '../ExerciseFormCard'
 import { useBodyScrollLock } from '../../../lib/useBodyScrollLock'
+import { setsToRecords } from './sessionRecords'
 import ResetDialog from './ResetDialog'
 
 export default function GuidedSessionOverlay({ guidedSession, onSessionActiveChange }) {
   const { t } = useLang()
-  const { session, done, next, close, resetSave, resetDiscard } = guidedSession
+  const { session, done, next, adjust, close, resetSave, resetDiscard } = guidedSession
   const [resetOpen, setResetOpen] = useState(false)
   const [formOpen, setFormOpen] = useState(false)
   const rootRef = useRef(null)
@@ -36,6 +37,7 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
 
   const { exercise, weight, reps, sets, curSet, phase, queue, queueIndex, completedExercises } = session
   const isMultiExercise = queue.length > 1
+  const weightStep = weight >= 20 ? 2.5 : 1
 
   const handleResetSave = () => { setResetOpen(false); resetSave() }
   const handleResetDiscard = () => { setResetOpen(false); resetDiscard() }
@@ -59,7 +61,22 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
         <ExerciseIcon name={exercise} className="ex-ic-lg" onClick={() => setFormOpen(true)} />
         {slugForExercise(exercise) && <div className="ex-tap-hint">{t('form_tap_hint')}</div>}
         <div className="wo-exname">{exercise}</div>
-        <div className="wo-winfo">{weight}kg × {reps}reps</div>
+        {phase === 'active' ? (
+          <div className="wo-adj">
+            <div className="wo-adj-grp">
+              <button className="wo-adj-btn" onClick={() => adjust('weight', -weightStep)} aria-label="weight -">−</button>
+              <div className="wo-adj-val">{weight > 0 ? `${weight}kg` : t('bodyweight_label')}</div>
+              <button className="wo-adj-btn" onClick={() => adjust('weight', weightStep)} aria-label="weight +">+</button>
+            </div>
+            <div className="wo-adj-grp">
+              <button className="wo-adj-btn" onClick={() => adjust('reps', -1)} aria-label="reps -">−</button>
+              <div className="wo-adj-val">{reps}reps</div>
+              <button className="wo-adj-btn" onClick={() => adjust('reps', 1)} aria-label="reps +">+</button>
+            </div>
+          </div>
+        ) : (
+          <div className="wo-winfo">{weight > 0 ? `${weight}kg` : t('bodyweight_label')} × {reps}reps</div>
+        )}
       </div>
       <div id="wo-main">
         <div className={`wo-phase${phase === 'active' ? ' on' : ''}`} />
@@ -71,8 +88,8 @@ export default function GuidedSessionOverlay({ guidedSession, onSessionActiveCha
           <div className="co-ic" />
           <div className="co-ttl">{t('wo_complete')}</div>
           <div className="co-det">
-            {completedExercises.map(ex => (
-              <div key={ex.exercise}>{ex.exercise}  {ex.weight}kg × {ex.reps}reps × {ex.completedSets.length}sets</div>
+            {completedExercises.flatMap(ex => setsToRecords(ex.exercise, ex.group, ex.completedSets)).map((r, i) => (
+              <div key={i}>{r.exercise}  {r.weight > 0 ? `${r.weight}kg` : t('bodyweight_label')} × {r.reps}reps × {r.sets}sets</div>
             ))}
           </div>
         </div>

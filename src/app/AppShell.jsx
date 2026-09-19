@@ -9,6 +9,7 @@ import RankModal from '../features/rank/RankModal'
 import { useGuidedSession } from '../features/workout/GuidedSession/useGuidedSession'
 import GuidedSessionOverlay from '../features/workout/GuidedSession/GuidedSessionOverlay'
 import { useOneTimeGestureSetup } from './useOneTimeGestureSetup'
+import { useOutboxSync } from '../data/useOutboxSync'
 
 // Chart.js is a large dependency only needed once the user actually opens
 // the Progress tab — code-split it out of the main bundle.
@@ -23,6 +24,7 @@ export default function AppShell() {
   const guidedSession = useGuidedSession()
   const sessionActive = !!guidedSession.session
   useOneTimeGestureSetup()
+  useOutboxSync()
 
   return (
     <>

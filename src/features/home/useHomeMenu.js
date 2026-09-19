@@ -3,7 +3,7 @@ import { useConditionCheckins } from '../../data/useConditionCheckins'
 import { todayLocalDate } from '../../lib/formatDate'
 import { generateDailyMenu } from './generateDailyMenu'
 
-export function useHomeMenu({ records, frequency, lang }) {
+export function useHomeMenu({ records, frequency, lang, profile }) {
   const [rotation, setRotation] = useState(0)
   const { data: checkins } = useConditionCheckins()
 
@@ -13,8 +13,8 @@ export function useHomeMenu({ records, frequency, lang }) {
   }, [checkins])
 
   const menu = useMemo(
-    () => generateDailyMenu({ records, frequency, lang, rotation, checkinsToday }),
-    [records, frequency, lang, rotation, checkinsToday],
+    () => generateDailyMenu({ records, frequency, lang, rotation, checkinsToday, profile }),
+    [records, frequency, lang, rotation, checkinsToday, profile],
   )
 
   const regenerate = () => setRotation(r => r + 1)

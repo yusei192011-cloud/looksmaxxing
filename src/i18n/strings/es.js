@@ -47,8 +47,8 @@ export default {
   cal_mon:'L',cal_tue:'M',cal_wed:'X',cal_thu:'J',cal_fri:'V',cal_sat:'S',cal_sun:'D',
 
   // Auth (welcome/email/otp)
-  welcome_subtitle:'Entrenador Personal IA',
-  welcome_feat1_ttl:'La IA arma tu menú',welcome_feat1_desc:'Un entrenamiento hecho para ti',
+  welcome_subtitle:'Tu compañero de entrenamiento',
+  welcome_feat1_ttl:'Se adapta a tus registros',welcome_feat1_desc:'El menú de hoy parte de tus últimos pesos y repeticiones',
   welcome_feat2_ttl:'Ve tu progreso',welcome_feat2_desc:'Registros y gráficos que muestran tu avance',
   welcome_feat3_ttl:'Rápido de usar en el gym',welcome_feat3_desc:'Controles simples, sin complicaciones',
   welcome_start:'Empezar',welcome_have_account:'Ya tengo una cuenta',
@@ -67,7 +67,7 @@ export default {
   exp_beginner_ttl:'Principiante',exp_beginner_desc:'De 1 a 6 meses',
   exp_intermediate_ttl:'Intermedio',exp_intermediate_desc:'De 6 meses a 2 años',
   exp_advanced_ttl:'Avanzado',exp_advanced_desc:'2+ años',
-  bodytype_q:'¿Cómo es tu cuerpo actualmente?',bodytype_desc:'Así la IA sugiere un menú que te quede bien',
+  bodytype_q:'¿Cómo es tu cuerpo actualmente?',bodytype_desc:'Para armar un menú que se ajuste a ti',
   bt_skinny_ttl:'Delgado',bt_skinny_desc:'Cuesta ganar grasa o músculo',
   bt_average_ttl:'Promedio',bt_average_desc:'Ni muy pesado ni muy delgado',
   bt_chubby_ttl:'Robusto',bt_chubby_desc:'Un poco más de peso, algo de músculo',
@@ -83,6 +83,13 @@ export default {
   confirm_q:'¡Todo listo!',confirm_desc:'Vamos a crear tu programa personal',
   confirm_create:'Crear mi programa',confirm_creating:'Creando...',
   onboarding_save_error:'Error al guardar. Inténtalo de nuevo',
+
+  // Menu personalization
+  menu_reason_up:'Más peso que la última vez',menu_reason_hold:'Mismo peso, una repetición más',menu_reason_more:'Una repetición más que la última vez',menu_reason_return:'Más ligero: ha pasado tiempo',
+  menu_adapted_note:'Ajustado a tu objetivo y tus registros',bodyweight_label:'Peso corporal',
+
+  // Offline
+  saved_offline:'Guardado sin conexión: se sincronizará al volver a estar en línea',synced_offline:'Registros sin conexión sincronizados',
 
   // Form card
   form_target_ttl:'Zona',form_points_ttl:'PUNTOS CLAVE',form_close:'Cerrar',form_tap_hint:'Toca para ver la técnica',

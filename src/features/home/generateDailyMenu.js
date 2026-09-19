@@ -1,15 +1,7 @@
 import { GROUP_EX } from '../workout/groups'
 import { applyConditionOverrides, listGroupRecovery } from './recovery'
 import { sessionsThisWeek } from './weeklyStats'
-
-const EXERCISES_PER_MENU = 5
-const DEFAULT_REPS = 10
-const DEFAULT_SETS = 3
-
-// Flat, conservative starting weights (kg) for a group with no history at
-// all — intentionally light; a real weight from the user's own past
-// records always wins over this once one exists.
-const GROUP_DEFAULT_WEIGHT = { chest: 20, back: 20, shoulder: 10, arms: 8, legs: 30, abs: 0 }
+import { getPlan, nextTarget, orderForExperience } from './menuPlan'
 
 function exerciseNamesForGroup(group, records, lang) {
   const key = (lang === 'ja' || lang === 'ko' || lang === 'zh') ? 'ja' : 'en'
@@ -20,7 +12,8 @@ function exerciseNamesForGroup(group, records, lang) {
 
 // Pure and swappable: a future AI-backed generator can return the exact
 // same shape and nothing else in the app needs to change.
-export function generateDailyMenu({ records, frequency, lang, rotation = 0, checkinsToday = [] }) {
+export function generateDailyMenu({ records, frequency, lang, rotation = 0, checkinsToday = [], profile = null }) {
+  const plan = getPlan(profile)
   const ranked = applyConditionOverrides(listGroupRecovery(records), checkinsToday)
   // sore/pain both mean "skip this group today" — pain is filtered explicitly
   // (not just deprioritized via hours=0) so it can never be picked even if
@@ -40,21 +33,16 @@ export function generateDailyMenu({ records, frequency, lang, rotation = 0, chec
 
   const targetGroup = candidates[rotation % candidates.length].group
 
-  const names = exerciseNamesForGroup(targetGroup, records, lang)
+  const names = orderForExperience(exerciseNamesForGroup(targetGroup, records, lang), plan)
   const offset = names.length ? rotation % names.length : 0
   const rotated = [...names.slice(offset), ...names.slice(0, offset)]
-  const chosen = rotated.slice(0, EXERCISES_PER_MENU)
+  const chosen = rotated.slice(0, plan.exercises)
 
-  const exercises = chosen.map(exercise => {
-    const last = records.find(r => r.exercise === exercise)
-    return {
-      exercise,
-      group: targetGroup,
-      weight: last?.weight ?? GROUP_DEFAULT_WEIGHT[targetGroup] ?? 10,
-      reps: last?.reps ?? DEFAULT_REPS,
-      sets: last?.sets ?? DEFAULT_SETS,
-    }
-  })
+  const exercises = chosen.map(exercise => ({
+    exercise,
+    group: targetGroup,
+    ...nextTarget({ exercise, group: targetGroup, records, plan }),
+  }))
 
   return {
     targetGroup,
