@@ -3,6 +3,7 @@ import { useLang } from '../../i18n/LangContext'
 import { slugForExercise } from './exerciseIcons'
 import { FORM_TIPS } from './formTips'
 import { useBodyScrollLock } from '../../lib/useBodyScrollLock'
+import { useSheetSwipeClose } from '../../lib/useSheetSwipeClose'
 
 // start -> mid -> end -> mid, looped, so the motion reads without controls.
 const FRAME_SEQUENCE = [1, 2, 3, 2]
@@ -13,6 +14,7 @@ export default function ExerciseFormCard({ exercise, onClose }) {
   const slug = exercise ? slugForExercise(exercise) : null
 
   useBodyScrollLock(!!slug)
+  const sheetRef = useSheetSwipeClose(!!slug, onClose)
 
   useEffect(() => {
     if (!slug) return
@@ -27,7 +29,7 @@ export default function ExerciseFormCard({ exercise, onClose }) {
 
   return (
     <div className="dlg-ov open" role="dialog" aria-modal="true" onClick={onClose}>
-      <div className="dlg form-card" onClick={(e) => e.stopPropagation()}>
+      <div className="dlg form-card" ref={sheetRef} onClick={(e) => e.stopPropagation()}>
         <div className="cond-drag" />
         <div className="form-card-img">
           {[1, 2, 3].map(n => (

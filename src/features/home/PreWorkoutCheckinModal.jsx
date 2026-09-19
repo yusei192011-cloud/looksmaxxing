@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useLang } from '../../i18n/LangContext'
 import { useBodyScrollLock } from '../../lib/useBodyScrollLock'
+import { useSheetSwipeClose } from '../../lib/useSheetSwipeClose'
 import ConditionPicker from './ConditionPicker'
 
 // Shared by two call sites: the pre-workout gate on HomePane, and the manual
@@ -17,6 +18,7 @@ export default function PreWorkoutCheckinModal({ open, onSelect, onClose }) {
   }, [open])
 
   useBodyScrollLock(open)
+  const sheetRef = useSheetSwipeClose(open, onClose)
 
   if (!open) return null
 
@@ -25,7 +27,7 @@ export default function PreWorkoutCheckinModal({ open, onSelect, onClose }) {
 
   return (
     <div className="dlg-ov open" role="dialog" aria-modal="true" onClick={onClose}>
-      <div className="dlg" onClick={(e) => e.stopPropagation()}>
+      <div className="dlg" ref={sheetRef} onClick={(e) => e.stopPropagation()}>
         <div className="cond-drag" />
         <div className="dlg-ttl">{t('checkin_question')}</div>
         <div className="dlg-body">{t('checkin_subtitle')}</div>
